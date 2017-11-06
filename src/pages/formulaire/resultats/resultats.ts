@@ -28,10 +28,10 @@ export class Resultats implements OnInit {
       emailForm: ['', Validators.pattern('(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)')],
     });
     //Initialise les observateurs de la connexion et de la déconnexion
-    network.onConnect().subscribe(() => {
+    this.network.onConnect().subscribe(() => {
       this.connectivityCheck = true;
     });
-    network.onDisconnect().subscribe(() => {
+    this.network.onDisconnect().subscribe(() => {
       this.connectivityCheck = false;
     });
   }

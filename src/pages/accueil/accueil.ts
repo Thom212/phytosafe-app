@@ -26,9 +26,9 @@ export class Accueil {
    */
   nextPage() {
     //Date de création du nouveau formulaire
-    interface dateObjet { dateForm: number };
+    interface dateObjet { datetime_creation: number };
     var currentTime = new Date();
-    var dateCreaForm: dateObjet = {dateForm : currentTime.getFullYear()*100000000+(currentTime.getMonth()+1)*1000000+currentTime.getDate()*10000+currentTime.getHours()*100+currentTime.getMinutes()};
+    var dateCreaForm: dateObjet = {datetime_creation : currentTime.getFullYear()*100000000+(currentTime.getMonth()+1)*1000000+currentTime.getDate()*10000+currentTime.getHours()*100+currentTime.getMinutes()};
 
     //Stockage local de la date de création du nouveau formulaire après avoir supprimer toutes les données déjà stockées
     this.localstockage.clearAllData().then(()=>{
