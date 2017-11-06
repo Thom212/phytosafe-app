@@ -32,20 +32,20 @@ ionic start phytosafe-app super
 
 ### Lancement de l'application
 
-####Cloner le répertoire GitHub
+#### Cloner le répertoire GitHub
 Dans un premier temps, il faut cloner ce répertoire GitHub dans un dossier local en lançant la commande, depuis l'emplacement désiré :
 ```bash
 git clone --https://github.com/kenko-apps/phytosafe-app
 ```
 
-####Lancer l'application dans un navigateur web**
+#### Lancer l'application dans un navigateur web
 Afin de lancer l'application localement, il suffit de lancer, depuis le répertoire du projet PhytoSafe, la commande suivante :
 ```bash
 ionic serve
 ```
 L'application s'ouvre alors automatiquement dans un navigateur web, à l'adresse : *http://localhost:8100*.
 
-####Lancer l'application grâce à Android Studio**
+#### Lancer l'application grâce à Android Studio
 Lancée localement dans un navigateur web, l'application ne peut pas fonctionner correctement : elle ne notamment pas faier de requête à l'API de PhytoSafe, le navigateur web empêchant toute requête qui n'a pas la même origine que l'application (c'est-à-dire localhost:8100). Pour contourner ce problème, il faut lancer l'application grâce à [Android Studio](https://developer.android.com/studio/index.html). La configuration d'Android Studio pour lancer une application Ionic est disponible en suivant ce [lien](http://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html).
 Il est essentiel de s'assurer que les variables d'environnement Java et Android, ainsi que les paquets SDK, à travers l'Android SDK Manager, sont bien configurées. L'application n'étant plus lancée dans un navigateur web, il faut faire référence à l'API avec son adresse IP et non avec la variable *localhost*, même si l'API est lancée localement. Cette mofication doit être réalisée dans le fichier [api.ts](../src/providers/api.ts). Attention à ne pas révéler son adresse IP sur GitHub.
 Une fois la configuration d'Android Studio finalisée, il est nécessaire d'ajouter la plateforme Android à notre application Ionic :
@@ -55,7 +55,7 @@ ionic cordova build android
 ``` 
 Il y a deux manières de lancer l'application grâce à Android Studio :
 
-* __en utilisant un appareil connecté,__
+* en utilisant un appareil connecté,
 
 Il suffit de connecter son appareil Android et de lancer la commande :
 ```bash
@@ -63,7 +63,7 @@ ionic cordova run android
 ```
 Il faut s'assurer que son appareil autorise le [développement d'applications](https://developer.android.com/studio/run/device.html).
 
-* __en utilisant un émulateur,__
+* en utilisant un émulateur,
 
 La création d'un émulateur android (AVD - Android Virtual Device), décrite sur le site de [Cordova](http://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html) dont le lien est donné ci-dessus, ne peut se faire avant d'avoir réalisé les étapes ci-dessous, qui permettent de faire du projet Ionic un projet Android Studio. La création d'un tel simulateur n'est pas nécessaire pour le lancement de l'application sur un appareil connecté.
 
