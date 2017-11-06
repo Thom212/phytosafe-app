@@ -55,14 +55,14 @@ ionic cordova build android
 ``` 
 Il y a deux manières de lancer l'application grâce à Android Studio :
 
-    *en utilisant un appareil connecté,
+* en utilisant un appareil connecté,
 Il suffit de connecter son appareil Android et de lancer la commande :
 ```bash
 ionic cordova run android
 ```
 Il faut s'assurer que son appareil autorise le [développement d'applications](https://developer.android.com/studio/run/device.html).
 
-    *en utilisant un émulateur,
+* en utilisant un émulateur,
 La création d'un émulateur android (AVD - Android Virtual Device), décrite sur le site de [Cordova](http://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html) dont le lien est donné ci-dessus, ne peut se faire avant d'avoir réalisé les étapes ci-dessous, qui permettent de faire du projet Ionic un projet Android Studio. La création d'un tel simulateur n'est pas nécessaire pour le lancement de l'application sur un appareil connecté.
 
 
@@ -75,7 +75,7 @@ ionic cordova emulate android
 
 L'application a été créée à partir du modèle _"Ionic Super Starter"_. Cette application comprend plusieurs modules, dont certains ont été ajoutés :
 
-    * @ngx-translate
+* @ngx-translate
 Ce [module](https://github.com/ngx-translate/core) permet d'écrire une application en différente langues de manière très simple.
 Pour ajouter un langage, il suffit d'ajouter un fichier dans le dossier [src/assets/i18n](../resources/database), en suivant la même convention que pour les autres langues, à savoir un fichier CODELANG.json où CODELANG est le code de la langue ajoutée (ex : en/gb/de/es/fr...).
 Pour changer la langue de l'application, il faut modifier dans le fichier [app.component.ts](../src/app/app.component.ts) la ligne :
@@ -84,7 +84,7 @@ translate.use('en')
 ```
 et remplacer le code de la langue par le code souhaité.
 
-    * @ng-idle
+* @ng-idle
 Ce module permet de détecter lorsqu'un utilisateur n'est plus actif sur l'application. Lors de l'initialisation de l'application, pour l'installer, il faut lancer les commandes suivantes :
 ```bash
 cd <nom_du_dossier>
@@ -92,13 +92,13 @@ npm install --save @ng-idle/core
 ```
 La mise en place de la détection de l'activité de l'utilisateur est gérée dans le fichier [inactif.ts](../src/providers/inactif.ts). Plus d'informations sur ce module peuvent être trouvées en suivant ce [lien](https://www.npmjs.com/package/ng2-idle).
 
-    * @ionic/storage
+* @ionic/storage
 Ce module permet de stocker localement des paires Clé/Valeur ou des objets JSON. La manipulation des paires/objets stockés est permise par le fichier [localstockage.ts](../src/providers/localstockage.ts). Ce module est compris par défaut dans toute application Ionic. Plus d'informations sur ce module peuvent être trouvées en suivant ce [lien](https://ionicframework.com/docs/storage/).
 
-    * @angular/http
+* @angular/http
 Ce module permet de communiquer avec un serveur HTTP. La partie front-end de l'application PhytoSafe peut ainsi communiquer avec l'API de l'application. Les requêtes qui permettent cette communication sont décrites dans le fichier [api.ts](../src/providers/api.ts), ainsi que dans les fichiers [formulaire.ts](../src/providers/formulaire.ts), [traitement.ts](../src/providers/traitement.ts) et [incompatibilite.ts](../src/providers/incompatibilite.ts). Ce module est compris par défaut dans toute application Angular. Plus d'informations peuvent être trouvées en suivant ce [lien](https://codecraft.tv/courses/angular/http/core-http-api/).
 
-    * @angular/forms
+* @angular/forms
 Ce module permet la mise en place de formulaires. Afin de valider les formulaires, des validateurs peuvent être créés sur-mesure. Ces validateurs sont répertoriés dans le fichier [validators.ts](../src/providers/validators.ts). Ce module est compris par défaut dans toute application Angular. Plus d'informations peuvent être trouvées en suivant ce [lien](https://angular.io/guide/forms).
 
 ## <a name="production"></a>Mise en production
