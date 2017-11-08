@@ -142,7 +142,7 @@ set HTTPS_PROXY=null
 
 Il est nécessaire de configurer [Git](https://gist.github.com/evantoli/f8c23a37eb3558ab8765) pour l'utiliser derrière un proxy. Il faut avant tout récupérer l'adresse du proxy, son port, le nom d'utilisateur et le mot de passe associé. Plusieurs [méthodes](https://stackoverflow.com/questions/22368515/how-to-see-the-proxy-settings-on-windows) existent. Il faut ensuite entrer les lignes de commande suivantes :
 ```bash
-git config --global http.proxy <proxyUserName>:<proxyPassword>@<adresseDuProxy>:<port>
+git config --global http.proxy http://<proxyUserName>:<proxyPassword>@<adresseDuProxy>:<port>
 ```
 La suppression de la configuration du proxy pour Git est réalisée en entrant les commandes :
 ```bash
