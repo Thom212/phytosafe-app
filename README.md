@@ -9,6 +9,7 @@ Ce répertoire Github contient le code source de la partie front-end de l'applic
 1. [Installation](#installation)
 2. [Fonctionnement](#fonctionnement)
 3. [Mise en production](#production)
+4. [Problèmes rencontrés](#problemes)
 
 ## <a name="installation"></a>Installation
 
@@ -46,8 +47,8 @@ ionic serve
 L'application s'ouvre alors automatiquement dans un navigateur web, à l'adresse : *http://localhost:8100*.
 
 #### Lancer l'application grâce à Android Studio
-Lancée localement dans un navigateur web, l'application ne peut pas fonctionner correctement : elle ne notamment pas faier de requête à l'API de PhytoSafe, le navigateur web empêchant toute requête qui n'a pas la même origine que l'application (c'est-à-dire localhost:8100). Pour contourner ce problème, il faut lancer l'application grâce à [Android Studio](https://developer.android.com/studio/index.html). La configuration d'Android Studio pour lancer une application Ionic est disponible en suivant ce [lien](http://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html).
-Il est essentiel de s'assurer que les variables d'environnement Java et Android, ainsi que les paquets SDK, à travers l'Android SDK Manager, sont bien configurées. L'application n'étant plus lancée dans un navigateur web, il faut faire référence à l'API avec son adresse IP et non avec la variable *localhost*, même si l'API est lancée localement. Cette mofication doit être réalisée dans le fichier [api.ts](../src/providers/api.ts). Attention à ne pas révéler son adresse IP sur GitHub.
+Lancée localement dans un navigateur web, l'application ne peut pas fonctionner correctement : elle ne notamment pas faier de requête à l'API de PhytoSafe, le navigateur web empêchant toute requête qui n'a pas la même origine que l'application (c'est-à-dire *http://localhost:8100*). Pour contourner ce problème, il faut lancer l'application grâce à [Android Studio](https://developer.android.com/studio/index.html). La configuration d'Android Studio pour lancer une application Ionic est disponible en suivant ce [lien](http://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html).
+Il est essentiel de s'assurer que les variables d'environnement Java et Android, ainsi que les paquets SDK, à travers l'Android SDK Manager, sont bien configurées. L'application n'étant plus lancée dans un navigateur web, il faut faire référence à l'API avec son adresse IP et non avec la variable *localhost*, même si l'API est lancée localement. Cette mofication doit être réalisée dans le fichier [api.ts](src/providers/api.ts). Attention à ne pas révéler son adresse IP sur GitHub.
 Une fois la configuration d'Android Studio finalisée, il est nécessaire d'ajouter la plateforme Android à notre application Ionic :
 ```bash
 ionic cordova platform add android
@@ -65,13 +66,18 @@ Il faut s'assurer que son appareil autorise le [développement d'applications](h
 
 * en utilisant un émulateur,
 
-La création d'un émulateur android (AVD - Android Virtual Device), décrite sur le site de [Cordova](http://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html) dont le lien est donné ci-dessus, ne peut se faire avant d'avoir réalisé les étapes ci-dessous, qui permettent de faire du projet Ionic un projet Android Studio. La création d'un tel simulateur n'est pas nécessaire pour le lancement de l'application sur un appareil connecté.
+La création d'un émulateur android (AVD - Android Virtual Device), décrite sur le site de [Cordova](http://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html), ne peut se faire avant d'avoir réalisé les étapes ci-dessous, qui permettent de faire du projet Ionic un projet Android Studio. La création d'un tel simulateur n'est pas nécessaire pour le lancement de l'application sur un appareil connecté.
 
+Pour créer un tel émulateur, il faut ouvrir le projet dans Android Studio. Il faut sélectionner *Open existing project* et ouvrir le dossier [Android](platforms/android). Une fois toutes les dépendances installées (éviter de mettre à jour la version de Gradle, cette mise à jour pouvant créer des [problèmes](#problemeAS)), il faut créer un émulateur dans l'[AVD Manager](https://developer.android.com/studio/run/managing-avds.html).
 
 Une fois créé, l'émulateur peut être utilisé pour lancer l'application :
 ```bash
 ionic cordova emulate android
 ```
+Il faut bien s'assurer que VT-x est activé dans le BIOS. La procédure d'[activation](https://www.howtogeek.com/213795/how-to-enable-intel-vt-x-in-your-computers-bios-or-uefi-firmware/) dépend de l'ordinateur. Pour ouvrir une console afin de suivre les messages, [Chrome](https://www.google.fr/chrome/browser/desktop/index.html) peut être utilisé en lançant dans l'URL :
+```
+chrome://inspect
+``` 
 
 ## <a name="fonctionnement"></a>Fonctionnement
 
@@ -80,8 +86,8 @@ L'application a été créée à partir du modèle _"Ionic Super Starter"_. Cett
 * __@ngx-translate__
 
 Ce [module](https://github.com/ngx-translate/core) permet d'écrire une application en différente langues de manière très simple.
-Pour ajouter un langage, il suffit d'ajouter un fichier dans le dossier [src/assets/i18n](../resources/database), en suivant la même convention que pour les autres langues, à savoir un fichier CODELANG.json où CODELANG est le code de la langue ajoutée (ex : en/gb/de/es/fr...).
-Pour changer la langue de l'application, il faut modifier dans le fichier [app.component.ts](../src/app/app.component.ts) la ligne :
+Pour ajouter un langage, il suffit d'ajouter un fichier dans le dossier [src/assets/i18n](resources/database), en suivant la même convention que pour les autres langues, à savoir un fichier CODELANG.json où CODELANG est le code de la langue ajoutée (ex : en/gb/de/es/fr...).
+Pour changer la langue de l'application, il faut modifier dans le fichier [app.component.ts](src/app/app.component.ts) la ligne :
 ```typescript
 translate.use('en')
 ```
@@ -94,18 +100,82 @@ Ce module permet de détecter lorsqu'un utilisateur n'est plus actif sur l'appli
 cd <nom_du_dossier>
 npm install --save @ng-idle/core
 ```
-La mise en place de la détection de l'activité de l'utilisateur est gérée dans le fichier [inactif.ts](../src/providers/inactif.ts). Plus d'informations sur ce module peuvent être trouvées en suivant ce [lien](https://www.npmjs.com/package/ng2-idle).
+La mise en place de la détection de l'activité de l'utilisateur est gérée dans le fichier [inactif.ts](src/providers/inactif.ts). Plus d'informations sur ce module peuvent être trouvées en suivant ce [lien](https://www.npmjs.com/package/ng2-idle).
 
 * __@ionic/storage__
 
-Ce module permet de stocker localement des paires Clé/Valeur ou des objets JSON. La manipulation des paires/objets stockés est permise par le fichier [localstockage.ts](../src/providers/localstockage.ts). Ce module est compris par défaut dans toute application Ionic. Plus d'informations sur ce module peuvent être trouvées en suivant ce [lien](https://ionicframework.com/docs/storage/).
+Ce module permet de stocker localement des paires Clé/Valeur ou des objets JSON. La manipulation des paires/objets stockés est permise par le fichier [localstockage.ts](src/providers/localstockage.ts). Ce module est compris par défaut dans toute application Ionic. Plus d'informations sur ce module peuvent être trouvées en suivant ce [lien](https://ionicframework.com/docs/storage/).
 
 * __@angular/http__
 
-Ce module permet de communiquer avec un serveur HTTP. La partie front-end de l'application PhytoSafe peut ainsi communiquer avec l'API de l'application. Les requêtes qui permettent cette communication sont décrites dans le fichier [api.ts](../src/providers/api.ts), ainsi que dans les fichiers [formulaire.ts](../src/providers/formulaire.ts), [traitement.ts](../src/providers/traitement.ts) et [incompatibilite.ts](../src/providers/incompatibilite.ts). Ce module est compris par défaut dans toute application Angular. Plus d'informations peuvent être trouvées en suivant ce [lien](https://codecraft.tv/courses/angular/http/core-http-api/).
+Ce module permet de communiquer avec un serveur HTTP. La partie front-end de l'application PhytoSafe peut ainsi communiquer avec l'API de l'application. Les requêtes qui permettent cette communication sont décrites dans le fichier [api.ts](src/providers/api.ts), ainsi que dans les fichiers [formulaire.ts](src/providers/formulaire.ts), [traitement.ts](src/providers/traitement.ts) et [incompatibilite.ts](src/providers/incompatibilite.ts). Ce module est compris par défaut dans toute application Angular. Plus d'informations peuvent être trouvées en suivant ce [lien](https://codecraft.tv/courses/angular/http/core-http-api/).
 
 * __@angular/forms__
 
-Ce module permet la mise en place de formulaires. Afin de valider les formulaires, des validateurs peuvent être créés sur-mesure. Ces validateurs sont répertoriés dans le fichier [validators.ts](../src/providers/validators.ts). Ce module est compris par défaut dans toute application Angular. Plus d'informations peuvent être trouvées en suivant ce [lien](https://angular.io/guide/forms).
+Ce module permet la mise en place de formulaires. Afin de valider les formulaires, des validateurs peuvent être créés sur-mesure. Ces validateurs sont répertoriés dans le fichier [validators.ts](src/providers/validators.ts). Ce module est compris par défaut dans toute application Angular. Plus d'informations peuvent être trouvées en suivant ce [lien](https://angular.io/guide/forms).
 
 ## <a name="production"></a>Mise en production
+
+## <a name="problemes"></a>Problèmes rencontrés
+
+### Utilisation de npm derrière un proxy
+
+Il est nécessaire de configurer npm pour l'utiliser derrière un proxy. Il faut avant tout récupérer l'adresse du proxy, son port, le nom d'utilisateur et le mot de passe associé. Plusieurs [méthodes](https://stackoverflow.com/questions/22368515/how-to-see-the-proxy-settings-on-windows) existent. Il faut ensuite entrer les lignes de commande suivantes :
+```bash
+npm config set proxy http://<proxyUserName>:<proxyPassword>@<adresseDuProxy>:<port>
+npm config set https-proxy http://<proxyUserName>:<proxyPassword>@<adresseDuProxy>:<port>
+npm config set registry http://registry.npmjs.org/
+```
+La suppression de la configuration du proxy pour npm est réalisée en entrant les commandes :
+```bash
+npm config delete http-proxy
+npm config delete https-proxy
+
+npm config rm proxy
+npm config rm https-proxy
+
+set HTTP_PROXY=null
+set HTTPS_PROXY=null
+```
+
+### Utilisation de git derrière un proxy
+
+Il est nécessaire de configurer [Git](https://gist.github.com/evantoli/f8c23a37eb3558ab8765) pour l'utiliser derrière un proxy. Il faut avant tout récupérer l'adresse du proxy, son port, le nom d'utilisateur et le mot de passe associé. Plusieurs [méthodes](https://stackoverflow.com/questions/22368515/how-to-see-the-proxy-settings-on-windows) existent. Il faut ensuite entrer les lignes de commande suivantes :
+```bash
+git config --global http.proxy <proxyUserName>:<proxyPassword>@<adresseDuProxy>:<port>
+```
+La suppression de la configuration du proxy pour Git est réalisée en entrant les commandes :
+```bash
+git config --global --unset http.proxy
+```
+
+### Utilisation de Android Studio derrière un proxy
+
+De la même manière, il faut configurer [Android Studio](https://developer.android.com/studio/intro/studio-config.html) pour l'utiliser derrière un proxy. La configuration est simple : il suffit d'ouvrir la page *Settings > Appearance & Behavior > System Settings > HTTP Proxy*, puis de sélectionner *Auto-detect proxy settings* pour une configuration automatique ou *Manual proxy configuration* pour une configuration manuelle. Pour supprimer la configuration liée au proxy, il suffit de sélectionner sur la même page *No proxy*.
+
+### <a name="problemeAS"></a> Mise à jour de Gradle
+
+Avec la version 3.0 d'Android Studio, à l'ouverture d'un projet, la mise à jour de Gradle vers la version 4.1 est demandée. L'installation de cette mise à jour peut entraîner des problèmes qui ne sont pas faciles à régler.
+
+### Lancement de l'émulateur
+
+L'erreur suivante peut exister lors du lancement de l'émulateur avec Android Studio :
+```bash
+BUILD SUCCESSFUL
+
+Total time: 1.601 secs
+Built the following apk(s): 
+	/Users/Joanne/Desktop/learning/mobile/platforms/android/build/outputs/apk/android-debug.apk
+ANDROID_HOME=/Users/Joanne/Library/Android/sdk
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home
+No target specified and no devices found, deploying to emulator
+Error: Cannot read property 'replace' of undefined
+```
+Pour régler cette erreur, il suffit de remplacer, dans le fichier [emulator.js](src/platforms/android/cordova/lib/emulator.js), la ligne 202 :
+```javascript
+var num = target.split('(API level ')[1].replace(')', '');
+```
+par :
+```javascript
+var num = target.match(/\d+/)[0];
+```

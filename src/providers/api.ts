@@ -19,7 +19,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Api {
   
-  url: string = 'https://192.168.43.10:3000/api/v1'; //'https://localhost:3000/api/v1' ne pas mettre sur GitHub son adresse IP.
+  url: string = 'https://127.0.0.1:3000/api/v1/'; //ne pas mettre sur GitHub son adresse IP.
 
   constructor(public http: Http) {}
 

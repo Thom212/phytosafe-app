@@ -43,17 +43,17 @@ export class Formulaire {
        this.subCreate.unsubscribe();
     }
     
-    let seq = this.api.post('formulaire', dataForm).share();
+    let seq = this.api.post('newForm/', dataForm).share();
 
     this.subCreate = seq.map(res => res.json())
       .subscribe(res => {
         // Si la requête est un succès, l'identifiant du formulaire est stocké localement
         if (res.status == 'success') {
-          this.localstockage.setData(JSON.parse(res.formres)); // Le stockage de l'identifiant du formulaire doit avoir le nom idForm.
+          //this.localstockage.setData(JSON.parse(res.formres)); // Le stockage de l'identifiant du formulaire doit avoir le nom idForm.
           this.localstockage.removeData(dataForm);//Il faut ensuite supprimer toutes les données qui ont été enregistrées sur le serveur, sauf l'identifiant du formulaire.
         }
       }, err => {
-        //console.error('ERROR', err);
+        console.error('ERROR', err);
       });
 
     return seq;
