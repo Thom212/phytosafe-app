@@ -37,25 +37,23 @@ export class Formulaire {
    * @returns {Observable} - un observable est renvoyé pour suivre l'état de la requête. 
    */
   createForm(dataForm) {
-
     //On ne peut créer qu'un seul formulaire côté serveur. Il faut s'assurer qu'il n'y a déjà pas une requête en cours lorsqu'on envoie une requête de création du formulaire.
     if(this.subCreate) {
        this.subCreate.unsubscribe();
     }
-    
     let seq = this.api.post('newForm/', dataForm).share();
-
+    interface idObjet { idForm: number };
     this.subCreate = seq.map(res => res.json())
       .subscribe(res => {
         // Si la requête est un succès, l'identifiant du formulaire est stocké localement
         if (res.status == 'success') {
-          //this.localstockage.setData(JSON.parse(res.formres)); // Le stockage de l'identifiant du formulaire doit avoir le nom idForm.
+          var idCreaForm: idObjet = {idForm : res.data.id}; // Le stockage de l'identifiant du formulaire doit avoir le nom idForm.
+          this.localstockage.setData(idCreaForm);
           this.localstockage.removeData(dataForm);//Il faut ensuite supprimer toutes les données qui ont été enregistrées sur le serveur, sauf l'identifiant du formulaire.
         }
       }, err => {
         console.error('ERROR', err);
       });
-
     return seq;
   }
 

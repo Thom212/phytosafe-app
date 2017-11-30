@@ -68,7 +68,7 @@ Il faut s'assurer que son appareil autorise le [développement d'applications](h
 
 La création d'un émulateur android (AVD - Android Virtual Device), décrite sur le site de [Cordova](http://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html), ne peut se faire avant d'avoir réalisé les étapes ci-dessous, qui permettent de faire du projet Ionic un projet Android Studio. La création d'un tel simulateur n'est pas nécessaire pour le lancement de l'application sur un appareil connecté.
 
-Pour créer un tel émulateur, il faut ouvrir le projet dans Android Studio. Il faut sélectionner *Open existing project* et ouvrir le dossier [Android](platforms/android). Une fois toutes les dépendances installées (éviter de mettre à jour la version de Gradle, cette mise à jour pouvant créer des [problèmes](#problemeAS)), il faut créer un émulateur dans l'[AVD Manager](https://developer.android.com/studio/run/managing-avds.html).
+Pour créer un tel émulateur, il faut ouvrir le projet dans Android Studio. Il faut sélectionner *Open existing project* et ouvrir le dossier _platforms/android_ du projet. Une fois toutes les dépendances installées (éviter de mettre à jour la version de Gradle, cette mise à jour pouvant créer des [problèmes](#problemeAS), il faut créer un émulateur dans l'[AVD Manager](https://developer.android.com/studio/run/managing-avds.html).
 
 Une fois créé, l'émulateur peut être utilisé pour lancer l'application :
 ```bash
@@ -86,7 +86,7 @@ L'application a été créée à partir du modèle _"Ionic Super Starter"_. Cett
 * __@ngx-translate__
 
 Ce [module](https://github.com/ngx-translate/core) permet d'écrire une application en différente langues de manière très simple.
-Pour ajouter un langage, il suffit d'ajouter un fichier dans le dossier [src/assets/i18n](resources/database), en suivant la même convention que pour les autres langues, à savoir un fichier CODELANG.json où CODELANG est le code de la langue ajoutée (ex : en/gb/de/es/fr...).
+Pour ajouter un langage, il suffit d'ajouter un fichier dans le dossier [src/assets/i18n](src/assets/i18n), en suivant la même convention que pour les autres langues, à savoir un fichier CODELANG.json où CODELANG est le code de la langue ajoutée (ex : en/gb/de/es/fr...).
 Pour changer la langue de l'application, il faut modifier dans le fichier [app.component.ts](src/app/app.component.ts) la ligne :
 ```typescript
 translate.use('en')
@@ -171,7 +171,7 @@ JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home
 No target specified and no devices found, deploying to emulator
 Error: Cannot read property 'replace' of undefined
 ```
-Pour régler cette erreur, il suffit de remplacer, dans le fichier [emulator.js](src/platforms/android/cordova/lib/emulator.js), la ligne 202 :
+Pour régler cette erreur, il suffit de remplacer, dans le fichier _emulator.js_ du dossier _src/platforms/android/cordova/lib_, la ligne 202 :
 ```javascript
 var num = target.split('(API level ')[1].replace(')', '');
 ```

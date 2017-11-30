@@ -8,7 +8,6 @@ import { NgIdleModule } from '@ng-idle/core';
 import { MyApp } from './app.component';
 
 import { Accueil } from '../pages/accueil/accueil';
-import { DonneesPerso } from '../pages/formulaire/donnees-perso/donnees-perso';
 import { Maladie } from '../pages/formulaire/maladie/maladie';
 import { TherapiesAlter } from '../pages/formulaire/therapies-alter/therapies-alter';
 import { TraitementNom } from '../pages/formulaire/traitement-nom/traitement-nom';
@@ -21,6 +20,7 @@ import { Formulaire } from '../providers/formulaire';
 import { LocalStockage } from '../providers/localstockage';
 import { Diacritics } from '../providers/diacritics';
 import { Traitement } from '../providers/traitement';
+import { Cancer } from '../providers/cancer';
 import { TherapieValidator } from '../providers/validators';
 
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -38,7 +38,6 @@ export function HttpLoaderFactory(http: Http) {
   declarations: [
     MyApp,
     Accueil,
-    DonneesPerso,
     Maladie,
     TherapiesAlter,
     TraitementNom,
@@ -63,7 +62,6 @@ export function HttpLoaderFactory(http: Http) {
   entryComponents: [
     MyApp,
     Accueil,
-    DonneesPerso,
     Maladie,
     TherapiesAlter,
     TraitementNom,
@@ -77,6 +75,7 @@ export function HttpLoaderFactory(http: Http) {
     LocalStockage,
     Diacritics,
     Traitement,
+    Cancer,
     TherapieValidator,
     SplashScreen,
     StatusBar,

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { DonneesPerso } from '../formulaire/donnees-perso/donnees-perso';
+import { Maladie } from '../formulaire/maladie/maladie';
 
 import { Formulaire } from '../../providers/formulaire';
 import { LocalStockage } from '../../providers/localstockage';
@@ -26,9 +26,9 @@ export class Accueil {
    */
   nextPage() {
     //Date de création du nouveau formulaire
-    interface dateObjet { datetime_creation: number };
-    var currentTime = new Date();
-    var dateCreaForm: dateObjet = {datetime_creation : currentTime.getFullYear()*100000000+(currentTime.getMonth()+1)*1000000+currentTime.getDate()*10000+currentTime.getHours()*100+currentTime.getMinutes()};
+    interface dateObjet { dateForm: number };
+    var currentTime = Date.now();
+    var dateCreaForm: dateObjet = {dateForm : currentTime};
 
     //Stockage local de la date de création du nouveau formulaire après avoir supprimer toutes les données déjà stockées
     this.localstockage.clearAllData().then(()=>{
@@ -38,8 +38,8 @@ export class Accueil {
         //Création d'un nouveau formulaire. La première donnée à entrer dans le formulaire est la date de création.
         this.formulaire.createForm(dateCreaForm);
         
-        //Navigation à la première page du formulaire - Données personnelles
-        this.navCtrl.push(DonneesPerso);
+        //Navigation à la deuxième page du formulaire - Maladie
+        this.navCtrl.push(Maladie);
       });
     });
   }

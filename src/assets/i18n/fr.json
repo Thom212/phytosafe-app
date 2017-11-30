@@ -20,14 +20,6 @@
   "TITRE_MODAL_TRAITEMENT": "Nom du traitement anti-cancéreux",
   "TITRE_MODAL_TRAITEMENT_BIS": "Thérapie alternative",
   "PLACEHOLDER_MODAL_TRAITEMENT": "nom du traitement",
-
-  "FORM_DONNEES_PERSONNELLES" : "Données personnelles",
-  "FORM_PRENOM" : "Prénom",
-  "FORM_PRENOM_ALERTE" : "Entrez un prénom valide.",
-  "FORM_NOM" : "Nom",
-  "FORM_NOM_ALERTE" : "Entrez un nom valide.",
-  "FORM_DATE_NAISSANCE" : "Date de naissance",
-  "FORM_DATE_NAISSANCE_ALERTE" : "Entrez une date de naissance.",
   
   "FORM_MALADIE" : "Maladie",
   "FORM_ORGANE_PRIMITIF" : "Organe primitif atteint",
@@ -43,6 +35,8 @@
   "FORM_RADIO_OPTION_1": "oui",
   "FORM_RADIO_OPTION_2": "prévue",
   "FORM_RADIO_OPTION_3": "non",
+  "FORM_DATE_NAISSANCE" : "Date de naissance",
+  "FORM_DATE_NAISSANCE_ALERTE" : "Entrez une date de naissance.",
   "FORM_ONCO_REF" : "Oncologue référent",
   "FORM_ONCO_REF_ALERTE" : "Entrez un nom d'oncologue valide.",
   

@@ -7,7 +7,7 @@ import { Api } from './api';
 import { LocalStockage } from './localstockage';
 
 /**
- * @class Traitement - Ce service utilise les requêtes définies dans le fichier providers/api pour faire l'interface entre le client et le serveur (et la table Traitement).
+ * @class Cancer - Ce service utilise les requêtes définies dans le fichier providers/api pour faire l'interface entre le client et le serveur (et la table Cancer).
  * Les réponses du serveur aux requêtes envoyées sont des objets JSON, et doivent commencer par le champ `status` : 
  * ```json
  * {
@@ -21,7 +21,7 @@ import { LocalStockage } from './localstockage';
  */
 
 @Injectable()
-export class Traitement {
+export class Cancer {
 
   public subCreate: any;
 
@@ -29,14 +29,14 @@ export class Traitement {
 
   /**
    * Méthode qui envoie une requête GET pour récupérer la liste des traitements enregistrés dans la base côté serveur. 
-   * @method getTrait
+   * @method getCancer
    * @requires providers/localstockage - la fonction utilise la méthode setData.
    * @requires providers/api - la fonction utilise la méthode get.
    * @param {} - aucun paramètre n'est passé à la méthode.
    * @returns {Observable} - un observable est renvoyé pour suivre l'état de la requête. 
    */
-  getTrait() {
-    let seq = this.api.get('traitements/').share();
+  getCancer() {
+    let seq = this.api.get('cancers/').share();
     return seq;
   }
 

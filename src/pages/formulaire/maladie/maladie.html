@@ -61,6 +61,14 @@
     <p *ngIf="!maladieForm.controls.radioForm.valid  && (maladieForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
     
     <ion-item no-lines>
+      <ion-label floating>{{ 'FORM_DATE_NAISSANCE' | translate }}</ion-label>
+      <ion-datetime cancelText="annuler" doneText="valider" [class.invalid]="!maladieForm.controls.date_naissanceForm.valid && (maladieForm.controls.date_naissanceForm.dirty || submitAttempt)" formControlName="date_naissanceForm" displayFormat="DD MMM YYYY" 
+        monthShortNames="jan, f\u00e9v, mars, avr, mai, juin, juil, ao\u00fbt, sept, oct, nov, d\u00e9c">
+      </ion-datetime>
+    </ion-item>
+    <p *ngIf="!maladieForm.controls.date_naissanceForm.valid  && (maladieForm.controls.date_naissanceForm.dirty || submitAttempt)">{{ 'FORM_DATE_NAISSANCE_ALERTE' | translate }}</p>
+
+    <ion-item no-lines>
       <ion-label floating>{{ 'FORM_ONCO_REF' | translate }}</ion-label>
       <ion-input [class.invalid]="!maladieForm.controls.oncoForm.valid && (maladieForm.controls.oncoForm.dirty || submitAttempt)" formControlName="oncoForm" type="text"></ion-input>
     </ion-item>

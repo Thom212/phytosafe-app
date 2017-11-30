@@ -19,7 +19,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Api {
   
-  url: string = 'https://127.0.0.1:3000/api/v1/'; //ne pas mettre sur GitHub son adresse IP.
+  url: string = 'http://192.168.1.26:3000/api/v1';//Chez Caro //'http://192.168.252.29:3000/api/v1';//GPMH //'http://127.0.0.1:3000/api/v1';//localhost// ne pas mettre sur GitHub son adresse IP.
 
   constructor(public http: Http) {}
 
@@ -51,9 +51,7 @@ export class Api {
    * Cette méthode est utilisée lorsque l'URI pour accéder à la ressource n'est pas encore créée et sera créée côté serveur. Les données envoyées seront donc dans un sous-domaine de l'URI utilisée pour envoyer les données.
    * @method post
    */
-  post(endpoint: string, data: any, options?: RequestOptions) {
-    var body: any;
-    body = JSON.stringify(data);
+  post(endpoint: string, body: any, options?: RequestOptions) {
     return this.http.post(this.url + '/' + endpoint, body, options);
   }
 
