@@ -10,10 +10,10 @@
   <p *ngIf="!maladieForm.valid && submitAttempt" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
   <form [formGroup]="maladieForm" novalidate>
 
-    <ion-item no-lines>
+    <button ion-item (click)="showOrganeModal()" no-lines>
       <ion-label floating>{{ 'FORM_ORGANE_PRIMITIF' | translate }}</ion-label>
-      <ion-input (click)="showOrganeModal()" [class.invalid]="!maladieForm.controls.organeForm.valid && (maladieForm.controls.organeForm.dirty || submitAttempt)" formControlName="organeForm" type="text"></ion-input>
-    </ion-item>
+      <ion-input [class.invalid]="!maladieForm.controls.organeForm.valid && (maladieForm.controls.organeForm.dirty || submitAttempt)" formControlName="organeForm" type="text"></ion-input>
+    </button>
     <p *ngIf="!maladieForm.controls.organeForm.valid  && (maladieForm.controls.organeForm.dirty || submitAttempt)">{{ 'FORM_ORGANE_PRIMITIF_ALERTE' | translate }}</p>
 
     <ion-item no-lines>
@@ -37,10 +37,10 @@
     </ion-list>
     <p *ngIf="!maladieForm.controls.etatForm.valid  && (maladieForm.controls.etatForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
 
-    <ion-item no-lines>
+    <button ion-item (click)="showTraitementModal()" no-lines>
       <ion-label floating>{{ 'FORM_NOM_TRAITEMENT' | translate }}</ion-label>
-      <ion-input (click)="showTraitementModal()" [class.invalid]="!maladieForm.controls.traitementForm.valid && (maladieForm.controls.traitementForm.dirty || submitAttempt)" formControlName="traitementForm" type="text"></ion-input>
-    </ion-item>
+      <ion-input [class.invalid]="!maladieForm.controls.traitementForm.valid && (maladieForm.controls.traitementForm.dirty || submitAttempt)" formControlName="traitementForm" type="text"></ion-input>
+    </button>
     <p *ngIf="!maladieForm.controls.traitementForm.valid  && (maladieForm.controls.traitementForm.dirty || submitAttempt)">{{ 'FORM_NOM_TRAITEMENT_ALERTE' | translate }}</p>
 
     <ion-list radio-group formControlName="radioForm">

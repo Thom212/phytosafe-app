@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ViewController, NavParams} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {ViewController, NavParams, Searchbar} from 'ionic-angular';
 
 import { Diacritics } from '../../providers/diacritics';
 
@@ -12,6 +12,8 @@ export class Autocomplete {
   autocompleteItems;
   autocompleteEntry;
 
+  @ViewChild(Searchbar) searchbar:Searchbar;
+
   constructor (public viewCtrl: ViewController, public params: NavParams, public diacritics: Diacritics) {
     this.autocompleteItems = [];
     this.autocompleteEntry = {
@@ -19,14 +21,20 @@ export class Autocomplete {
     };
   }
 
+  ionViewDidEnter() {
+    setTimeout(() => {
+      this.searchbar.setFocus();
+    });
+  }
+
   /**
-   * Fonction qui supprime la page modale ouverte, sans passer de données à la page initiale.
+   * Fonction qui supprime la page modale ouverte, en passant comme valeur à la page initiale la valeur entrée par l'utilisateur.
    * @method dismiss
    * @param {} - aucun paramètre n'est passé à la fonction.
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
   dismiss() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(this.autocompleteEntry.query);
   }
 
   /**
@@ -38,18 +46,6 @@ export class Autocomplete {
   chooseItem(item: any) {
     this.autocompleteEntry.query = item;
     this.viewCtrl.dismiss(item);
-  }
-  
-  /**
-   * Fonction qui supprime la page modale ouverte, en passant comme valeur à la page initiale la valeur entrée par l'utilisateur.
-   * @method search
-   * @param {} - aucun paramètre n'est passé à la fonction.
-   * @returns {} - aucune valeur n'est retournée par la fonction.
-   */
-  enterItem(keyCode) {
-    if (this.params.get('enterAutocomplete')==true && keyCode==13){
-      this.viewCtrl.dismiss(this.autocompleteEntry.query);
-    }
   }
 
   /**

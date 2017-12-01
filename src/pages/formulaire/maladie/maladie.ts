@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
+import { Keyboard } from '@ionic-native/keyboard';
 
 import { TherapiesAlter } from '../therapies-alter/therapies-alter';
 import{ Autocomplete } from '../../autocomplete/autocomplete';
@@ -27,7 +28,7 @@ export class Maladie implements OnInit {
   traitementTitre: string;
   traitementPlaceholder: string;
   
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public organe: Cancer) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public organe: Cancer, public keyboard: Keyboard) {
     this.maladieForm = formBuilder.group({
         organeForm: ['', Validators.compose([ Validators.pattern('([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)([\-]?)([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)'), Validators.required])],
         diagnosticForm: ['', Validators.required],
@@ -83,7 +84,6 @@ export class Maladie implements OnInit {
     });
     let modal = this.modalCtrl.create(Autocomplete, {dataAutocomplete: this.organeNom, titreAutocomplete: this.organeTitre, placeholderAutocomplete: this.organePlaceholder, enterAutocomplete: true});
     modal.onDidDismiss(data => {
-      //console.log(data);
       this.maladieForm.patchValue({organeForm: data});
     });
     modal.present();
@@ -98,7 +98,6 @@ export class Maladie implements OnInit {
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
   showTraitementModal(){
-    //console.log(this.traitementNom);
     this.translate.get('TITRE_MODAL_TRAITEMENT').subscribe(value => {
       this.traitementTitre = value;
     });
@@ -107,7 +106,6 @@ export class Maladie implements OnInit {
     });
     let modal = this.modalCtrl.create(Autocomplete, {dataAutocomplete: this.traitementNom, titreAutocomplete: this.traitementTitre, placeholderAutocomplete: this.traitementPlaceholder, enterAutocomplete: false});
     modal.onDidDismiss(data => {
-      //console.log(data);
       this.maladieForm.patchValue({traitementForm: data});
     });
     modal.present();

@@ -25,6 +25,7 @@ import { TherapieValidator } from '../providers/validators';
 
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { Keyboard } from '@ionic-native/keyboard';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -79,6 +80,7 @@ export function HttpLoaderFactory(http: Http) {
     TherapieValidator,
     SplashScreen,
     StatusBar,
+    Keyboard,
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
