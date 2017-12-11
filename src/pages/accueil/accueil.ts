@@ -26,8 +26,8 @@ export class Accueil {
    */
   nextPage() {
     //Date de création du nouveau formulaire
-    interface dateObjet { dateForm: number };
-    var currentTime = Date.now();
+    interface dateObjet { dateForm: Date };
+    var currentTime = new Date();
     var dateCreaForm: dateObjet = {dateForm : currentTime};
 
     //Stockage local de la date de création du nouveau formulaire après avoir supprimer toutes les données déjà stockées

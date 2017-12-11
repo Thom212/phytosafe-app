@@ -10,9 +10,10 @@
   <p *ngIf="!maladieForm.valid && submitAttempt" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
   <form [formGroup]="maladieForm" novalidate>
 
-    <button ion-item (click)="showOrganeModal()" no-lines>
-      <ion-label floating>{{ 'FORM_ORGANE_PRIMITIF' | translate }}</ion-label>
-      <ion-input [class.invalid]="!maladieForm.controls.organeForm.valid && (maladieForm.controls.organeForm.dirty || submitAttempt)" formControlName="organeForm" type="text"></ion-input>
+    <button type="button" ion-item class="buttonModal" (click)="showOrganeModal()" no-lines>
+      <ion-label class="labelModalstacked" [class.cache]="!organeChoix" stacked>{{ 'FORM_ORGANE_PRIMITIF' | translate }}</ion-label>
+      <ion-label class="labelModal" *ngIf="!organeChoix" [class.invalid]="!maladieForm.controls.organeForm.valid && (maladieForm.controls.organeForm.dirty || submitAttempt)">{{ 'FORM_ORGANE_PRIMITIF' | translate }}</ion-label>
+      <ion-label class="nomModal" *ngIf="organeChoix" [class.invalid]="!maladieForm.controls.organeForm.valid && (maladieForm.controls.organeForm.dirty || submitAttempt)">{{organeChoix}}</ion-label>
     </button>
     <p *ngIf="!maladieForm.controls.organeForm.valid  && (maladieForm.controls.organeForm.dirty || submitAttempt)">{{ 'FORM_ORGANE_PRIMITIF_ALERTE' | translate }}</p>
 
@@ -37,9 +38,10 @@
     </ion-list>
     <p *ngIf="!maladieForm.controls.etatForm.valid  && (maladieForm.controls.etatForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
 
-    <button ion-item (click)="showTraitementModal()" no-lines>
-      <ion-label floating>{{ 'FORM_NOM_TRAITEMENT' | translate }}</ion-label>
-      <ion-input [class.invalid]="!maladieForm.controls.traitementForm.valid && (maladieForm.controls.traitementForm.dirty || submitAttempt)" formControlName="traitementForm" type="text"></ion-input>
+    <button type="button" ion-item class="buttonModal" (click)="showTraitementModal()" no-lines>
+      <ion-label class="labelModalstacked" [class.cache]="!traitementChoix" stacked>{{ 'FORM_NOM_TRAITEMENT' | translate }}</ion-label>
+      <ion-label class="labelModal" *ngIf="!traitementChoix" [class.invalid]="!maladieForm.controls.traitementForm.valid && (maladieForm.controls.traitementForm.dirty || submitAttempt)">{{ 'FORM_NOM_TRAITEMENT' | translate }}</ion-label>
+      <ion-label class="nomModal" *ngIf="traitementChoix" [class.invalid]="!maladieForm.controls.traitementForm.valid && (maladieForm.controls.traitementForm.dirty || submitAttempt)">{{traitementChoix}}</ion-label>
     </button>
     <p *ngIf="!maladieForm.controls.traitementForm.valid  && (maladieForm.controls.traitementForm.dirty || submitAttempt)">{{ 'FORM_NOM_TRAITEMENT_ALERTE' | translate }}</p>
 

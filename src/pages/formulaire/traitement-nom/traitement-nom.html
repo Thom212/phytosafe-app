@@ -12,16 +12,25 @@
   <form [formGroup]="traitementNomForm" novalidate>  
     <div>
       <ion-list class="row" no-lines *ngFor="let phytotmt of traitementTable; let i=index">
-        <ion-item no-lines>
+        <!--ion-item no-lines>
           <ion-label floating>{{ 'FORM_PHYTO_NOM' | translate }}</ion-label>
           <ion-input (click)="showTraitementModal(i)" [formControlName]=phytotmt.phytonom type="text" [class.invalid]="!phytotmt.phytonomControl.valid && (phytotmt.phytonomControl.dirty || submitAttempt || checkTraitement)"></ion-input>
-        </ion-item>
-        <ion-item no-lines>
+        </ion-item-->
+
+        <button type="button" ion-item class="buttonModal" (click)="showTraitementModal(i)" no-lines>
+          <ion-label class="labelModalstacked" [class.cache]="!traitementChoix[i].choixTest" stacked>{{ 'FORM_PHYTO_NOM' | translate }}</ion-label>
+          <ion-label class="labelModal" *ngIf="!traitementChoix[i].choixTest" [class.invalid]="!phytotmt.phytonomControl.valid && (phytotmt.phytonomControl.dirty || submitAttempt || checkTraitement)">{{ 'FORM_PHYTO_NOM' | translate }}</ion-label>
+          <ion-label class="nomModal" *ngIf="traitementChoix[i].choixTest" [class.invalid]="!phytotmt.phytonomControl.valid && (phytotmt.phytonomControl.dirty || submitAttempt || checkTraitement)">{{traitementChoix[i].choixNom}}</ion-label>
+        </button>
+
+
+        <ion-item class="itemDate" no-lines>
           <ion-label floating>{{ 'FORM_PHYTO_DATE' | translate }}</ion-label>
           <ion-datetime cancelText="annuler" doneText="valider" [formControlName]=phytotmt.phytodate displayFormat="DD MMM YYYY" 
             monthShortNames="jan, f\u00e9v, mars, avr, mai, juin, juil, ao\u00fbt, sept, oct, nov, d\u00e9c">
           </ion-datetime>
         </ion-item>
+        
         <ion-item class="ItemButtonClose" no-lines>
           <button class="ButtonClose" *ngIf="traitementTable.length > 1" ion-button round clear (click)="removePhyto(i)">
             <ion-icon class="IconClose" name="close"></ion-icon>

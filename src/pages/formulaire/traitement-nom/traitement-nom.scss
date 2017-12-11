@@ -27,32 +27,54 @@
         }
         ion-list{
           margin-bottom: 0px;
-          ion-item{
-            width: 30%;
+          .buttonModal{
+            width: 40%;
+            background: rgba(0,0,0,0);
+            .labelModalstacked{
+              font-size: 0.8em;
+              color: #999999;
+              margin: 15px 0px 4px 10px;
+            }
+            .cache{
+              color: #ffffff;
+            }
+            .labelModal{
+              background-color: #f2f2f2;
+              color: #999999;
+              padding: 7px 0px 13px 10px;
+              margin: 0px;
+            }
+            .nomModal{
+              background-color: #f2f2f2;
+              padding: 10px 0px 10px 10px;
+              margin: 0px;
+            }
+          }
+          .itemDate{
+            width: 40%;
+            padding: 0px 0px 0px 0px;
+            margin: 0px;
+            ion-label {
+              padding: 0px 0px 0px 0px;
+              margin: 20px 0px 0px 10px;
+            }
+            ion-datetime {
+              background-color: #f2f2f2;
+              padding: 10px 0px 10px 10px;
+              margin: 1px 0px 3px 0px;
+            }
           }
           .ItemButtonClose{
             width: 100px;
-          }
-          ion-label {
-            padding-left: 10px;
-          }
-          ion-input, ion-datetime {
-            background-color: #f2f2f2;
-          }
-          ion-datetime {
-            padding: 10px;
-          }
-          ion-input{
-            padding-left: 10px;
-          }
-          .ButtonClose{
-            margin: 0px;
-            margin-top: 20px;
-            display: block;
-            border: 2px #999999 solid;
-          }
-          .IconClose{
-            color: #999999;
+            .ButtonClose{
+              margin: 0px;
+              margin-top: 20px;
+              display: block;
+              border: 2px #999999 solid;
+            }
+            .IconClose{
+              color: #999999;
+            }
           }
         }
         .invalid {

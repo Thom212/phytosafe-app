@@ -12,6 +12,7 @@ import { Formulaire } from '../../../providers/formulaire';
 import { LocalStockage } from '../../../providers/localstockage';
 import { Traitement } from '../../../providers/traitement';
 import { Cancer } from '../../../providers/cancer';
+import { Diacritics } from '../../../providers/diacritics';
 
 @Component({
   selector: 'maladie',
@@ -22,49 +23,45 @@ export class Maladie implements OnInit {
   maladieForm: FormGroup;
   submitAttempt: boolean = false;
   organeNom: any;
+  organeElement: any;
   organeTitre: string;
   organePlaceholder: string;
+  organeChoix: string;
   traitementNom: any;
+  traitementElement: any;
   traitementTitre: string;
   traitementPlaceholder: string;
+  traitementChoix: string;
   
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public organe: Cancer, public keyboard: Keyboard) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public organe: Cancer, public keyboard: Keyboard, public diacritics: Diacritics) {
     this.maladieForm = formBuilder.group({
         organeForm: ['', Validators.compose([ Validators.pattern('([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)([\-]?)([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)'), Validators.required])],
+        nom_organeForm: ['', Validators.compose([ Validators.pattern('([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)([\-]?)([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)'), Validators.required])],
         diagnosticForm: ['', Validators.required],
         etatForm:  ['', Validators.required],
-        traitementForm: ['',Validators.compose([ Validators.pattern('([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)([\-]*)'), Validators.required])],
+        traitementForm: ['',Validators.compose([ Validators.pattern('([0-9]*)'), Validators.required])],
+        nom_traitementForm: ['',Validators.compose([ Validators.pattern('([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)([\-]?)([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)'), Validators.required])],
         radioForm:  ['', Validators.required],
         date_naissanceForm: ['', Validators.required],
         oncoForm: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('([a-zA-Zéèêëàäâùüûïîöôçÿ. ]*)([\-]?)([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)')])]
     });
     this.organeNom = [];
+    this.organeElement = [];
     this.traitementNom = [];
+    this.traitementElement = [];
   }
 
   ngOnInit(){
-    this.traitement.getTrait().toPromise().then((res) => {
-      var auxTab = res.json().data;
-      let traitementList = [];
-      auxTab.forEach((element) => {
-        traitementList.push(element.nom.charAt(0).toUpperCase() + element.nom.slice(1).toLowerCase());
-      })
-      this.traitementNom = traitementList;
-      console.log(this.traitementNom)
-    }).catch((err)=>{
-      console.error('ERROR', err);
+    this.traitement.makeTraitList(['CANPO','CANIV']).then((liste) =>{
+      this.traitementNom = liste[0];
+      this.traitementElement = liste[1];
     });
-    this.organe.getCancer().toPromise().then((res) => {
-      var auxTab = res.json().data;
-      let organeList = [];
-      auxTab.forEach((element) => {
-        organeList.push(element.nom.charAt(0).toUpperCase() + element.nom.slice(1).toLowerCase());
-      })
-      this.organeNom = organeList;
-      console.log(this.organeNom)
-    }).catch((err)=>{
-      console.error('ERROR', err);
+    this.organe.makeCancerList().then((liste) =>{
+      this.organeNom = liste[0];
+      this.organeElement = liste[1];
     });
+    this.organeChoix = '';
+    this.traitementChoix = '';
   }
 
   /**
@@ -82,9 +79,23 @@ export class Maladie implements OnInit {
     this.translate.get('PLACEHOLDER_MODAL_ORGANE').subscribe(value => {
       this.organePlaceholder = value;
     });
-    let modal = this.modalCtrl.create(Autocomplete, {dataAutocomplete: this.organeNom, titreAutocomplete: this.organeTitre, placeholderAutocomplete: this.organePlaceholder, enterAutocomplete: true});
+    let modal = this.modalCtrl.create(Autocomplete, {dataAutocomplete: this.organeNom, titreAutocomplete: this.organeTitre, placeholderAutocomplete: this.organePlaceholder});
     modal.onDidDismiss(data => {
-      this.maladieForm.patchValue({organeForm: data});
+      this.organeChoix = data;
+      var organeData = this.organeElement.find((val)=>{
+        let strVal = this.diacritics.replaceDiacritics(val.nom.toLowerCase());
+        let strData = this.diacritics.replaceDiacritics(data.toLowerCase());
+        if(strVal.indexOf(strData) > -1){
+          return val;
+        }
+      });
+      if(organeData){
+        this.maladieForm.patchValue({organeForm: organeData.id});
+        this.maladieForm.patchValue({nom_organeForm: organeData.nom});
+      } else {
+        this.maladieForm.patchValue({organeForm: 'AUCUN'});
+        this.maladieForm.patchValue({nom_organeForm: this.organeChoix});
+      }
     });
     modal.present();
   }
@@ -104,9 +115,23 @@ export class Maladie implements OnInit {
     this.translate.get('PLACEHOLDER_MODAL_TRAITEMENT').subscribe(value => {
       this.traitementPlaceholder = value;
     });
-    let modal = this.modalCtrl.create(Autocomplete, {dataAutocomplete: this.traitementNom, titreAutocomplete: this.traitementTitre, placeholderAutocomplete: this.traitementPlaceholder, enterAutocomplete: false});
+    let modal = this.modalCtrl.create(Autocomplete, {dataAutocomplete: this.traitementNom, titreAutocomplete: this.traitementTitre, placeholderAutocomplete: this.traitementPlaceholder});
     modal.onDidDismiss(data => {
-      this.maladieForm.patchValue({traitementForm: data});
+      this.traitementChoix = data;
+      var traitementData = this.traitementElement.find((val)=>{
+        let strVal = this.diacritics.replaceDiacritics(val.nom.toLowerCase());
+        let strData = this.diacritics.replaceDiacritics(data.toLowerCase());
+        if(strVal.indexOf(strData) > -1){
+          return val;
+        }
+      });
+      if(traitementData){
+        this.maladieForm.patchValue({traitementForm: traitementData.id});
+        this.maladieForm.patchValue({nom_traitementForm: traitementData.nom});
+      } else {
+        this.maladieForm.patchValue({traitementForm: 0});
+        this.maladieForm.patchValue({nom_traitementForm: this.traitementChoix});
+      }
     });
     modal.present();
   }
@@ -140,7 +165,7 @@ export class Maladie implements OnInit {
               this.formulaire.createForm(dataForm);
             } else {
               //Sinon, il faut le mettre à jour
-              this.formulaire.updateForm(val,dataForm);
+              this.formulaire.updateForm(dataForm);
             }
           });
         });

@@ -49,9 +49,8 @@ export class LocalStockage {
         //L'identifiant unique, qui peut être une des propriétés de l'objet data, n'est pas supprimé.
         if (propertyName!="idForm"){
           this.storage.remove(propertyName).then(() => {
-            console.log('donnée supprimée');
+            console.log(propertyName + ' supprimée');
           });
-          console.log(propertyName + ' supprimée');
         }
       }
       resolve('Supression des données');
@@ -59,21 +58,22 @@ export class LocalStockage {
   }
 
   /**
-   * Méthode qui récupère l'ensemble des données stockées localement, sauf l'identifiant du formulaire.
+   * Méthode qui récupère l'ensemble des données stockées localement.
    * @method getAllData
    * @param {} - aucun paramètre n'est passé à la méthode.
    * @returns {Promise} - une promesse est renvoyée avec les valeurs des donnés stockées sous la forme d'un objet. 
    */
   getAllData(){
-    let data = {};
+    let dataStorage = {}
     return new Promise((resolve, reject) => {
       this.storage.forEach( (value, key, index) => {
-        if (typeof key === 'string' && key.endsWith('Form') && key!="idForm"){
-          data[key]=value;
+        if (typeof key === 'string' && key.endsWith('Form')){
+          dataStorage[key]=value;
           console.log('la valeur est ' + value + ' et la key est ' + key);
         }
+      }).then(() => {      
+        resolve(dataStorage);
       });
-      resolve(data);
     }); 
   }
 

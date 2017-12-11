@@ -35,9 +35,35 @@ export class Traitement {
    * @param {} - aucun paramètre n'est passé à la méthode.
    * @returns {Observable} - un observable est renvoyé pour suivre l'état de la requête. 
    */
-  getTrait() {
-    let seq = this.api.get('traitements/').share();
+  getTrait(type) {
+    let seq = this.api.get('traitements/' + type).share();
     return seq;
+  }
+
+  /**
+   * Fonction qui permet 
+   * @method makeTraitList
+   * @requires providers/traitement - elle appelle la méthode getTrait.
+   * @param {array} - un tableau de référence des traitements à sélectionner est passée à la fonction.
+   * @returns {array} - deux tableaux avec les traitements et leurs noms sont retournés par la fonction.
+   */
+  makeTraitList(refArray){
+    return new Promise((resolve,reject) => {
+      let traitementList = [];
+      let traitementTab = [];
+      refArray.forEach((reference) => {
+        this.getTrait(reference).toPromise().then((res) => {
+          var auxTab = res.json().data;
+          auxTab.forEach((element) => {
+            traitementList.push(element.nom.charAt(0).toUpperCase() + element.nom.slice(1).toLowerCase());
+            traitementTab.push(element);
+          });
+        }).catch((err)=>{
+          console.error('ERROR', err);
+        });
+      });
+      resolve([traitementList,traitementTab]);
+    });
   }
 
 }

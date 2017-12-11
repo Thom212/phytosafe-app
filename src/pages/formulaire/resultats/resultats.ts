@@ -58,7 +58,7 @@ export class Resultats implements OnInit {
               });
             } else {
               //Sinon, il faut le mettre à jour
-              this.formulaire.updateForm(val,dataForm).toPromise().then((res) => {
+              this.formulaire.updateForm(dataForm).toPromise().then((res) => {
                 this.incompatibilite.getIncomp(val).toPromise().then((res) => {
                   this.incompRes = [res.blob];//A VERIFIER - BLOB PERMET DE RETROUVER LE BODY DE LA REPONSE!!
                   this.informationCheck = true;
@@ -97,7 +97,7 @@ export class Resultats implements OnInit {
               this.formulaire.createForm(dataForm);            
             } else {
               //Sinon, il faut le mettre à jour
-              this.formulaire.updateForm(val,dataForm);
+              this.formulaire.updateForm(dataForm);
             }
           });
         });

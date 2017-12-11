@@ -65,14 +65,13 @@ export class Formulaire {
    * @param {any, Objet} - une variable avec la valeur de l'identifiant du formulaire et les données à mettre à jour, sous la forme d'un objet, sont passées à la méthode.
    * @returns {Observable} - un observable est renvoyé pour suivre l'état de la requête. 
    */
-  updateForm(idForm, dataForm) {
-    
+  updateForm(dataForm) { 
     //On doit s'assurer que les données mises à jour soient mise à jour dans le bon ordre : il est préférable d'annuler toute requête déjà existante.
     if(this.subCreate) {
        this.subCreate.unsubscribe();
     }
     
-    let seq = this.api.patch('formulaire/' + idForm.toString(), dataForm).share();
+    let seq = this.api.patch('updateform/', dataForm).share();
 
     this.subCreate = seq.map(res => res.json())
       .subscribe(res => {
@@ -80,7 +79,7 @@ export class Formulaire {
           this.localstockage.removeData(dataForm);//Il faut ensuite supprimer toutes les données qui ont été enregistrées sur le serveur, sauf l'identifiant du formulaire.
         }
       }, err => {
-        //console.error('ERROR', err);
+        console.error('ERROR', err);
       });
 
     return seq;

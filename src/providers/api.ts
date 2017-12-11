@@ -19,7 +19,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Api {
   
-  url: string = 'http://192.168.1.26:3000/api/v1';//Chez Caro //'http://192.168.252.29:3000/api/v1';//GPMH //'http://127.0.0.1:3000/api/v1';//localhost// ne pas mettre sur GitHub son adresse IP.
+  url: string = 'http://192.168.1.26:3000/api/v1';//Chez Caro //'http://192.168.252.29:3000/api/v1';//GPMH //'http://127.0.0.1:3000/api/v1';//localhost//
 
   constructor(public http: Http) {}
 
@@ -77,9 +77,11 @@ export class Api {
    * Cette méthode est utilisée lorsque les données envoyées sont une mise à jour d'une ressource déjà identifiée. Les données correspondent donc à un format attendu.
    * @method patch
    */
-  patch(endpoint: string, data: any, options?: RequestOptions) {
-    var body: any;
+  patch(endpoint: string, body: any, options?: RequestOptions) {
+    /* var body: any;
     body = JSON.stringify(data);
-    return this.http.put(this.url + '/' + endpoint, body, options);
+    console.log(data)
+    console.log('body :' + body) */
+    return this.http.patch(this.url + '/' + endpoint, body, options);
   }
 }

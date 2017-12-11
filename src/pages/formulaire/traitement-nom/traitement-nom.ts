@@ -10,6 +10,7 @@ import{ Autocomplete } from '../../autocomplete/autocomplete';
 import { Formulaire } from '../../../providers/formulaire';
 import { LocalStockage } from '../../../providers/localstockage';
 import { Traitement } from '../../../providers/traitement';
+import { Diacritics } from '../../../providers/diacritics';
 
 @Component({
   selector: 'traitement-nom',
@@ -23,27 +24,32 @@ export class TraitementNom implements OnInit{
   nbTraitement: number = 0;
   traitementTable = [];
 
-  traitementNom = [];
+  traitementNom: any;
+  traitementElement: any;
   traitementTitre: string;
   traitementPlaceholder: string;
+  traitementChoix = [];
   
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public diacritics: Diacritics) {
     this.traitementNomForm = formBuilder.group({});
+    this.traitementNom = [];
+    this.traitementElement = [];
   }
 
   ngOnInit(){
     this.createTraitObjet();
+    this.createChoixObjet();
     this.traitementNomForm.addControl(this.traitementTable[0].phytonom, this.traitementTable[0].phytonomControl);
     this.traitementNomForm.addControl(this.traitementTable[0].phytodate, this.traitementTable[0].phytodateControl);
-    /* this.traitement.getTrait().toPromise().then((res) => {
-      this.traitementNom = [res.blob];//A VERIFIER - BLOB PERMET DE RETROUVER LE BODY DE LA REPONSE!!
-    }).catch((err)=>{
-      console.error('ERROR', err);
-    }); */
+    this.traitementNomForm.addControl(this.traitementTable[0].phytoid, this.traitementTable[0].phytoidControl);
+    this.traitement.makeTraitList(['PHYPO','PHYTO']).then((liste) =>{
+      this.traitementNom = liste[0];
+      this.traitementElement = liste[1];
+    });
   }
 
   /**
-   * Fonction qui créé une paire nom du traitement/date de début du traitement et la stocke dans un tableau.
+   * Fonction qui créé trois paires nom du traitement/date de début du traitement/identifiant du traitement et la stocke dans un tableau.
    * @method createTraitObjet
    * @param {} - aucun paramètre n'est passé à la fonction.
    * @returns {} - aucune valeur n'est retournée par la fonction.
@@ -52,17 +58,39 @@ export class TraitementNom implements OnInit{
     this.nbTraitement = this.nbTraitement+1;
     interface traitementObjet {
       phytonom : string,
-      phytodate: any,
+      phytoid : string,
+      phytodate: string,
       phytonomControl : FormControl,
+      phytoidControl : FormControl,
       phytodateControl : FormControl
     };
     var phytoForm: traitementObjet = {
       phytonom: "phytonom_"+this.nbTraitement.toString()+"_Form",
+      phytoid: "phytoid_"+this.nbTraitement.toString()+"_Form",
       phytodate: "phytodate_"+this.nbTraitement.toString()+"_Form",
-      phytonomControl : new FormControl ('',  Validators.compose([ Validators.pattern('([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)([\-]*)'), Validators.required])),
+      phytonomControl : new FormControl ('', Validators.compose([ Validators.pattern('([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)([\-]*)'), Validators.required])),
+      phytoidControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9]*)'), Validators.required])),
       phytodateControl : new FormControl ('')
     }
     this.traitementTable.push(phytoForm);
+  }
+
+  /**
+   * Fonction qui créé deux paires traitement choisi/nom du traitement et la stocke dans un tableau.
+   * @method createChoixObjet
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  createChoixObjet(){
+    interface choixObjet {
+      choixTest : boolean,
+      choixNom : string
+    };
+    var phytoChoix: choixObjet = {
+      choixTest : false,
+      choixNom : ''
+    }
+    this.traitementChoix.push(phytoChoix);
   }
 
   /**
@@ -75,9 +103,11 @@ export class TraitementNom implements OnInit{
     if (this.traitementNomForm.valid){
       let i: number = this.traitementTable.length;
       this.createTraitObjet();
+      this.createChoixObjet();
       // add phyto treatment to the list
       this.traitementNomForm.addControl(this.traitementTable[i].phytonom, this.traitementTable[i].phytonomControl);
       this.traitementNomForm.addControl(this.traitementTable[i].phytodate, this.traitementTable[i].phytodateControl);
+      this.traitementNomForm.addControl(this.traitementTable[i].phytoid, this.traitementTable[i].phytoidControl);
       this.checkTraitement = false;
       this.submitAttempt = false;
     }else{
@@ -97,39 +127,53 @@ export class TraitementNom implements OnInit{
     var suppressionObjet = {}
     suppressionObjet[this.traitementTable[i].phytonom] = this.traitementNomForm.value[this.traitementTable[i].phytonom];
     suppressionObjet[this.traitementTable[i].phytodate] = this.traitementNomForm.value[this.traitementTable[i].phytodate];
+    suppressionObjet[this.traitementTable[i].phytoid] = this.traitementNomForm.value[this.traitementTable[i].phytoid];
     console.log(suppressionObjet);
     this.localstockage.removeData(suppressionObjet);
     this.traitementNomForm.removeControl(this.traitementTable[i].phytonom);
     this.traitementNomForm.removeControl(this.traitementTable[i].phytodate);
+    this.traitementNomForm.removeControl(this.traitementTable[i].phytoid);
     this.traitementTable.splice(i,1);
+    this.traitementChoix.splice(i,1);
   }
 
   /**
    * Fonction qui est liée au champ "Nom du traitement" sur la page du formulaire - Nom des Thérapies.
    * Elle permet d'ouvrir une page modale (pages/autocomplete) qui propose, en fonction des entrées de l'utilisateur une liste de noms possibles : autocompletion.
-   * @method showOrganeModal
+   * @method showTraitementModal
    * @requires pages/autocomplete - elle appelle la page autocomplete.ts.
    * @param {} - aucun paramètre n'est passé à la fonction.
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
   showTraitementModal(i: number){
-    //console.log(this.traitementNom);
-    if (this.traitementNom.length > 0){
-      this.translate.get('TITRE_MODAL_TRAITEMENT_BIS').subscribe(value => {
-        this.traitementTitre = value;
+    this.translate.get('TITRE_MODAL_TRAITEMENT').subscribe(value => {
+      this.traitementTitre = value;
+    });
+    this.translate.get('PLACEHOLDER_MODAL_TRAITEMENT').subscribe(value => {
+      this.traitementPlaceholder = value;
+    });
+    let modal = this.modalCtrl.create(Autocomplete, {dataAutocomplete: this.traitementNom, titreAutocomplete: this.traitementTitre, placeholderAutocomplete: this.traitementPlaceholder});
+    modal.onDidDismiss(data => {
+      this.traitementChoix[i].choixTest = true;
+      this.traitementChoix[i].choixNom = data;
+      var traitementData = this.traitementElement.find((val)=>{
+        let strVal = this.diacritics.replaceDiacritics(val.nom.toLowerCase());
+        let strData = this.diacritics.replaceDiacritics(data.toLowerCase());
+        if(strVal.indexOf(strData) > -1){
+          return val;
+        }
       });
-      this.translate.get('PLACEHOLDER_MODAL_TRAITEMENT').subscribe(value => {
-        this.traitementPlaceholder = value;
-      });
-      let modal = this.modalCtrl.create(Autocomplete, {dataAutocomplete: this.traitementNom, titreAutocomplete: this.traitementTitre, placeholderAutocomplete: this.traitementPlaceholder, enterAutocomplete: false});
-      modal.onDidDismiss(data => {
-        //console.log(data);
-        let dataObj =  {};
+      let dataObj =  {};
+      if(traitementData){
+        dataObj[this.traitementTable[i].phytonom] = traitementData.nom;
+        dataObj[this.traitementTable[i].phytoid] = traitementData.id;
+      } else {
         dataObj[this.traitementTable[i].phytonom] = data;
-        this.traitementNomForm.patchValue(dataObj);
-      });
-      modal.present();
-    };
+        dataObj[this.traitementTable[i].phytoid] = 0;
+      }
+      this.traitementNomForm.patchValue(dataObj);
+    });
+    modal.present();
   }
 
   /**
@@ -152,23 +196,29 @@ export class TraitementNom implements OnInit{
       this.localstockage.setData(this.traitementNomForm.value).then((message) => {
         console.log('********************************************************');
         console.log('Nom des Thérapies : ' + message);
+        var requestUpdate : any;
         //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
         this.localstockage.getData("idForm").then((val)=> {
           this.localstockage.getAllData().then((dataForm)=>{
+            console.log(dataForm);
             //il faut créer/mettre à jour le formulaire avec toutes les données stockées
             if (val==null){
               //Si le formulaire n'a pas été créé, il faut le créer
               this.formulaire.createForm(dataForm);            
             } else {
               //Sinon, il faut le mettre à jour
-              this.formulaire.updateForm(val,dataForm);
+              requestUpdate = this.formulaire.updateForm(dataForm);
             }
           });
         });
 
         //Navigation à la page des résultats du formulaire - Résultats
-        this.navCtrl.push(Resultats);
-
+        requestUpdate.toPromise().then((res) => {
+          this.navCtrl.push(Resultats);
+        })
+        .catch((err)=>{
+          console.error('ERROR', err);
+        });
       });
     }
   }

@@ -40,4 +40,28 @@ export class Cancer {
     return seq;
   }
 
+  /**
+   * Fonction qui permet 
+   * @method makeCancerList
+   * @requires providers/cancer - elle appelle la méthode getCancer.
+   * @param {} - aucun paramètre n'est passé à la fonction..
+   * @returns {array} - un tableau avec les organes est retournée par la fonction.
+   */
+  makeCancerList(){
+    return new Promise((resolve,reject) => {
+      let organeList = [];
+      let organeTab = [];
+      this.getCancer().toPromise().then((res) => {
+        var auxTab = res.json().data;
+        auxTab.forEach((element) => {
+          organeList.push(element.nom.charAt(0).toUpperCase() + element.nom.slice(1).toLowerCase());
+          organeTab.push(element);
+        })
+        return organeList;
+      }).catch((err)=>{
+        console.error('ERROR', err);
+      });
+      resolve([organeList,organeTab]);
+    });
+  } 
 }

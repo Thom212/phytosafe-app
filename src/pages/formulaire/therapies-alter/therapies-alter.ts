@@ -94,7 +94,7 @@ export class TherapiesAlter{
       //Stockage local des données remplies dans cette page de formulaire
       this.localstockage.setData(this.therapiesAlterForm.value).then((message) => {
         console.log('Thérapies alternatives : ' + message);
-
+        var requestUpdate : any;
         //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
         this.localstockage.getData("idForm").then((val)=> {
           this.localstockage.getAllData().then((dataForm)=>{
@@ -104,7 +104,7 @@ export class TherapiesAlter{
               this.formulaire.createForm(dataForm);            
             } else {
               //Sinon, il faut le mettre à jour
-              this.formulaire.updateForm(val,dataForm);
+              requestUpdate = this.formulaire.updateForm(dataForm);
             }
           });
         });
@@ -115,9 +115,13 @@ export class TherapiesAlter{
           this.navCtrl.push(TraitementNom);
         }else{
           //Si l'utilisateur n'utilise aucune thérapie alternative, navigation à la page des résultats du formulaire.
-          this.navCtrl.push(Resultats);
+          requestUpdate.toPromise().then((res) => {
+            this.navCtrl.push(Resultats);
+          })
+          .catch((err)=>{
+            console.error('ERROR', err);
+          });    
         }
-
       });
     }
   }
