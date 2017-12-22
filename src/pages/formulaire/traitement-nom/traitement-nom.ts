@@ -196,7 +196,6 @@ export class TraitementNom implements OnInit{
       this.localstockage.setData(this.traitementNomForm.value).then((message) => {
         console.log('********************************************************');
         console.log('Nom des Thérapies : ' + message);
-        var requestUpdate : any;
         //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
         this.localstockage.getData("idForm").then((val)=> {
           this.localstockage.getAllData().then((dataForm)=>{
@@ -207,18 +206,14 @@ export class TraitementNom implements OnInit{
               this.formulaire.createForm(dataForm);            
             } else {
               //Sinon, il faut le mettre à jour
-              requestUpdate = this.formulaire.updateForm(dataForm);
+              this.formulaire.updateForm(dataForm);
             }
           });
         });
 
         //Navigation à la page des résultats du formulaire - Résultats
-        requestUpdate.toPromise().then((res) => {
-          this.navCtrl.push(Resultats);
-        })
-        .catch((err)=>{
-          console.error('ERROR', err);
-        });
+        this.navCtrl.push(Resultats);
+
       });
     }
   }

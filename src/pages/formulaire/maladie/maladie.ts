@@ -40,6 +40,7 @@ export class Maladie implements OnInit {
         diagnosticForm: ['', Validators.required],
         etatForm:  ['', Validators.required],
         traitementForm: ['',Validators.compose([ Validators.pattern('([0-9]*)'), Validators.required])],
+        date_traitementForm: ['', Validators.required],
         nom_traitementForm: ['',Validators.compose([ Validators.pattern('([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)([\-]?)([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)'), Validators.required])],
         radioForm:  ['', Validators.required],
         date_naissanceForm: ['', Validators.required],

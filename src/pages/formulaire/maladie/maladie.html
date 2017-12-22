@@ -45,6 +45,14 @@
     </button>
     <p *ngIf="!maladieForm.controls.traitementForm.valid  && (maladieForm.controls.traitementForm.dirty || submitAttempt)">{{ 'FORM_NOM_TRAITEMENT_ALERTE' | translate }}</p>
 
+    <ion-item no-lines>
+      <ion-label floating>{{ 'FORM_TRAITEMENT_DATE' | translate }}</ion-label>
+      <ion-datetime cancelText="annuler" doneText="valider" [class.invalid]="!maladieForm.controls.date_traitementForm.valid && (maladieForm.controls.date_traitementForm.dirty || submitAttempt)" formControlName="date_traitementForm" displayFormat="DD MMM YYYY" 
+        monthShortNames="jan, f\u00e9v, mars, avr, mai, juin, juil, ao\u00fbt, sept, oct, nov, d\u00e9c">
+      </ion-datetime>
+    </ion-item>
+    <p *ngIf="!maladieForm.controls.date_traitementForm.valid  && (maladieForm.controls.date_traitementForm.dirty || submitAttempt)">{{ 'FORM_TRAITEMENT_DATE_ALERTE' | translate }}</p>
+
     <ion-list radio-group formControlName="radioForm">
       <p>{{ 'FORM_RADIO_CHECK' | translate }}</p>
       <ion-item no-lines>

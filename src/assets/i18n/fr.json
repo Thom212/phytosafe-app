@@ -31,6 +31,8 @@
   "FORM_MALADIE_OPTION_2" : "tumeur métastasée",
   "FORM_NOM_TRAITEMENT" : "Nom du traitement anti-cancéreux",
   "FORM_NOM_TRAITEMENT_ALERTE" : "Entrez un nom de traitement valide.",
+  "FORM_TRAITEMENT_DATE" : "Date de début du traitement",
+  "FORM_TRAITEMENT_DATE_ALERTE" : "Entrez une date de début de traitement",
   "FORM_RADIO_CHECK" : "Radiothérapie",
   "FORM_RADIO_OPTION_1": "oui",
   "FORM_RADIO_OPTION_2": "prévue",
