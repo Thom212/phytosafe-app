@@ -12,6 +12,7 @@ import { Maladie } from '../pages/formulaire/maladie/maladie';
 import { TherapiesAlter } from '../pages/formulaire/therapies-alter/therapies-alter';
 import { TraitementNom } from '../pages/formulaire/traitement-nom/traitement-nom';
 import { Resultats } from '../pages/formulaire/resultats/resultats';
+import { ResultatsErreur } from '../pages/formulaire/resultats-erreur/resultats-erreur';
 import { Autocomplete } from '../pages/autocomplete/autocomplete';
 
 import { Api } from '../providers/api';
@@ -43,6 +44,7 @@ export function HttpLoaderFactory(http: Http) {
     TherapiesAlter,
     TraitementNom,
     Resultats,
+    ResultatsErreur,
     Autocomplete
   ],
   imports: [
@@ -67,6 +69,7 @@ export function HttpLoaderFactory(http: Http) {
     TherapiesAlter,
     TraitementNom,
     Resultats,
+    ResultatsErreur,
     Autocomplete
   ],
   providers: [

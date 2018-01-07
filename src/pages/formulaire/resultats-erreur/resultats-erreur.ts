@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit} from '@angular/core';
-import { NavController, LoadingController, AlertController} from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController} from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -8,61 +8,33 @@ import { Formulaire } from '../../../providers/formulaire';
 import { LocalStockage } from '../../../providers/localstockage';
 
 @Component({
-  selector: 'resultats',
-  templateUrl: 'resultats.html'
+  selector: 'resultats-erreur',
+  templateUrl: 'resultats-erreur.html'
 })
-export class Resultats implements OnInit {
+export class ResultatsErreur implements OnInit {
 
   resultatsForm: FormGroup;
   submitAttempt: boolean = false;
-  booleanError: boolean = false;
+  networkCheck: boolean;
   textError: string;
-  infos: any;
-  incompatibilites: any;
-  identifiant: number;
-  booleanReady: any;
-  booleanIncomp: boolean = false;
 
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public formBuilder: FormBuilder,public translate: TranslateService, public localstockage: LocalStockage, public formulaire: Formulaire) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public formBuilder: FormBuilder,public translate: TranslateService, public localstockage: LocalStockage, public formulaire: Formulaire) {
     this.resultatsForm = formBuilder.group({
       emailForm: ['', Validators.pattern('(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)')],
     });
-    this.infos = [];
-    this.incompatibilites = [];
-    this.booleanReady = [false, false];
+    this.networkCheck = this.navParams.get('networkCheck');
   }
 
   ngOnInit(){
-    this.localstockage.getData("idForm").then((val)=> {
-      this.identifiant = val;
-      this.formulaire.getInfo(val).toPromise().then((res) => {
-        this.infos = res.json().data;
-        this.booleanReady[0] = true;
-        console.log(this.infos);
-      }).catch((err)=>{
-        this.booleanReady[0] = true;
-      });
-      this.formulaire.getIncompatibilites(val).toPromise().then((res) => {
-        this.incompatibilites = res.json().data.filter(elt => elt != null);
-        console.log(this.incompatibilites);
-        if (this.incompatibilites.length == 0) {
-          this.booleanIncomp = true;
-        }
-        this.booleanReady[1] = true;
-      }).catch((err)=>{
-        this.translate.get('ERROR_NETWORK_RESULTAT').subscribe(value => {
-          this.textError = value;
-        });
-        this.booleanError = true;
-        this.booleanReady[1] = true;
-      });
-    }).catch((err) => {
+    if (this.networkCheck === true) {
       this.translate.get('ERROR_NETWORK_RESULTAT').subscribe(value => {
         this.textError = value;
       });
-      this.booleanError = true;
-      this.booleanReady = [true, true];
-    });
+    } else {
+      this.translate.get('ERROR_CONNECTION_RESULTAT').subscribe(value => {
+        this.textError = value;
+      });
+    }
   }
 
   /**
@@ -121,43 +93,45 @@ export class Resultats implements OnInit {
     this.localstockage.setData(this.resultatsForm.value).then((message) => {
       console.log('Email : ' + message);
       //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
-      this.localstockage.getAllData().then((dataForm)=>{
-        //il faut créer/mettre à jour le formulaire avec toutes les données stockées
-        if (this.identifiant == null){
-          //Si le formulaire n'a pas été créé, il faut le créer
-          this.formulaire.createForm(dataForm).toPromise().then((res) => {
-            this.formulaire.createPatient(dataForm).toPromise().then((res) => {
+      this.localstockage.getData("idForm").then((val)=> {
+        this.localstockage.getAllData().then((dataForm)=>{
+          //il faut créer/mettre à jour le formulaire avec toutes les données stockées
+          if (val==null){
+            //Si le formulaire n'a pas été créé, il faut le créer
+            this.formulaire.createForm(dataForm).toPromise().then((res) => {
+              this.formulaire.createPatient(dataForm).toPromise().then((res) => {
+                loader.dismiss();
+                //Navigation à la page d'accueil du formulaire - Accueil
+                this.navCtrl.popToRoot();
+              }).catch((err)=>{
+                console.error('ERROR', err);
+              });
+            }).catch((err)=>{
+              console.error('ERROR', err);
+              this.localstockage.storeAllData(dataForm);
               loader.dismiss();
               //Navigation à la page d'accueil du formulaire - Accueil
               this.navCtrl.popToRoot();
+            });
+          } else {
+            //Sinon, il faut le mettre à jour
+            this.formulaire.updateForm(dataForm).toPromise().then((res) => {
+              this.formulaire.createPatient(dataForm).toPromise().then((res) => {
+                loader.dismiss();
+                //Navigation à la page d'accueil du formulaire - Accueil
+                this.navCtrl.popToRoot();
+              }).catch((err)=>{
+                console.error('ERROR', err);
+              });
             }).catch((err)=>{
               console.error('ERROR', err);
-            });
-          }).catch((err)=>{
-            console.error('ERROR', err);
-            this.localstockage.storeAllData(dataForm);
-            loader.dismiss();
-            //Navigation à la page d'accueil du formulaire - Accueil
-            this.navCtrl.popToRoot();
-          });
-        } else {
-          //Sinon, il faut le mettre à jour
-          this.formulaire.updateForm(dataForm).toPromise().then((res) => {
-            this.formulaire.createPatient(dataForm).toPromise().then((res) => {
+              this.localstockage.storeAllData(dataForm);
               loader.dismiss();
               //Navigation à la page d'accueil du formulaire - Accueil
               this.navCtrl.popToRoot();
-            }).catch((err)=>{
-              console.error('ERROR', err);
             });
-          }).catch((err)=>{
-            console.error('ERROR', err);
-            this.localstockage.storeAllData(dataForm);
-            loader.dismiss();
-            //Navigation à la page d'accueil du formulaire - Accueil
-            this.navCtrl.popToRoot();
-          });
-        }
+          }
+        });
       });
     });
   }
@@ -183,35 +157,37 @@ export class Resultats implements OnInit {
     this.localstockage.setData(this.resultatsForm.value).then((message) => {
       console.log('Email : ' + message);
       //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
-      this.localstockage.getAllData().then((dataForm)=>{
-        //il faut créer/mettre à jour le formulaire avec toutes les données stockées
-        if (this.identifiant == null){
-          //Si le formulaire n'a pas été créé, il faut le créer
-          this.formulaire.createForm(dataForm).toPromise().then((res) => {
-            loader.dismiss();
-            //Navigation à la page d'accueil du formulaire - Accueil
-            this.navCtrl.popToRoot();
-          }).catch((err)=>{
-            console.error('ERROR', err);
-            this.localstockage.storeAllData(dataForm);
-            loader.dismiss();
-            //Navigation à la page d'accueil du formulaire - Accueil
-            this.navCtrl.popToRoot();
-          });
-        } else {
-          //Sinon, il faut le mettre à jour
-          this.formulaire.updateForm(dataForm).toPromise().then((res) => {
-            loader.dismiss();
-            //Navigation à la page d'accueil du formulaire - Accueil
-            this.navCtrl.popToRoot();
-          }).catch((err)=>{
-            console.error('ERROR', err);
-            this.localstockage.storeAllData(dataForm);
-            loader.dismiss();
-            //Navigation à la page d'accueil du formulaire - Accueil
-            this.navCtrl.popToRoot();
-          });
-        }
+      this.localstockage.getData("idForm").then((val)=> {
+        this.localstockage.getAllData().then((dataForm)=>{
+          //il faut créer/mettre à jour le formulaire avec toutes les données stockées
+          if (val==null){
+            //Si le formulaire n'a pas été créé, il faut le créer
+            this.formulaire.createForm(dataForm).toPromise().then((res) => {
+              loader.dismiss();
+              //Navigation à la page d'accueil du formulaire - Accueil
+              this.navCtrl.popToRoot();
+            }).catch((err)=>{
+              console.error('ERROR', err);
+              this.localstockage.storeAllData(dataForm);
+              loader.dismiss();
+              //Navigation à la page d'accueil du formulaire - Accueil
+              this.navCtrl.popToRoot();
+            });
+          } else {
+            //Sinon, il faut le mettre à jour
+            this.formulaire.updateForm(dataForm).toPromise().then((res) => {
+              loader.dismiss();
+              //Navigation à la page d'accueil du formulaire - Accueil
+              this.navCtrl.popToRoot();
+            }).catch((err)=>{
+              console.error('ERROR', err);
+              this.localstockage.storeAllData(dataForm);
+              loader.dismiss();
+              //Navigation à la page d'accueil du formulaire - Accueil
+              this.navCtrl.popToRoot();
+            });
+          }
+        });
       });
     });
   }

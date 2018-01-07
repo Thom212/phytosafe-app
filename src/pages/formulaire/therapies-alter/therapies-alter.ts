@@ -1,11 +1,13 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component} from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController} from 'ionic-angular';
+//NETWORK : import { Network } from '@ionic-native/network';
 
 import { TranslateService } from '@ngx-translate/core';
 
 import { TraitementNom } from '../traitement-nom/traitement-nom';
 import { Resultats } from '../resultats/resultats';
+import { ResultatsErreur } from '../resultats-erreur/resultats-erreur';
 
 import { Formulaire } from '../../../providers/formulaire';
 import { LocalStockage } from '../../../providers/localstockage';
@@ -23,7 +25,8 @@ export class TherapiesAlter{
   questionsTherapie: boolean = false;
   checkAutres: boolean = false;
   
-  constructor(public navCtrl: NavController, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage) {
+  //NETWORK : ajouter dans le constructeur private network: Network
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage) {
     this.therapiesAlterForm = formBuilder.group({
         therapiesForm: ['',Validators.required],
         phytoForm: [false],
@@ -90,33 +93,68 @@ export class TherapiesAlter{
   nextPage() {
     this.submitAttempt = true;
     if(this.therapiesAlterForm.valid){
-
-      //Stockage local des données remplies dans cette page de formulaire
-      this.localstockage.setData(this.therapiesAlterForm.value).then((message) => {
-        console.log('Thérapies alternatives : ' + message);
-        //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
-        this.localstockage.getData("idForm").then((val)=> {
-          this.localstockage.getAllData().then((dataForm)=>{
-            //il faut créer/mettre à jour le formulaire avec toutes les données stockées
-            if (val==null){
-              //Si le formulaire n'a pas été créé, il faut le créer
-              this.formulaire.createForm(dataForm);            
-            } else {
-              //Sinon, il faut le mettre à jour
-              this.formulaire.updateForm(dataForm);
-            }
+      if (this.therapiesAlterForm.controls.phytoForm.value) {
+        //Stockage local des données remplies dans cette page de formulaire
+        this.localstockage.setData(this.therapiesAlterForm.value).then((message) => {
+          console.log('Thérapies alternatives : ' + message);
+          //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
+          this.localstockage.getData("idForm").then((val)=> {
+            this.localstockage.getAllData().then((dataForm)=>{
+              //il faut créer/mettre à jour le formulaire avec toutes les données stockées
+              if (val==null){
+                //Si le formulaire n'a pas été créé, il faut le créer
+                this.formulaire.createForm(dataForm);  
+              } else {
+                //Sinon, il faut le mettre à jour
+                this.formulaire.updateForm(dataForm)
+              }
+            });
           });
         });
-
-        //Navigation qui dépend de la saisie de l'utilisateur.
-        if (this.therapiesAlterForm.controls.phytoForm.value){
-          //Si l'utilisateur utilise au moin une thérapie alternative, navigation à la quatrième page du formulaire pour entrer le nom des thérapies.
-          this.navCtrl.push(TraitementNom);
-        } else {
-          //Si l'utilisateur n'utilise aucune thérapie alternative, navigation à la page des résultats du formulaire.
-          this.navCtrl.push(Resultats);    
-        }
-      });
+        this.navCtrl.push(TraitementNom);
+      } else {
+        let loader = this.loadingCtrl.create({
+          content: "Enregistrement du formulaire. Veuillez patienter..."
+        });
+        loader.present();
+        //Stockage local des données remplies dans cette page de formulaire
+        this.localstockage.setData(this.therapiesAlterForm.value).then((message) => {
+          console.log('Thérapies alternatives : ' + message);
+          //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
+          this.localstockage.getData("idForm").then((val)=> {
+            this.localstockage.getAllData().then((dataForm)=>{
+              //il faut créer/mettre à jour le formulaire avec toutes les données stockées
+              if (val==null){
+                //Si le formulaire n'a pas été créé, il faut le créer
+                this.formulaire.createForm(dataForm).toPromise().then((res) => {
+                  loader.dismiss();
+                  //Navigation à la page des résultats du formulaire - Résultats
+                  this.navCtrl.push(Resultats);
+                }).catch((err)=>{
+                  loader.dismiss();
+                  this.navCtrl.push(ResultatsErreur,{
+                    networkCheck : true, //ajouter la vérification de la connection : true si la connection est bonne, false si elle n'est pas bonne
+                  });
+                  console.error('ERROR', err);
+                });            
+              } else {
+                //Sinon, il faut le mettre à jour
+                this.formulaire.updateForm(dataForm).toPromise().then((res) => {
+                  loader.dismiss();
+                  //Navigation à la page des résultats du formulaire - Résultats
+                  this.navCtrl.push(Resultats);
+                }).catch((err)=>{
+                  loader.dismiss();
+                  this.navCtrl.push(ResultatsErreur,{
+                    networkCheck : true //ajouter la vérification de la connection : true si la connection est bonne, false si elle n'est pas bonne
+                  });
+                  console.error('ERROR', err);
+                });
+              }
+            });
+          });
+        });
+      }
     }
   }
 }

@@ -1,10 +1,11 @@
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit} from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, LoadingController} from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
 
 import { Resultats } from '../resultats/resultats';
+import { ResultatsErreur } from '../resultats-erreur/resultats-erreur';
 import{ Autocomplete } from '../../autocomplete/autocomplete';
 
 import { Formulaire } from '../../../providers/formulaire';
@@ -30,7 +31,7 @@ export class TraitementNom implements OnInit{
   traitementPlaceholder: string;
   traitementChoix = [];
   
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public diacritics: Diacritics) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public loadingCtrl: LoadingController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public diacritics: Diacritics) {
     this.traitementNomForm = formBuilder.group({});
     this.traitementNom = [];
     this.traitementElement = [];
@@ -146,7 +147,7 @@ export class TraitementNom implements OnInit{
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
   showTraitementModal(i: number){
-    this.translate.get('TITRE_MODAL_TRAITEMENT').subscribe(value => {
+    this.translate.get('TITRE_MODAL_TRAITEMENT_BIS').subscribe(value => {
       this.traitementTitre = value;
     });
     this.translate.get('PLACEHOLDER_MODAL_TRAITEMENT').subscribe(value => {
@@ -191,7 +192,10 @@ export class TraitementNom implements OnInit{
   nextPage() {
     this.submitAttempt = true;
     if(this.traitementNomForm.valid){
-
+      let loader = this.loadingCtrl.create({
+        content: "Enregistrement du formulaire. Veuillez patienter..."
+      });
+      loader.present();
       //Stockage local des données remplies dans cette page de formulaire
       this.localstockage.setData(this.traitementNomForm.value).then((message) => {
         console.log('********************************************************');
@@ -199,21 +203,36 @@ export class TraitementNom implements OnInit{
         //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
         this.localstockage.getData("idForm").then((val)=> {
           this.localstockage.getAllData().then((dataForm)=>{
-            console.log(dataForm);
             //il faut créer/mettre à jour le formulaire avec toutes les données stockées
             if (val==null){
               //Si le formulaire n'a pas été créé, il faut le créer
-              this.formulaire.createForm(dataForm);            
+              this.formulaire.createForm(dataForm).toPromise().then((res) => {
+                loader.dismiss();
+                //Navigation à la page des résultats du formulaire - Résultats
+                this.navCtrl.push(Resultats);     
+              }).catch((err)=>{
+                loader.dismiss();
+                this.navCtrl.push(ResultatsErreur,{
+                  networkCheck : true, //ajouter la vérification de la connection : true si la connection est bonne, false si elle n'est pas bonne
+                });
+                console.error('ERROR', err);
+              });
             } else {
               //Sinon, il faut le mettre à jour
-              this.formulaire.updateForm(dataForm);
+              this.formulaire.updateForm(dataForm).toPromise().then((res) => {
+                loader.dismiss();
+                //Navigation à la page des résultats du formulaire - Résultats
+                this.navCtrl.push(Resultats);
+              }).catch((err)=>{
+                loader.dismiss();
+                this.navCtrl.push(ResultatsErreur,{
+                  networkCheck : true //ajouter la vérification de la connection : true si la connection est bonne, false si elle n'est pas bonne
+                });
+                console.error('ERROR', err);
+              });
             }
           });
         });
-
-        //Navigation à la page des résultats du formulaire - Résultats
-        this.navCtrl.push(Resultats);
-
       });
     }
   }

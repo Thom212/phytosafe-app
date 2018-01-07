@@ -60,5 +60,15 @@
   "FORM_PHYTO_PLUS" : "Ajouter un traitement",
 
   "FORM_RESULTAT" : "Résultats du formulaire",
-  "FORM_RESULTAT_INTITULE" : "C'est fini"
+  "ORGANE_RESULTAT" : "Nom de l'organe primitif atteint : ",
+  "TRAITEMENT_RESULTAT" : "Nom du traitement cancéreux prescrit : ",
+  "ALTERNATIF_RESULTAT" : "Nom du traitement alternatif utilisé : ",
+  "INCOMPATIBILITE_RESULTAT" : "Aucune incompatibilité n'a été détectée.",
+  "ERROR_NETWORK_RESULTAT": "Un problème est apparu et nous n'avons pas pu établir les incompatibilités entre vos traitements anti-cancéreux et vos thérapies alternatives.",
+  "ERROR_CONNECTION_RESULTAT": "La connexion est mauvaise et nous n'avons pas pu établir les incompatibilités entre vos traitements anti-cancéreux et vos thérapies alternatives.",
+  "ERROR_EMAIL_RESULTAT": "Vous pouvez néanmoins les recevoir par email. Si vous le souhaitez, renseignez le champ ci-dessous :",
+  "EMAIL_RESULTAT": "Vous pouvez recevoir les informations ci-dessus par email. Si vous le souhaitez, renseignez le champ ci-dessous :",
+  "FORM_EMAIL_REF": "Email personnel",
+  "FORM_EMAIL_REF_ALERTE":"Entrez une adresse email valide.",
+  "FIN_BUTTON": "Terminer le formulaire"
 }

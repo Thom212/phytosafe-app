@@ -86,4 +86,16 @@ export class LocalStockage {
   clearAllData(){
       return this.storage.clear();
   }
+
+  /**
+   * Méthode qui enregistre sous un nom particulier les données qui n'ont pas pu être envoyées sous le serveur, pour une prohcaine connexion.
+   * @method storeAllData
+   * @param {Objet} - l'objet dont les valeurs des propriétés doivent être enregistrées.
+   * @returns {Promise} - une promesse est renvoyée lorsque toutes les données ont été enregistrées.
+   */
+  storeAllData(data){
+    var currentTime = new Date();
+    let key = 'Saved_Form' + String(currentTime);
+    return this.storage.set(key,JSON.stringify(data));
+  }
 }

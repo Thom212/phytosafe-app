@@ -30,7 +30,6 @@ export class Traitement {
   /**
    * Méthode qui envoie une requête GET pour récupérer la liste des traitements enregistrés dans la base côté serveur. 
    * @method getTrait
-   * @requires providers/localstockage - la fonction utilise la méthode setData.
    * @requires providers/api - la fonction utilise la méthode get.
    * @param {} - aucun paramètre n'est passé à la méthode.
    * @returns {Observable} - un observable est renvoyé pour suivre l'état de la requête. 
@@ -41,7 +40,7 @@ export class Traitement {
   }
 
   /**
-   * Fonction qui permet 
+   * Fonction qui permet de faire un tableau avec les traitements.
    * @method makeTraitList
    * @requires providers/traitement - elle appelle la méthode getTrait.
    * @param {array} - un tableau de référence des traitements à sélectionner est passée à la fonction.

@@ -12,10 +12,6 @@
   <form [formGroup]="traitementNomForm" novalidate>  
     <div>
       <ion-list class="row" no-lines *ngFor="let phytotmt of traitementTable; let i=index">
-        <!--ion-item no-lines>
-          <ion-label floating>{{ 'FORM_PHYTO_NOM' | translate }}</ion-label>
-          <ion-input (click)="showTraitementModal(i)" [formControlName]=phytotmt.phytonom type="text" [class.invalid]="!phytotmt.phytonomControl.valid && (phytotmt.phytonomControl.dirty || submitAttempt || checkTraitement)"></ion-input>
-        </ion-item-->
 
         <button type="button" ion-item class="buttonModal" (click)="showTraitementModal(i)" no-lines>
           <ion-label class="labelModalstacked" [class.cache]="!traitementChoix[i].choixTest" stacked>{{ 'FORM_PHYTO_NOM' | translate }}</ion-label>
