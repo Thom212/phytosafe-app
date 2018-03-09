@@ -9,47 +9,50 @@
 <ion-content no-bounce>
   <p *ngIf="!therapiesAlterForm.valid && submitAttempt" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
   <form [formGroup]="therapiesAlterForm" novalidate>
-
-    <ion-list radio-group formControlName="therapiesForm">
-      <p>{{ 'FORM_THERAPIES_CHECK' | translate }}</p>
-      <ion-item no-lines>
-        <ion-label [class.invalid-bis]="!therapiesAlterForm.controls.therapiesForm.valid && (therapiesAlterForm.controls.therapiesForm.dirty || submitAttempt)">{{ 'FORM_THERAPIE_OUI' | translate }}</ion-label>
-        <ion-radio (click)="therapieOui()" value="{{ 'FORM_THERAPIE_OUI' | translate }}" [class.invalid-bis]="!therapiesAlterForm.controls.therapiesForm.valid && (therapiesAlterForm.controls.therapiesForm.dirty || submitAttempt)"></ion-radio>
-      </ion-item>
-      <ion-item no-lines>
-        <ion-label [class.invalid-bis]="!therapiesAlterForm.controls.therapiesForm.valid && (therapiesAlterForm.controls.therapiesForm.dirty || submitAttempt)">{{ 'FORM_THERAPIE_NON' | translate }}</ion-label>
-        <ion-radio (click)="therapieNon()" value="{{ 'FORM_THERAPIE_NON' | translate }}" [class.invalid-bis]="!therapiesAlterForm.controls.therapiesForm.valid && (therapiesAlterForm.controls.therapiesForm.dirty || submitAttempt)"></ion-radio>
-      </ion-item>
-    </ion-list>
-    <p *ngIf="!therapiesAlterForm.controls.therapiesForm.valid  && (therapiesAlterForm.controls.therapiesForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
-
-    <ion-list *ngIf="questionsTherapie">
+    <h3>
+      <span>{{ 'FORM_INFO_ALTERNATIF' | translate }}</span>
+      {{ 'FORM_INFO_ALTERNATIF_DETAILS' | translate }}
+    </h3>
+    <ion-list>
       <p>{{ 'FORM_THERAPIES_TYPES' | translate }}</p>
       <ion-item no-lines>
         <ion-label>{{ 'FORM_THERAPIES_OPTION_1' | translate }}</ion-label>
-        <ion-checkbox formControlName="phytoForm"></ion-checkbox>
+        <ion-checkbox formControlName="phytoForm" (click)="therapie()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines>
         <ion-label>{{ 'FORM_THERAPIES_OPTION_2' | translate }}</ion-label>
-        <ion-checkbox formControlName="homeoForm"></ion-checkbox>
+        <ion-checkbox formControlName="boissonForm" (click)="therapie()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines>
         <ion-label>{{ 'FORM_THERAPIES_OPTION_3' | translate }}</ion-label>
-        <ion-checkbox formControlName="aromaForm"></ion-checkbox>
+        <ion-checkbox formControlName="aromaForm" (click)="therapie()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines>
-        <ion-label >{{ 'FORM_THERAPIES_OPTION_4' | translate }}</ion-label>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_4' | translate }}</ion-label>
+        <ion-checkbox formControlName="vitamineForm" (click)="therapie()"></ion-checkbox>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_5' | translate }}</ion-label>
+        <ion-checkbox formControlName="homeoForm" (click)="therapie()"></ion-checkbox>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label >{{ 'FORM_THERAPIES_OPTION_6' | translate }}</ion-label>
         <ion-checkbox formControlName="autres" (click)="autres()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines *ngIf="checkAutres">
         <ion-input [class.invalid]="!therapiesAlterForm.controls.autresForm.valid && (therapiesAlterForm.controls.autresForm.dirty || submitAttempt)" formControlName="autresForm" type="text"></ion-input>
       </ion-item>
+      <ion-item no-lines>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_7' | translate }}</ion-label>
+        <ion-checkbox formControlName="aucunForm" (click)="aucun()"></ion-checkbox>
+      </ion-item>
+      
     </ion-list>
-    <p *ngIf="questionsTherapie && (!therapiesAlterForm.valid && submitAttempt)">{{ 'FORM_CHECK_THERAPIE_ALERTE' | translate }}</p>
+    <p *ngIf="!therapiesAlterForm.valid && submitAttempt">{{ 'FORM_CHECK_THERAPIE_ALERTE' | translate }}</p>
   
   </form>
   
-  <button class="ButtonValide" ion-button icon-end large clear (click)="nextPage()">
+  <button class="buttonValide" ion-button icon-end large clear (click)="nextPage()">
     {{ 'CONTINUE_BOUTON' | translate }}
     <ion-icon name="arrow-forward"></ion-icon>
   </button>

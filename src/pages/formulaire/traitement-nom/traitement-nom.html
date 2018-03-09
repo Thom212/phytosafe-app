@@ -10,38 +10,30 @@
   <p *ngIf="!traitementNomForm.valid && (submitAttempt || checkTraitement)" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
   
   <form [formGroup]="traitementNomForm" novalidate>  
+    <h3>
+      <span>{{ 'FORM_INFO_PHYTO' | translate }}</span>
+      {{ 'FORM_INFO_PHYTO_DETAILS' | translate }}
+    </h3>
     <div>
-      <ion-list class="row" no-lines *ngFor="let phytotmt of traitementTable; let i=index">
-
-        <button type="button" ion-item class="buttonModal" (click)="showTraitementModal(i)" no-lines>
+      <ion-list class="listTraitement" ion-row no-lines *ngFor="let phytotmt of traitementTable; let i=index">
+        <button ion-col type="button" ion-item class="buttonModal" (click)="showTraitementModal(i)" no-lines>
           <ion-label class="labelModalstacked" [class.cache]="!traitementChoix[i].choixTest" stacked>{{ 'FORM_PHYTO_NOM' | translate }}</ion-label>
           <ion-label class="labelModal" *ngIf="!traitementChoix[i].choixTest" [class.invalid]="!phytotmt.phytonomControl.valid && (phytotmt.phytonomControl.dirty || submitAttempt || checkTraitement)">{{ 'FORM_PHYTO_NOM' | translate }}</ion-label>
           <ion-label class="nomModal" *ngIf="traitementChoix[i].choixTest" [class.invalid]="!phytotmt.phytonomControl.valid && (phytotmt.phytonomControl.dirty || submitAttempt || checkTraitement)">{{traitementChoix[i].choixNom}}</ion-label>
         </button>
-
-
-        <ion-item class="itemDate" no-lines>
-          <ion-label floating>{{ 'FORM_PHYTO_DATE' | translate }}</ion-label>
-          <ion-datetime cancelText="annuler" doneText="valider" [formControlName]=phytotmt.phytodate displayFormat="DD MMM YYYY" 
-            monthShortNames="jan, f\u00e9v, mars, avr, mai, juin, juil, ao\u00fbt, sept, oct, nov, d\u00e9c">
-          </ion-datetime>
-        </ion-item>
-        
-        <ion-item class="ItemButtonClose" no-lines>
-          <button class="ButtonClose" *ngIf="traitementTable.length > 1" ion-button round clear (click)="removePhyto(i)">
-            <ion-icon class="IconClose" name="close"></ion-icon>
-          </button>
-        </ion-item>
+        <button *ngIf="traitementTable.length > 1" ion-col col-auto icon-only class="buttonRemove" (click)="removePhyto(i)">
+          <ion-icon name="close"></ion-icon>
+        </button>
       </ion-list>
       <p class="col" *ngIf="!traitementNomForm.valid && (submitAttempt || checkTraitement)">{{ 'FORM_PHYTO_NOM_ALERTE' | translate }}</p>
     </div>
-    <button ion-button icon-start medium clear (click)="addPhyto()">
+    <button class="buttonAjout" ion-button icon-start medium clear (click)="addPhyto()">
       <ion-icon name="add"></ion-icon>
       {{ 'FORM_PHYTO_PLUS' | translate }}
     </button>
   </form>
 
-  <button class="ButtonValide" ion-button icon-end large clear (click)="nextPage()">
+  <button class="buttonValide" ion-button icon-end large clear (click)="nextPage()">
     {{ 'CONTINUE_BOUTON' | translate }}
     <ion-icon name="arrow-forward"></ion-icon>
   </button>

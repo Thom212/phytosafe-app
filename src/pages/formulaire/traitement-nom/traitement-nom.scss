@@ -12,23 +12,46 @@
         font-size: 1.2em;
         color: #ea6153;
       }
-      .ButtonValide{
+      .buttonValide{
         margin: auto;
+        margin-bottom: 50px;
         margin-top: 50px;
         display: block;
         border: 3px #488aff solid;
       }
-      
       form{
-        p {
+        padding: 0px;
+        h3{
+          span{
+            font-weight: bold;
+          }
+          font-size: 1.2em;
+          font-weight: normal;
+          color: #488aff;
+          padding: 0px;
+          margin: 50px 10px 0px 15px; 
+          text-align:justify;
+        }
+        p{
           font-size: 1em;
           color: #ea6153;
           margin-left: 10px;
         }
-        ion-list{
+        .listTraitement{
           margin-bottom: 0px;
+          margin-top: 0px;
+          p{
+            font-size: 0.9em;
+            color: #999999;
+            margin: 15px 0px 4px 25px;
+          }
           .buttonModal{
-            width: 40%;
+            padding-bottom: 10px;
+            margin-top: 0px;
+            margin-bottom: 4px;
+            .invalid {
+              border: 2px solid #ea6153;
+            }
             background: rgba(0,0,0,0);
             .labelModalstacked{
               font-size: 0.8em;
@@ -40,45 +63,30 @@
             }
             .labelModal{
               background-color: #f2f2f2;
-              color: #999999;
-              padding: 7px 0px 13px 10px;
+              padding: 10px 0px 10px 10px;
               margin: 0px;
+              color: #999999;
             }
             .nomModal{
               background-color: #f2f2f2;
               padding: 10px 0px 10px 10px;
               margin: 0px;
+              color: #000000;
             }
           }
-          .itemDate{
-            width: 40%;
-            padding: 0px 0px 0px 0px;
-            margin: 0px;
-            ion-label {
-              padding: 0px 0px 0px 0px;
-              margin: 20px 0px 0px 10px;
-            }
-            ion-datetime {
+          .buttonRemove{
+            background: rgba(0,0,0,0);
+            ion-icon{
+              font-size: 28px;
               background-color: #f2f2f2;
-              padding: 10px 0px 10px 10px;
-              margin: 1px 0px 3px 0px;
-            }
-          }
-          .ItemButtonClose{
-            width: 100px;
-            .ButtonClose{
-              margin: 0px;
-              margin-top: 20px;
-              display: block;
-              border: 2px #999999 solid;
-            }
-            .IconClose{
               color: #999999;
+              padding: 11px 11px 11px 11px;
+              margin: 24px 5px 0px 0px;
             }
           }
-        }
-        .invalid {
-          border: 2px solid #ea6153;
+          .buttonAjout{
+            margin-left: 15px;
+          }
         }
       }
     } 

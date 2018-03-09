@@ -32,13 +32,34 @@ export class Accueil {
 
     //Stockage local de la date de création du nouveau formulaire après avoir supprimer toutes les données déjà stockées
     this.localstockage.clearAllData().then(()=>{
+      this.localstockage.getStoreData().then((dataStore) => {
+        for(var propertyName in dataStore) {
+          let data = JSON.parse(dataStore[propertyName]);
+          if(data.idForm == null){
+            console.log(data);
+            //Si le formulaire n'a pas été créé, il faut le créer
+            this.formulaire.createForm(data).toPromise().then((res) => {
+              //Suppression du formulaire qui vient d'être envoyé sur le serveur
+              this.localstockage.clearStoreData(propertyName);
+            }).catch((err)=>{
+              console.error('ERROR', err);
+            });
+          } else {
+            //Sinon, il faut le mettre à jour
+            this.formulaire.updateForm(data).toPromise().then((res) => {
+              //Suppression du formulaire qui vient d'être envoyé sur le serveur
+              this.localstockage.clearStoreData(propertyName);
+            }).catch((err)=>{
+              console.error('ERROR', err);
+            });
+          }
+        }
+      });
       this.localstockage.setData(dateCreaForm).then((message) => {
         console.log('Date de création du formulaire : ' + message);
-      
         //Création d'un nouveau formulaire. La première donnée à entrer dans le formulaire est la date de création.
         this.formulaire.createForm(dateCreaForm);
-        
-        //Navigation à la deuxième page du formulaire - Maladie
+        //Navigation à la page du formulaire - Maladie
         this.navCtrl.push(Maladie);
       });
     });

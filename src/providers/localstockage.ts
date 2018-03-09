@@ -20,7 +20,7 @@ export class LocalStockage {
     return new Promise((resolve,reject) => {
       //Décomposition des propriétés de l'objet en paire clé/valeur
       for(var propertyName in data) {
-        //console.log(propertyName + ' en cours d\'enregistrement : ' + data[propertyName]);
+        console.log(propertyName + ' en cours d\'enregistrement : ' + data[propertyName]);
         this.storage.set(propertyName,data[propertyName]);//Enregistrement de la paire clé/valeur
       }
       resolve('enregistré !');
@@ -38,7 +38,7 @@ export class LocalStockage {
   }
 
   /**
-   * Méthode qui permet de supprimer des données stockées localement. Seul l'identifiant d'un formulaire n'est pas supprimé.
+   * Méthode qui permet de supprimer des données stockées localement. Seul l'identifiant d'un formulaire n'est pas supprimé, et les données des autres formulaires non envoyés sur le réseau.
    * @method removeData 
    * @param {Objet} - l'objet dont les valeurs des propriétés doivent être supprimées.
    * @returns {Promise} - une promesse est renvoyée qui se termine lorsque les données sont supprimées. 
@@ -47,7 +47,7 @@ export class LocalStockage {
     return new Promise((resolve, reject) => {
       for(var propertyName in data) {
         //L'identifiant unique, qui peut être une des propriétés de l'objet data, n'est pas supprimé.
-        if (propertyName!="idForm"){
+        if (propertyName!="idForm" && !propertyName.startsWith('Saved_Form')){
           this.storage.remove(propertyName).then(() => {
             console.log(propertyName + ' supprimée');
           });
@@ -64,9 +64,9 @@ export class LocalStockage {
    * @returns {Promise} - une promesse est renvoyée avec les valeurs des donnés stockées sous la forme d'un objet. 
    */
   getAllData(){
-    let dataStorage = {}
+    let dataStorage = {};
     return new Promise((resolve, reject) => {
-      this.storage.forEach( (value, key, index) => {
+      this.storage.forEach((value, key, index) => {
         if (typeof key === 'string' && key.endsWith('Form')){
           dataStorage[key]=value;
           console.log('la valeur est ' + value + ' et la key est ' + key);
@@ -78,17 +78,27 @@ export class LocalStockage {
   }
 
   /**
-   * Méthode qui supprime TOUTES les données stockées localement.
+   * Méthode qui permet de supprimer des données stockées localement. Seules les données des autres formulaires non envoyés sur le réseau ne sont pas supprimées.
    * @method clearAllData 
-   * @param {} - aucun paramètre n'est passé à la méthode.
-   * @returns {Promise} - une promesse est renvoyée lorsque toutes les données sont supprimées. 
+   * @param {} - l'objet dont les valeurs des propriétés doivent être supprimées.
+   * @returns {Promise} - une promesse est renvoyée qui se termine lorsque les données sont supprimées. 
    */
   clearAllData(){
-      return this.storage.clear();
+    return new Promise((resolve, reject) => {
+      this.storage.forEach( (value, key, index) => {
+        if (!key.startsWith('Saved_Form')){
+          this.storage.remove(key).then(() => {
+            console.log(key + ' supprimée : ' + value);
+          });
+        }
+      }).then(() => {      
+        resolve('Supression des données');
+      });
+    });
   }
 
   /**
-   * Méthode qui enregistre sous un nom particulier les données qui n'ont pas pu être envoyées sous le serveur, pour une prohcaine connexion.
+   * Méthode qui enregistre sous un nom particulier les données qui n'ont pas pu être envoyées sur le serveur, pour une prohcaine connexion.
    * @method storeAllData
    * @param {Objet} - l'objet dont les valeurs des propriétés doivent être enregistrées.
    * @returns {Promise} - une promesse est renvoyée lorsque toutes les données ont été enregistrées.
@@ -97,5 +107,34 @@ export class LocalStockage {
     var currentTime = new Date();
     let key = 'Saved_Form' + String(currentTime);
     return this.storage.set(key,JSON.stringify(data));
+  }
+
+  /**
+   * Méthode qui récupère l'ensemble des données qui n'ont pas été envoyées sur le serveur mais qui ont été stockées localement.
+   * @method getStoreData
+   * @param {} - aucun paramètre n'est passé à la méthode.
+   * @returns {Promise} - une promesse est renvoyée avec les valeurs des donnés stockées sous la forme d'un objet. 
+   */
+  getStoreData(){
+    var dataStorage = {};
+    return new Promise((resolve, reject) => {
+      this.storage.forEach( (value, key, index) => {
+        if (key.startsWith('Saved_Form')){
+          dataStorage[key] = value;
+        }
+      }).then(() => {
+        resolve(dataStorage);
+      });
+    }); 
+  }
+
+  /**
+   * Méthode qui supprime le formulaire qui n'avait pas été nevoyé sur le servuer, mais qui l'a été par la suite.
+   * @method clearStoreData
+   * @param {string} - la key du formulaire à supprimer est passée à la méthode.
+   * @returns {Promise} - une promesse est renvoyée avec les valeurs des donnés stockées sous la forme d'un objet. 
+   */
+  clearStoreData(key){
+    return this.storage.get(key);
   }
 }

@@ -1,11 +1,10 @@
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit} from '@angular/core';
-import { NavController, ModalController, LoadingController} from 'ionic-angular';
+import { NavController, ModalController} from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { Resultats } from '../resultats/resultats';
-import { ResultatsErreur } from '../resultats-erreur/resultats-erreur';
+import { InfoPerso } from '../info-perso/info-perso';
 import{ Autocomplete } from '../../autocomplete/autocomplete';
 
 import { Formulaire } from '../../../providers/formulaire';
@@ -31,7 +30,7 @@ export class TraitementNom implements OnInit{
   traitementPlaceholder: string;
   traitementChoix = [];
   
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public loadingCtrl: LoadingController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public diacritics: Diacritics) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public diacritics: Diacritics) {
     this.traitementNomForm = formBuilder.group({});
     this.traitementNom = [];
     this.traitementElement = [];
@@ -43,7 +42,7 @@ export class TraitementNom implements OnInit{
     this.traitementNomForm.addControl(this.traitementTable[0].phytonom, this.traitementTable[0].phytonomControl);
     this.traitementNomForm.addControl(this.traitementTable[0].phytodate, this.traitementTable[0].phytodateControl);
     this.traitementNomForm.addControl(this.traitementTable[0].phytoid, this.traitementTable[0].phytoidControl);
-    this.traitement.makeTraitList(['PHYPO','PHYTO']).then((liste) =>{
+    this.traitement.makeTraitList(['PHYTO']).then((liste) =>{
       this.traitementNom = liste[0];
       this.traitementElement = liste[1];
     });
@@ -178,11 +177,11 @@ export class TraitementNom implements OnInit{
   }
 
   /**
-   * Fonction qui est liée au bouton "Continuer" sur la quatrième page du formulaire - Nom des Thérapies.
+   * Fonction qui est liée au bouton "Continuer" sur la page du formulaire - Nom des Thérapies.
    * Elle valide les valeurs entrées dans les champs du formulaire et les stocke localement. 
    * Une fois ces valeurs stockées, elle récupère la valeur stockée correspondant à l'identificant du formulaire. 
    * Si aucun identifiant n'a été stocké, elle créé un nouveau formulaire avec toutes les données stockées. Sinon, elle met à jour le formulaire avec ces mêmes données.
-   * Elle affiche ensuite la page des résultats du formulaire - Résultats.
+   * Elle affiche ensuite la page des informations générales du formulaire - Informations Générales.
    * @method nextPage
    * @requires providers/localstockage - la fonction utilise les méthodes setData, getData, getAllData.
    * @requires providers/formulaire - la fonction utilise les méthodes createForm et updateForm.
@@ -192,10 +191,6 @@ export class TraitementNom implements OnInit{
   nextPage() {
     this.submitAttempt = true;
     if(this.traitementNomForm.valid){
-      let loader = this.loadingCtrl.create({
-        content: "Enregistrement du formulaire. Veuillez patienter..."
-      });
-      loader.present();
       //Stockage local des données remplies dans cette page de formulaire
       this.localstockage.setData(this.traitementNomForm.value).then((message) => {
         console.log('********************************************************');
@@ -206,34 +201,16 @@ export class TraitementNom implements OnInit{
             //il faut créer/mettre à jour le formulaire avec toutes les données stockées
             if (val==null){
               //Si le formulaire n'a pas été créé, il faut le créer
-              this.formulaire.createForm(dataForm).toPromise().then((res) => {
-                loader.dismiss();
-                //Navigation à la page des résultats du formulaire - Résultats
-                this.navCtrl.push(Resultats);     
-              }).catch((err)=>{
-                loader.dismiss();
-                this.navCtrl.push(ResultatsErreur,{
-                  networkCheck : true, //ajouter la vérification de la connection : true si la connection est bonne, false si elle n'est pas bonne
-                });
-                console.error('ERROR', err);
-              });
+              this.formulaire.createForm(dataForm);
             } else {
               //Sinon, il faut le mettre à jour
-              this.formulaire.updateForm(dataForm).toPromise().then((res) => {
-                loader.dismiss();
-                //Navigation à la page des résultats du formulaire - Résultats
-                this.navCtrl.push(Resultats);
-              }).catch((err)=>{
-                loader.dismiss();
-                this.navCtrl.push(ResultatsErreur,{
-                  networkCheck : true //ajouter la vérification de la connection : true si la connection est bonne, false si elle n'est pas bonne
-                });
-                console.error('ERROR', err);
-              });
+              this.formulaire.updateForm(dataForm);
             }
           });
         });
       });
+      //Navigation à la page du formulaire - Informations Générales
+      this.navCtrl.push(InfoPerso);
     }
   }
 }

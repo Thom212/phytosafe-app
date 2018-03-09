@@ -58,34 +58,6 @@ export class Formulaire {
   }
 
   /**
-   * Méthode qui envoie une requête POST pour faire le lien entre le patient et le formulaire.
-   * Ce lien peut être accompagné par la création d'un patient, s'il n'existe pas.
-   * @method createForm
-   * @requires providers/api - la fonction utilise la méthode patch.
-   * @param {any, Objet} - une variable avec la valeur de l'identifiant du formulaire et les données à mettre à jour, sous la forme d'un objet, sont passées à la méthode.
-   * @returns {Observable} - un observable est renvoyé pour suivre l'état de la requête. 
-   */
-  createPatient(dataForm) { 
-    //On doit s'assurer que le lien entre le patient et le formulaire n'a été fait qu'une fois : il est préférable d'annuler toute requête déjà existante.
-    if(this.subCreate) {
-       this.subCreate.unsubscribe();
-    }
-    
-    let seq = this.api.post('createpatient/', dataForm).share();
-
-    this.subCreate = seq.map(res => res.json())
-      .subscribe(res => {
-        if (res.status == 'success') {
-          this.localstockage.removeData(dataForm);//Il faut ensuite supprimer toutes les données qui ont été enregistrées sur le serveur, sauf l'identifiant du formulaire.
-        }
-      }, err => {
-        console.error('ERROR', err);
-      });
-
-    return seq;
-  }
-
-  /**
    * Méthode qui envoie une requête PATCH pour mettre à jour le formulaire côté serveur. 
    * @method updateForm
    * @requires providers/localstockage - la fonction utilise la méthode removeData.
@@ -110,30 +82,6 @@ export class Formulaire {
         console.error('ERROR', err);
       });
 
-    return seq;
-  }
-
-  /**
-   * Méthode qui envoie une requête GET pour récupérer la liste des informations importantes (nom du cancer, nom des traitements) enregistrés dans la base côté serveur.
-   * @method getInfo
-   * @requires providers/api - la fonction utilise la méthode get.
-   * @param {} - aucun paramètre n'est passé à la méthode.
-   * @returns {Observable} - un observable est renvoyé pour suivre l'état de la requête. 
-   */
-  getInfo(id) {
-    let seq = this.api.get('informations/' + id).share();
-    return seq;
-  }
-
-  /**
-   * Méthode qui envoie une requête GET pour récupérer la liste des incompatibilités enregistrés dans la base côté serveur.
-   * @method getIncompatibilites
-   * @requires providers/api - la fonction utilise la méthode get.
-   * @param {} - aucun paramètre n'est passé à la méthode.
-   * @returns {Observable} - un observable est renvoyé pour suivre l'état de la requête.
-   */
-  getIncompatibilites(id) {
-    let seq = this.api.get('incompatibilites/' + id).share();
     return seq;
   }
 }

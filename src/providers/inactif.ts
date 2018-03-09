@@ -73,6 +73,7 @@ export class Inactif {
       title: '',
       subTitle: '',
       message: '',
+      cssClass: 'idleCss',
       buttons: [
         {
           text: buttonTextConfirm,

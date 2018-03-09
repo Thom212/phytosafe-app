@@ -31,7 +31,7 @@ export class Traitement {
    * Méthode qui envoie une requête GET pour récupérer la liste des traitements enregistrés dans la base côté serveur. 
    * @method getTrait
    * @requires providers/api - la fonction utilise la méthode get.
-   * @param {} - aucun paramètre n'est passé à la méthode.
+   * @param {string} - le type de traitement est passé à la méthode.
    * @returns {Observable} - un observable est renvoyé pour suivre l'état de la requête. 
    */
   getTrait(type) {
@@ -64,5 +64,4 @@ export class Traitement {
       resolve([traitementList,traitementTab]);
     });
   }
-
 }

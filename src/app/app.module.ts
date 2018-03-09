@@ -10,9 +10,8 @@ import { MyApp } from './app.component';
 import { Accueil } from '../pages/accueil/accueil';
 import { Maladie } from '../pages/formulaire/maladie/maladie';
 import { TherapiesAlter } from '../pages/formulaire/therapies-alter/therapies-alter';
+import { InfoPerso } from '../pages/formulaire/info-perso/info-perso';
 import { TraitementNom } from '../pages/formulaire/traitement-nom/traitement-nom';
-import { Resultats } from '../pages/formulaire/resultats/resultats';
-import { ResultatsErreur } from '../pages/formulaire/resultats-erreur/resultats-erreur';
 import { Autocomplete } from '../pages/autocomplete/autocomplete';
 
 import { Api } from '../providers/api';
@@ -43,8 +42,7 @@ export function HttpLoaderFactory(http: Http) {
     Maladie,
     TherapiesAlter,
     TraitementNom,
-    Resultats,
-    ResultatsErreur,
+    InfoPerso,
     Autocomplete
   ],
   imports: [
@@ -68,8 +66,7 @@ export function HttpLoaderFactory(http: Http) {
     Maladie,
     TherapiesAlter,
     TraitementNom,
-    Resultats,
-    ResultatsErreur,
+    InfoPerso,
     Autocomplete
   ],
   providers: [
