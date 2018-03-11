@@ -51,8 +51,8 @@ export class Maladie implements OnInit {
     this.organeElement = [];
     this.traitementNom = [];
     this.traitementElement = [];
-    /*Si l'utilisateur est inactif, une alerte est envoyée avec la possibilité de continuer ou de recommencer le questionnaire.
-+   inactif.idleSet(navCtrl,alertCtrl);*/
+    //Si l'utilisateur est inactif, une alerte est envoyée avec la possibilité de continuer ou de recommencer le questionnaire.
+    inactif.idleSet(navCtrl,alertCtrl);
   }
 
   ngOnInit(){
@@ -69,6 +69,16 @@ export class Maladie implements OnInit {
       this.organeElement = liste[1];
     });
     this.organeChoix = '';
+  }
+
+  ionViewWillLeave() {
+    console.log("Looks like I'm about to leave :(");
+    this.localstockage.getData("idForm").then((val)=> {
+      if (val!==null){
+        //Si le formulaire n'a pas été créé, il faut le créer
+        this.formulaire.removeForm(val);
+      }
+    });
   }
 
   /**

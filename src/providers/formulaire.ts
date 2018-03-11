@@ -84,4 +84,27 @@ export class Formulaire {
 
     return seq;
   }
+
+  /**
+   * Méthode qui envoie une requête DELETE pour supprimer un formulaire côté serveur. 
+   * @method removeForm
+   * @requires providers/api - la fonction utilise la méthode delete.
+   * @param {number} - l'identifiant du formulaire à supprimer.
+   * @returns {Observable} - un observable est renvoyé pour suivre l'état de la requête. 
+   */
+  removeForm(idForm) { 
+    //On doit annuler toute requête déjà existante.
+    if(this.subCreate) {
+       this.subCreate.unsubscribe();
+    }
+    
+    let seq = this.api.delete('removeform/' + idForm).share();
+
+    this.subCreate = seq.map(res => res.json())
+      .subscribe(res => {}, err => {
+        console.error('ERROR', err);
+      });
+
+    return seq;
+  }
 }

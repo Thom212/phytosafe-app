@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/Rx';
 import {Idle, DEFAULT_INTERRUPTSOURCES} from '@ng-idle/core';
 import { TranslateService } from '@ngx-translate/core';
 
+import { Formulaire } from './formulaire';
 import { LocalStockage } from './localstockage';
 
 /**
@@ -15,7 +16,7 @@ export class Inactif {
   idleCount: number = 15; //Fixe le temps avant que l'utilisateur, une fois inactif, soit redirigé vers la page d'accueil.
   idleState: any;
 
-  constructor(public translate: TranslateService, private idle: Idle, public localstockage: LocalStockage) {
+  constructor(public translate: TranslateService, private idle: Idle, public localstockage: LocalStockage, public formulaire: Formulaire) {
     // Temps à partir duquel on estime que l'utilisateur est inactif.
     idle.setIdle(5);
     // Actions qui terminent l'inactivité.
@@ -80,6 +81,12 @@ export class Inactif {
           handler: () =>{ 
             timer.unsubscribe();
             alert.dismiss().then(() => {
+              this.localstockage.getData("idForm").then((val)=> {
+                if (val!==null){
+                  //Si le formulaire n'a pas été créé, il faut le créer
+                  this.formulaire.removeForm(val);
+                }
+              });
               navCtrl.popToRoot();
             });
             return false;//La fermeture de l'alerte est faite manuellement, par alert.dismiss(), une fois la suppression des données effectuées.
@@ -120,9 +127,14 @@ export class Inactif {
         });
         alert.setSubTitle(sousTitrePrinc + count + sousTitreUnit);
       } else {
-        //La redirection vers la page d'accueil est précédé d'une suppression des données stockées localement
         timer.unsubscribe();
         alert.dismiss().then(() => {
+          this.localstockage.getData("idForm").then((val)=> {
+            if (val!==null){
+              //Si le formulaire n'a pas été créé, il faut le créer
+              this.formulaire.removeForm(val);
+            }
+          });
           navCtrl.popToRoot();
         });
       }
