@@ -40,7 +40,6 @@ export class TraitementNom implements OnInit{
     this.createTraitObjet();
     this.createChoixObjet();
     this.traitementNomForm.addControl(this.traitementTable[0].phytonom, this.traitementTable[0].phytonomControl);
-    this.traitementNomForm.addControl(this.traitementTable[0].phytodate, this.traitementTable[0].phytodateControl);
     this.traitementNomForm.addControl(this.traitementTable[0].phytoid, this.traitementTable[0].phytoidControl);
     this.traitement.makeTraitList(['PHYTO']).then((liste) =>{
       this.traitementNom = liste[0];
@@ -59,18 +58,14 @@ export class TraitementNom implements OnInit{
     interface traitementObjet {
       phytonom : string,
       phytoid : string,
-      phytodate: string,
       phytonomControl : FormControl,
-      phytoidControl : FormControl,
-      phytodateControl : FormControl
+      phytoidControl : FormControl
     };
     var phytoForm: traitementObjet = {
       phytonom: "phytonom_"+this.nbTraitement.toString()+"_Form",
       phytoid: "phytoid_"+this.nbTraitement.toString()+"_Form",
-      phytodate: "phytodate_"+this.nbTraitement.toString()+"_Form",
-      phytonomControl : new FormControl ('', Validators.compose([ Validators.pattern('([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)([\-]*)'), Validators.required])),
-      phytoidControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9]*)'), Validators.required])),
-      phytodateControl : new FormControl ('')
+      phytonomControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ \-\']*)'), Validators.required])),
+      phytoidControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9]*)'), Validators.required]))
     }
     this.traitementTable.push(phytoForm);
   }
@@ -106,7 +101,6 @@ export class TraitementNom implements OnInit{
       this.createChoixObjet();
       // add phyto treatment to the list
       this.traitementNomForm.addControl(this.traitementTable[i].phytonom, this.traitementTable[i].phytonomControl);
-      this.traitementNomForm.addControl(this.traitementTable[i].phytodate, this.traitementTable[i].phytodateControl);
       this.traitementNomForm.addControl(this.traitementTable[i].phytoid, this.traitementTable[i].phytoidControl);
       this.checkTraitement = false;
       this.submitAttempt = false;
@@ -126,12 +120,10 @@ export class TraitementNom implements OnInit{
     // remove phyto treatment from the list
     var suppressionObjet = {}
     suppressionObjet[this.traitementTable[i].phytonom] = this.traitementNomForm.value[this.traitementTable[i].phytonom];
-    suppressionObjet[this.traitementTable[i].phytodate] = this.traitementNomForm.value[this.traitementTable[i].phytodate];
     suppressionObjet[this.traitementTable[i].phytoid] = this.traitementNomForm.value[this.traitementTable[i].phytoid];
     console.log(suppressionObjet);
     this.localstockage.removeData(suppressionObjet);
     this.traitementNomForm.removeControl(this.traitementTable[i].phytonom);
-    this.traitementNomForm.removeControl(this.traitementTable[i].phytodate);
     this.traitementNomForm.removeControl(this.traitementTable[i].phytoid);
     this.traitementTable.splice(i,1);
     this.traitementChoix.splice(i,1);

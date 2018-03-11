@@ -36,7 +36,6 @@ export class Accueil {
         for(var propertyName in dataStore) {
           let data = JSON.parse(dataStore[propertyName]);
           if(data.idForm == null){
-            console.log(data);
             //Si le formulaire n'a pas été créé, il faut le créer
             this.formulaire.createForm(data).toPromise().then((res) => {
               //Suppression du formulaire qui vient d'être envoyé sur le serveur
@@ -53,6 +52,7 @@ export class Accueil {
               console.error('ERROR', err);
             });
           }
+          break;
         }
       });
       this.localstockage.setData(dateCreaForm).then((message) => {

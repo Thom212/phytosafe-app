@@ -6,7 +6,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content no-bounce>
+<ion-content no-bounce overflow-scroll="true">
   <p *ngIf="!traitementNomForm.valid && (submitAttempt || checkTraitement)" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
   
   <form [formGroup]="traitementNomForm" novalidate>  

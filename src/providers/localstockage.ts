@@ -121,6 +121,7 @@ export class LocalStockage {
       this.storage.forEach( (value, key, index) => {
         if (key.startsWith('Saved_Form')){
           dataStorage[key] = value;
+          console.log(key + ' récupérée : ' + value);
         }
       }).then(() => {
         resolve(dataStorage);
@@ -135,6 +136,8 @@ export class LocalStockage {
    * @returns {Promise} - une promesse est renvoyée avec les valeurs des donnés stockées sous la forme d'un objet. 
    */
   clearStoreData(key){
-    return this.storage.get(key);
+    return this.storage.remove(key).then(() => {
+      console.log(key + ' supprimée');
+    });
   }
 }

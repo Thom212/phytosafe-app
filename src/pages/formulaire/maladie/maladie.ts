@@ -88,7 +88,7 @@ export class Maladie implements OnInit {
     var traitement: traitementObjet = {
       traitementnom: "traitementnom_"+this.nbTraitement.toString()+"_Form",
       traitementid: "traitementid_"+this.nbTraitement.toString()+"_Form",
-      traitementnomControl : new FormControl ('', Validators.compose([ Validators.pattern('([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)([\-]*)'), Validators.required])),
+      traitementnomControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ \-\']*)'), Validators.required])),
       traitementidControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9]*)'), Validators.required]))
     }
     this.anticancerTable.push(traitement);
