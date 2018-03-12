@@ -18,7 +18,7 @@ export class Inactif {
 
   constructor(public translate: TranslateService, private idle: Idle, public localstockage: LocalStockage, public formulaire: Formulaire) {
     // Temps à partir duquel on estime que l'utilisateur est inactif.
-    idle.setIdle(5);
+    idle.setIdle(30);
     // Actions qui terminent l'inactivité.
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
   }
