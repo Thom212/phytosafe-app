@@ -130,10 +130,10 @@ export class LocalStockage {
   }
 
   /**
-   * Méthode qui supprime le formulaire qui n'avait pas été nevoyé sur le servuer, mais qui l'a été par la suite.
+   * Méthode qui supprime une paire key/value stockée
    * @method clearStoreData
-   * @param {string} - la key du formulaire à supprimer est passée à la méthode.
-   * @returns {Promise} - une promesse est renvoyée avec les valeurs des donnés stockées sous la forme d'un objet. 
+   * @param {string} - la key de la paire à supprimer est passée à la méthode.
+   * @returns {Promise} - une promesse est renvoyée lorsque la donnée a été supprimée. 
    */
   clearStoreData(key){
     return this.storage.remove(key).then(() => {

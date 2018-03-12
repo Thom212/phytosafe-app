@@ -83,7 +83,6 @@ export class Inactif {
             alert.dismiss().then(() => {
               this.localstockage.getData("idForm").then((val)=> {
                 if (val!==null){
-                  //Si le formulaire n'a pas été créé, il faut le créer
                   this.formulaire.removeForm(val);
                 }
               });
@@ -131,7 +130,6 @@ export class Inactif {
         alert.dismiss().then(() => {
           this.localstockage.getData("idForm").then((val)=> {
             if (val!==null){
-              //Si le formulaire n'a pas été créé, il faut le créer
               this.formulaire.removeForm(val);
             }
           });

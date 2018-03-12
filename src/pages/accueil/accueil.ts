@@ -13,7 +13,7 @@ import { LocalStockage } from '../../providers/localstockage';
 export class Accueil {
 
   constructor(public navCtrl: NavController, public formulaire: Formulaire, public localstockage: LocalStockage) {}
-
+  
   /**
    * Fonction qui est liée au bouton "Commencer le formulaire" sur la page d'accueil.
    * Elle récupère la date et l'heure au moment où le bouton est cliqué et stocke cette valeur localement. 
@@ -29,6 +29,13 @@ export class Accueil {
     interface dateObjet { dateForm: Date };
     var currentTime = new Date();
     var dateCreaForm: dateObjet = {dateForm : currentTime};
+
+    this.localstockage.getData("idForm").then((val)=> {
+      console.log(val);
+      if (val!==null){
+        this.formulaire.removeForm(val);
+      }
+    });
 
     //Stockage local de la date de création du nouveau formulaire après avoir supprimer toutes les données déjà stockées
     this.localstockage.clearAllData().then(()=>{

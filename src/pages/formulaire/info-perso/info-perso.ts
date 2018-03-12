@@ -80,6 +80,7 @@ export class InfoPerso{
               //Si le formulaire n'a pas été créé, il faut le créer
               this.formulaire.createForm(dataForm).toPromise().then((res) => {
                 loader.dismiss();
+                this.localstockage.clearStoreData("idForm");
                 //Navigation à la page d'accueil du formulaire - Accueil
                 this.navCtrl.push(Accueil);
               }).catch((err)=>{
@@ -91,15 +92,17 @@ export class InfoPerso{
                   console.error('ERROR', err);
                   this.navCtrl.push(Accueil);
                 });
-              });            
+              });
             } else {
               //Sinon, il faut le mettre à jour
               this.formulaire.updateForm(dataForm).toPromise().then((res) => {
                 loader.dismiss();
+                this.localstockage.clearStoreData("idForm");
                 //Navigation à la page d'accueil du formulaire - Accueil
                 this.navCtrl.push(Accueil);
               }).catch((err)=>{
                 loader.dismiss();
+                this.localstockage.clearStoreData("idForm");
                 console.error('ERROR', err);
                 this.localstockage.storeAllData(dataForm).then((res) => {
                   this.navCtrl.push(Accueil);
