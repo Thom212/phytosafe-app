@@ -31,7 +31,6 @@ export class Accueil {
     var dateCreaForm: dateObjet = {dateForm : currentTime};
 
     this.localstockage.getData("idForm").then((val)=> {
-      console.log(val);
       if (val!==null){
         this.formulaire.removeForm(val);
       }

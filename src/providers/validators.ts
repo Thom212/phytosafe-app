@@ -8,12 +8,12 @@ export class TherapieValidator {
     var vitamineForm = group.controls.vitamineForm.value;
     var homeoForm = group.controls.homeoForm.value;
     var aucunForm = group.controls.aucunForm.value;
-    var autres = group.controls.autres.value;
+    var autresboolForm = group.controls.autresboolForm.value;
     var autresForm = group.controls.autresForm.value;
-    if (autres && autresForm==''){
+    if (autresboolForm && autresForm==''){
       group.controls.autresForm.setErrors({"autres_empty": true});
     }
-    if (!phytoForm && !boissonForm && !aromaForm && !vitamineForm && !homeoForm && !autres && !aucunForm){
+    if (!phytoForm && !boissonForm && !aromaForm && !vitamineForm && !homeoForm && !autresboolForm && !aucunForm){
       return {
           "empty": true
       };
@@ -29,6 +29,16 @@ export class TabacValidator {
     var frequenceForm = group.controls.frequenceForm.value;
     if (tabacForm=='oui' && frequenceForm==''){
       group.controls.frequenceForm.setErrors({"empty": true});
+    }
+  }
+}
+
+export class MaladieValidator {
+  static isValid(group: FormGroup): any {
+    var organeboolForm = group.controls.organeboolForm.value;
+    var nom_organeForm = group.controls.nom_organeForm.value;
+    if (organeboolForm=='oui' && nom_organeForm==''){
+      group.controls.nom_organeForm.setErrors({"empty": true});
     }
   }
 }

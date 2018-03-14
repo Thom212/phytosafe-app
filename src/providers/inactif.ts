@@ -36,6 +36,16 @@ export class Inactif {
   }
 
   /**
+   * Méthode qui arrête la détection de l'inactivité de l'utilisateur. 
+   * @method idleStop
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la méthode.
+   */
+  idleStop() {
+    this.idle.ngOnDestroy();
+  }
+
+  /**
    * Méthode qui lance un timer.
    * @method idleTimer
    * @param {} - aucun paramètre n'est passé à la fonction.

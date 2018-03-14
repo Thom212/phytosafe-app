@@ -29,7 +29,7 @@ export class TherapiesAlter{
         vitamineForm: [false],
         homeoForm: [false],
         aucunForm: [false],
-        autres: [false],
+        autresboolForm: [false],
         autresForm: ['']
     },{ validator: TherapieValidator.isValid}); 
   }
@@ -46,7 +46,7 @@ export class TherapiesAlter{
       this.therapiesAlterForm.controls.aucunForm.setValue(false);
     }else{
       this.checkAutres = false;
-      this.therapiesAlterForm.controls.autres.setValue(false);
+      this.therapiesAlterForm.controls.autresboolForm.setValue(false);
       this.therapiesAlterForm.controls.autresForm.setValue('');
     }
   }
@@ -64,7 +64,7 @@ export class TherapiesAlter{
     this.therapiesAlterForm.controls.aromaForm.setValue(false);
     this.therapiesAlterForm.controls.vitamineForm.setValue(false);
     this.therapiesAlterForm.controls.homeoForm.setValue(false);
-    this.therapiesAlterForm.controls.autres.setValue(false);
+    this.therapiesAlterForm.controls.autresboolForm.setValue(false);
     this.therapiesAlterForm.controls.autresForm.setValue('');
   }
 

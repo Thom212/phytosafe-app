@@ -38,6 +38,10 @@
           color: #ea6153;
           margin-left: 10px;
         }
+        div{
+          padding: 0px;
+          margin: 0px;
+        }
         ion-label {
           padding-left: 10px;
         }
@@ -51,6 +55,11 @@
             font-size: 0.8em;
             color: #999999;
             margin: 15px 0px 4px 10px;
+          }
+          .labelModalstackedOrgane{
+            font-size: 0.8em;
+            color: #999999;
+            margin: 15px 0px 4px 0px;
           }
           .cache{
             color: #ffffff;

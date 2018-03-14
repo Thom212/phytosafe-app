@@ -22,6 +22,7 @@ export class InfoPerso{
   
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage) {
     this.infoPersoForm = formBuilder.group({
+      sexeForm: ['', Validators.required],
       date_naissanceForm: ['', Validators.required],
       tabacForm: ['',Validators.required],
       frequenceForm: ['']

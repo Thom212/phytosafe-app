@@ -14,6 +14,7 @@ import { Traitement } from '../../../providers/traitement';
 import { Cancer } from '../../../providers/cancer';
 import { Diacritics } from '../../../providers/diacritics';
 import { Inactif } from '../../../providers/inactif';
+import { MaladieValidator } from '../../../providers/validators';
 
 @Component({
   selector: 'maladie',
@@ -37,22 +38,22 @@ export class Maladie implements OnInit {
   traitementElement: any;
   traitementTitre: string;
   traitementPlaceholder: string;
+  questionOrgane: boolean = false;
   
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public organe: Cancer, public keyboard: Keyboard, public diacritics: Diacritics, public inactif: Inactif) {
     this.maladieForm = formBuilder.group({
-        organeForm: ['', Validators.compose([ Validators.pattern('([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)([\-]?)([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)'), Validators.required])],
-        nom_organeForm: ['', Validators.compose([ Validators.pattern('([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)([\-]?)([a-zA-Zéèêëàäâùüûïîöôçÿ ]*)'), Validators.required])],
-        etatForm:  ['', Validators.required],
-        radioForm:  ['', Validators.required],
-        chirurgieForm:  ['', Validators.required]
-    });
+      organeboolForm : ['', Validators.required],
+      organeForm: [''],
+      nom_organeForm: [''],
+      etatForm:  ['', Validators.required],
+      radioForm:  ['', Validators.required],
+      chirurgieForm:  ['', Validators.required]
+    },{ validator: MaladieValidator.isValid});
     this.anticancerForm = formBuilder.group({});
     this.organeNom = [];
     this.organeElement = [];
     this.traitementNom = [];
     this.traitementElement = [];
-    //Si l'utilisateur est inactif, une alerte est envoyée avec la possibilité de continuer ou de recommencer le questionnaire.
-    //inactif.idleSet(navCtrl,alertCtrl);
   }
 
   ngOnInit(){
@@ -69,6 +70,15 @@ export class Maladie implements OnInit {
       this.organeElement = liste[1];
     });
     this.organeChoix = '';
+  }
+
+  ionViewDidEnter(){
+    //Si l'utilisateur est inactif, une alerte est envoyée avec la possibilité de continuer ou de recommencer le questionnaire.
+    this.inactif.idleSet(this.navCtrl,this.alertCtrl);
+  }
+
+  ionViewWillLeave(){
+    this.inactif.idleStop();
   }
 
   /**
@@ -110,6 +120,28 @@ export class Maladie implements OnInit {
       choixNom : ''
     }
     this.choixTable.push(traitChoix);
+  }
+
+  /**
+   * Fonction qui permet l'entrée du nom de l'organe primitif atteint.
+   * @method organeOui
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  organeOui() {
+    this.questionOrgane = true;
+  }
+
+  /**
+   * Fonction qui supprime l'entrée du nom de l'organe primitif atteint.
+   * @method organeNon
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  organeNon() {
+    this.questionOrgane = false;
+    this.maladieForm.patchValue({organeForm: ''});
+    this.maladieForm.patchValue({nom_organeForm: ''});
   }
 
   /**
