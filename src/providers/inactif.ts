@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import {Idle, DEFAULT_INTERRUPTSOURCES} from '@ng-idle/core';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertController } from 'ionic-angular';
 
 import { Formulaire } from './formulaire';
 import { LocalStockage } from './localstockage';
@@ -16,7 +17,7 @@ export class Inactif {
   idleCount: number = 15; //Fixe le temps avant que l'utilisateur, une fois inactif, soit redirigé vers la page d'accueil.
   idleState: any;
 
-  constructor(public translate: TranslateService, private idle: Idle, public localstockage: LocalStockage, public formulaire: Formulaire) {
+  constructor(public alertCtrl: AlertController, public translate: TranslateService, private idle: Idle, public localstockage: LocalStockage, public formulaire: Formulaire) {
     // Temps à partir duquel on estime que l'utilisateur est inactif.
     idle.setIdle(30);
     // Actions qui terminent l'inactivité.
@@ -30,9 +31,10 @@ export class Inactif {
    * @param {Controller, Controller} - les deux controlleurs, qui correspondent à la page sur laquelle l'utilisateur est présent et à la fenêtre d'alerte sont passées à la méthode.
    * @returns {} - aucune valeur n'est retournée par la méthode.
    */
-  idleSet(navCtrl,alertCtrl) {
+  idleSet(navCtrl) {
     this.idle.watch();
-    this.idleState = this.idle.onIdleStart.subscribe(()=>this.idleRedirectConfirm(navCtrl,alertCtrl));
+    this.idleState = this.idle.onIdleStart.subscribe(()=>this.idleRedirectConfirm(navCtrl));
+    
   }
 
   /**
@@ -65,7 +67,8 @@ export class Inactif {
    * @param {Controller, Controller} - les deux controlleurs, qui correspondent à la page sur laquelle l'utilisateur est présent et à la fenêtre d'alerte sont passées à la méthode.
    * @returns {} - aucune valeur n'est retournée par la méthode.
    */
-  idleRedirectConfirm(navCtrl,alertCtrl) {
+  idleRedirectConfirm(navCtrl) {
+    console.log('alerte créée');
     //Arrêt de la détection de l'inactivité de l'utilisateur
     this.idleState.unsubscribe();
     this.idle.stop();
@@ -80,7 +83,7 @@ export class Inactif {
       buttonTextCancel = value;
     });
 
-    let alert = alertCtrl.create({
+    let alert = this.alertCtrl.create({
       title: '',
       subTitle: '',
       message: '',
@@ -91,6 +94,7 @@ export class Inactif {
           handler: () =>{ 
             timer.unsubscribe();
             alert.dismiss().then(() => {
+              console.log('alerte détruite');
               this.localstockage.getData("idForm").then((val)=> {
                 if (val!==null){
                   this.formulaire.removeForm(val);
@@ -106,8 +110,13 @@ export class Inactif {
           role: 'cancel',
           handler: () =>{
             //Relance de la détection de l'inactivité de l'utilisateur
-            this.idleSet(navCtrl,alertCtrl);
             timer.unsubscribe();
+            alert.dismiss().then(() => {
+              console.log('alerte détruite');
+              this.idleSet(navCtrl);
+            });
+            return false;//La fermeture de l'alerte est faite manuellement, par alert.dismiss(), une fois la suppression des données effectuées.
+            //alert.dismiss();
           }
         }
       ]
@@ -138,6 +147,7 @@ export class Inactif {
       } else {
         timer.unsubscribe();
         alert.dismiss().then(() => {
+          console.log('alerte détruite');
           this.localstockage.getData("idForm").then((val)=> {
             if (val!==null){
               this.formulaire.removeForm(val);

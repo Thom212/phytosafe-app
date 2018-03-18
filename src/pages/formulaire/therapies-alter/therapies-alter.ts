@@ -10,6 +10,7 @@ import { InfoPerso } from '../info-perso/info-perso';
 import { Formulaire } from '../../../providers/formulaire';
 import { LocalStockage } from '../../../providers/localstockage';
 import { TherapieValidator } from '../../../providers/validators';
+import { Inactif } from '../../../providers/inactif';
 
 @Component({
   selector: 'therapies-alter',
@@ -21,7 +22,7 @@ export class TherapiesAlter{
   submitAttempt: boolean = false;
   checkAutres: boolean = false;
   
-  constructor(public navCtrl: NavController, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage) {
+  constructor(public navCtrl: NavController, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public inactif: Inactif) {
     this.therapiesAlterForm = formBuilder.group({
         phytoForm: [false],
         boissonForm: [false],
@@ -32,6 +33,15 @@ export class TherapiesAlter{
         autresboolForm: [false],
         autresForm: ['']
     },{ validator: TherapieValidator.isValid}); 
+  }
+
+  ionViewDidEnter(){
+    //Si l'utilisateur est inactif, une alerte est envoyée avec la possibilité de continuer ou de recommencer le questionnaire.
+    this.inactif.idleSet(this.navCtrl);
+  }
+
+  ionViewWillLeave(){
+    this.inactif.idleStop();
   }
 
   /**

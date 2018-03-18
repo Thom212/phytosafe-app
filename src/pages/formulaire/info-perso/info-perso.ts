@@ -1,14 +1,15 @@
-import { FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { Component} from '@angular/core';
-import { NavController, LoadingController} from 'ionic-angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { NavController, LoadingController } from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { Accueil } from '../../accueil/accueil';
+import { FinFormulaire } from '../fin-formulaire/fin-formulaire';
 
 import { Formulaire } from '../../../providers/formulaire';
 import { LocalStockage } from '../../../providers/localstockage';
 import { TabacValidator } from '../../../providers/validators';
+import { Inactif } from '../../../providers/inactif';
 
 @Component({
   selector: 'info-perso',
@@ -20,7 +21,7 @@ export class InfoPerso{
   submitAttempt: boolean = false;
   questionTabac: boolean = false;
   
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage) {
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public inactif: Inactif) {
     this.infoPersoForm = formBuilder.group({
       sexeForm: ['', Validators.required],
       date_naissanceForm: ['', Validators.required],
@@ -28,7 +29,16 @@ export class InfoPerso{
       frequenceForm: ['']
     },{ validator: TabacValidator.isValid});
   }
-  
+
+  ionViewDidEnter(){
+    //Si l'utilisateur est inactif, une alerte est envoyée avec la possibilité de continuer ou de recommencer le questionnaire.
+    this.inactif.idleSet(this.navCtrl);
+  }
+
+  ionViewWillLeave(){
+    this.inactif.idleStop();
+  }
+
   /**
    * Fonction qui permet le déploiement d'un menu proposant différentes fréquences, après que l'utilisateur ait dit fumer.
    * @method tabacOui
@@ -56,7 +66,7 @@ export class InfoPerso{
    * Elle valide les valeurs entrées dans les champs du formulaire et les stocke localement. 
    * Une fois ces valeurs stockées, elle récupère la valeur stockée correspondant à l'identificant du formulaire. 
    * Si aucun identifiant n'a été stocké, elle créé un nouveau formulaire avec toutes les données stockées. Sinon, elle met à jour le formulaire avec ces mêmes données.
-   * Elle affiche ensuite la page d'accueil du formulaire - Accueil.
+   * Elle affiche ensuite la page de fin du formulaire - FinFormulaire.
    * @method nextPage
    * @requires providers/localstockage - la fonction utilise les méthodes setData, getData, getAllData.
    * @requires providers/formulaire - la fonction utilise les méthodes createForm et updateForm.
@@ -82,16 +92,22 @@ export class InfoPerso{
               this.formulaire.createForm(dataForm).toPromise().then((res) => {
                 loader.dismiss();
                 this.localstockage.clearStoreData("idForm");
-                //Navigation à la page d'accueil du formulaire - Accueil
-                this.navCtrl.push(Accueil);
+                //Navigation à la page de fin du formulaire - FinFormulaire
+                this.navCtrl.push(FinFormulaire, {
+                  succesForm : true
+                });
               }).catch((err)=>{
                 loader.dismiss();
                 console.error('ERROR', err);
                 this.localstockage.storeAllData(dataForm).then((res) => {
-                  this.navCtrl.push(Accueil);
+                  this.navCtrl.push(FinFormulaire, {
+                    succesForm : true
+                  });
                 }).catch((err)=>{
                   console.error('ERROR', err);
-                  this.navCtrl.push(Accueil);
+                  this.navCtrl.push(FinFormulaire, {
+                    succesForm : false
+                  });
                 });
               });
             } else {
@@ -99,17 +115,23 @@ export class InfoPerso{
               this.formulaire.updateForm(dataForm).toPromise().then((res) => {
                 loader.dismiss();
                 this.localstockage.clearStoreData("idForm");
-                //Navigation à la page d'accueil du formulaire - Accueil
-                this.navCtrl.push(Accueil);
+                //Navigation à la page de fin du formulaire - FinFormulaire
+                this.navCtrl.push(FinFormulaire, {
+                  succesForm : true
+                });
               }).catch((err)=>{
                 loader.dismiss();
                 this.localstockage.clearStoreData("idForm");
                 console.error('ERROR', err);
                 this.localstockage.storeAllData(dataForm).then((res) => {
-                  this.navCtrl.push(Accueil);
+                  this.navCtrl.push(FinFormulaire, {
+                    succesForm : true
+                  });
                 }).catch((err)=>{
                   console.error('ERROR', err);
-                  this.navCtrl.push(Accueil);
+                  this.navCtrl.push(FinFormulaire, {
+                    succesForm : false
+                  });
                 });
               });
             }

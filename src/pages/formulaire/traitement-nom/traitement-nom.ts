@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit} from '@angular/core';
-import { NavController, ModalController} from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -11,6 +11,7 @@ import { Formulaire } from '../../../providers/formulaire';
 import { LocalStockage } from '../../../providers/localstockage';
 import { Traitement } from '../../../providers/traitement';
 import { Diacritics } from '../../../providers/diacritics';
+import { Inactif } from '../../../providers/inactif';
 
 @Component({
   selector: 'traitement-nom',
@@ -30,7 +31,7 @@ export class TraitementNom implements OnInit{
   traitementPlaceholder: string;
   traitementChoix = [];
   
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public diacritics: Diacritics) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public diacritics: Diacritics, public inactif: Inactif) {
     this.traitementNomForm = formBuilder.group({});
     this.traitementNom = [];
     this.traitementElement = [];
@@ -45,6 +46,15 @@ export class TraitementNom implements OnInit{
       this.traitementNom = liste[0];
       this.traitementElement = liste[1];
     });
+  }
+
+  ionViewDidEnter(){
+    //Si l'utilisateur est inactif, une alerte est envoyée avec la possibilité de continuer ou de recommencer le questionnaire.
+    this.inactif.idleSet(this.navCtrl);
+  }
+
+  ionViewWillLeave(){
+    this.inactif.idleStop();
   }
 
   /**
@@ -64,7 +74,7 @@ export class TraitementNom implements OnInit{
     var phytoForm: traitementObjet = {
       phytonom: "phytonom_"+this.nbTraitement.toString()+"_Form",
       phytoid: "phytoid_"+this.nbTraitement.toString()+"_Form",
-      phytonomControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ \-\']*)'), Validators.required])),
+      phytonomControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ]{1})([0-9a-zA-Zéèêëàäâùüûïîöôçÿ\\- \']*)([0-9a-zA-Zéèêëàäâùüûïîöôçÿ]{1})'), Validators.required])),
       phytoidControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9]*)'), Validators.required]))
     }
     this.traitementTable.push(phytoForm);

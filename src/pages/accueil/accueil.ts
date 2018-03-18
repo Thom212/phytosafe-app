@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { Maladie } from '../formulaire/maladie/maladie';
 
@@ -12,7 +13,7 @@ import { LocalStockage } from '../../providers/localstockage';
 })
 export class Accueil {
 
-  constructor(public navCtrl: NavController, public formulaire: Formulaire, public localstockage: LocalStockage) {}
+  constructor(public navCtrl: NavController, public formulaire: Formulaire, public localstockage: LocalStockage, private geolocation: Geolocation) {}
   
   /**
    * Fonction qui est liée au bouton "Commencer le formulaire" sur la page d'accueil.
@@ -26,9 +27,9 @@ export class Accueil {
    */
   nextPage() {
     //Date de création du nouveau formulaire
-    interface dateObjet { dateForm: Date };
+    interface dateObjet { dateForm: Date, latitudeForm: Number, longitudeForm: Number};
     var currentTime = new Date();
-    var dateCreaForm: dateObjet = {dateForm : currentTime};
+    var dateCreaForm: dateObjet = {dateForm : currentTime, latitudeForm: null, longitudeForm: null};
 
     this.localstockage.getData("idForm").then((val)=> {
       if (val!==null){
@@ -61,13 +62,19 @@ export class Accueil {
           break;
         }
       });
-      this.localstockage.setData(dateCreaForm).then((message) => {
-        console.log('Date de création du formulaire : ' + message);
-        //Création d'un nouveau formulaire. La première donnée à entrer dans le formulaire est la date de création.
-        this.formulaire.createForm(dateCreaForm);
-        //Navigation à la page du formulaire - Maladie
-        this.navCtrl.push(Maladie);
+      this.geolocation.getCurrentPosition().then((resp) => {
+        dateCreaForm.latitudeForm = resp.coords.latitude;
+        dateCreaForm.longitudeForm = resp.coords.longitude;
+        this.localstockage.setData(dateCreaForm).then((message) => {
+          console.log('Date de création du formulaire : ' + message);
+          //Création d'un nouveau formulaire. La première donnée à entrer dans le formulaire est la date de création.
+          this.formulaire.createForm(dateCreaForm);
+        });
+      }).catch((error) => {
+         console.log('Error getting location', error);
       });
+      //Navigation à la page du formulaire - Maladie
+      this.navCtrl.push(Maladie);
     });
   }
 }

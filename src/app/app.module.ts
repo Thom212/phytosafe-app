@@ -9,9 +9,11 @@ import { MyApp } from './app.component';
 
 import { Accueil } from '../pages/accueil/accueil';
 import { Maladie } from '../pages/formulaire/maladie/maladie';
+import { Therapies } from '../pages/formulaire/therapies/therapies';
 import { TherapiesAlter } from '../pages/formulaire/therapies-alter/therapies-alter';
 import { InfoPerso } from '../pages/formulaire/info-perso/info-perso';
 import { TraitementNom } from '../pages/formulaire/traitement-nom/traitement-nom';
+import { FinFormulaire } from '../pages/formulaire/fin-formulaire/fin-formulaire';
 import { Autocomplete } from '../pages/autocomplete/autocomplete';
 
 import { Api } from '../providers/api';
@@ -26,6 +28,7 @@ import { TherapieValidator } from '../providers/validators';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Keyboard } from '@ionic-native/keyboard';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -40,9 +43,11 @@ export function HttpLoaderFactory(http: Http) {
     MyApp,
     Accueil,
     Maladie,
+    Therapies,
     TherapiesAlter,
     TraitementNom,
     InfoPerso,
+    FinFormulaire,
     Autocomplete
   ],
   imports: [
@@ -64,9 +69,11 @@ export function HttpLoaderFactory(http: Http) {
     MyApp,
     Accueil,
     Maladie,
+    Therapies,
     TherapiesAlter,
     TraitementNom,
     InfoPerso,
+    FinFormulaire,
     Autocomplete
   ],
   providers: [
@@ -81,6 +88,7 @@ export function HttpLoaderFactory(http: Http) {
     SplashScreen,
     StatusBar,
     Keyboard,
+    Geolocation,
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]

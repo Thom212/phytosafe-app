@@ -35,6 +35,7 @@
   "FORM_MALADIE_OPTION_2" : "tumeur métastasée",
   "FORM_MALADIE_OPTION_3" : "je ne sais pas",
   
+  "FORM_THERAPIES" : "Thérapies",
   "FORM_INFO_THERAPIE" : "Informations sur les thérapies utilisées : ",
   "FORM_INFO_THERAPIE_DETAILS" : "renseignez si vous avez reçu, ou si vous allez recevoir, une radiothérapie ou une chirurgie.",
   "FORM_INFO_TRAITEMENT" : "Informations sur les traitements pris : ",
@@ -91,5 +92,12 @@
   "FORM_FREQUENCE_3" : "10-15",
   "FORM_FREQUENCE_4" : "15-20",
   "FORM_FREQUENCE_5" : ">20",
-  "FIN_BOUTON": "Terminer le formulaire"
+  "FIN_BOUTON": "Terminer le formulaire",
+
+  "REMERCIEMENT_APPLI" : "Merci d'avoir pris le temps de remplir ce formulaire !",
+  "SUCCES_FORMULAIRE_APPLI" : "Ce formulaire a bien été enregistré.",
+  "ERREUR_FORMULAIRE_APPLI" : "Un problème a eu lieu lors de l'enregistrement du formulaire. Nous sommes désolé et nous vous invitons à recommencer.",
+  "REDIRECTION_APPLI" : "Vous allez être redirigés vers la page d'accueil du formulaire dans ",
+  "UNITE_APPLI" : " secondes...",
+  "REDIRECTION_BOUTON" : "Retourner à l'accueil"
 }
