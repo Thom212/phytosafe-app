@@ -8,12 +8,13 @@ export class TherapieValidator {
     var vitamineForm = group.controls.vitamineForm.value;
     var homeoForm = group.controls.homeoForm.value;
     var aucunForm = group.controls.aucunForm.value;
+    var inconnuForm = group.controls.inconnuForm.value;
     var autresboolForm = group.controls.autresboolForm.value;
     var autresForm = group.controls.autresForm.value;
     if (autresboolForm && autresForm==''){
       group.controls.autresForm.setErrors({"autres_empty": true});
     }
-    if (!phytoForm && !boissonForm && !aromaForm && !vitamineForm && !homeoForm && !autresboolForm && !aucunForm){
+    if (!phytoForm && !boissonForm && !aromaForm && !vitamineForm && !homeoForm && !autresboolForm && !aucunForm && !inconnuForm){
       return {
           "empty": true
       };

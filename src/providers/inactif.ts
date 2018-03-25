@@ -19,7 +19,7 @@ export class Inactif {
 
   constructor(public alertCtrl: AlertController, public translate: TranslateService, private idle: Idle, public localstockage: LocalStockage, public formulaire: Formulaire) {
     // Temps à partir duquel on estime que l'utilisateur est inactif.
-    idle.setIdle(30);
+    idle.setIdle(120);
     // Actions qui terminent l'inactivité.
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
   }
@@ -33,8 +33,9 @@ export class Inactif {
    */
   idleSet(navCtrl) {
     this.idle.watch();
-    this.idleState = this.idle.onIdleStart.subscribe(()=>this.idleRedirectConfirm(navCtrl));
-    
+    this.idleState = this.idle.onIdleStart.subscribe(()=>{
+      this.idleRedirectConfirm(navCtrl);
+    });
   }
 
   /**
@@ -44,6 +45,8 @@ export class Inactif {
    * @returns {} - aucune valeur n'est retournée par la méthode.
    */
   idleStop() {
+    this.idleState.unsubscribe();
+    this.idle.stop();
     this.idle.ngOnDestroy();
   }
 
@@ -68,7 +71,6 @@ export class Inactif {
    * @returns {} - aucune valeur n'est retournée par la méthode.
    */
   idleRedirectConfirm(navCtrl) {
-    console.log('alerte créée');
     //Arrêt de la détection de l'inactivité de l'utilisateur
     this.idleState.unsubscribe();
     this.idle.stop();
@@ -94,7 +96,6 @@ export class Inactif {
           handler: () =>{ 
             timer.unsubscribe();
             alert.dismiss().then(() => {
-              console.log('alerte détruite');
               this.localstockage.getData("idForm").then((val)=> {
                 if (val!==null){
                   this.formulaire.removeForm(val);
@@ -112,7 +113,6 @@ export class Inactif {
             //Relance de la détection de l'inactivité de l'utilisateur
             timer.unsubscribe();
             alert.dismiss().then(() => {
-              console.log('alerte détruite');
               this.idleSet(navCtrl);
             });
             return false;//La fermeture de l'alerte est faite manuellement, par alert.dismiss(), une fois la suppression des données effectuées.
@@ -147,7 +147,6 @@ export class Inactif {
       } else {
         timer.unsubscribe();
         alert.dismiss().then(() => {
-          console.log('alerte détruite');
           this.localstockage.getData("idForm").then((val)=> {
             if (val!==null){
               this.formulaire.removeForm(val);

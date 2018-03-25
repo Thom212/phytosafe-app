@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
@@ -30,8 +30,9 @@ export class TherapiesAlter{
         vitamineForm: [false],
         homeoForm: [false],
         aucunForm: [false],
+        inconnuForm: [false],
         autresboolForm: [false],
-        autresForm: ['']
+        autresForm: ['', Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ\u0153\\- \'\(\)]*)')]
     },{ validator: TherapieValidator.isValid}); 
   }
 
@@ -54,13 +55,14 @@ export class TherapiesAlter{
     if(this.checkAutres == false){
       this.checkAutres = true;
       this.therapiesAlterForm.controls.aucunForm.setValue(false);
+      this.therapiesAlterForm.controls.inconnuForm.setValue(false);
     }else{
       this.checkAutres = false;
       this.therapiesAlterForm.controls.autresboolForm.setValue(false);
       this.therapiesAlterForm.controls.autresForm.setValue('');
     }
   }
-
+  
   /**
    * Fonction qui supprime les entrées des différentes thérapies alternatives, après que l'utilisateur ait dit ne pas avoir recours à des thérapies alternatives.
    * @method aucun
@@ -76,6 +78,25 @@ export class TherapiesAlter{
     this.therapiesAlterForm.controls.homeoForm.setValue(false);
     this.therapiesAlterForm.controls.autresboolForm.setValue(false);
     this.therapiesAlterForm.controls.autresForm.setValue('');
+    this.therapiesAlterForm.controls.inconnuForm.setValue(false);
+  }
+
+  /**
+   * Fonction qui supprime les entrées des différentes thérapies alternatives, après que l'utilisateur ait dit ne pas savoir s'il a recours à des thérapies alternatives.
+   * @method inconnu
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  inconnu() {
+    this.checkAutres = false;
+    this.therapiesAlterForm.controls.phytoForm.setValue(false);
+    this.therapiesAlterForm.controls.boissonForm.setValue(false);
+    this.therapiesAlterForm.controls.aromaForm.setValue(false);
+    this.therapiesAlterForm.controls.vitamineForm.setValue(false);
+    this.therapiesAlterForm.controls.homeoForm.setValue(false);
+    this.therapiesAlterForm.controls.autresboolForm.setValue(false);
+    this.therapiesAlterForm.controls.autresForm.setValue('');
+    this.therapiesAlterForm.controls.aucunForm.setValue(false);
   }
 
   /**
@@ -86,6 +107,7 @@ export class TherapiesAlter{
    */
   therapie() {
     this.therapiesAlterForm.controls.aucunForm.setValue(false);
+    this.therapiesAlterForm.controls.inconnuForm.setValue(false);
   }
 
   /**
@@ -105,7 +127,6 @@ export class TherapiesAlter{
     if(this.therapiesAlterForm.valid){
       //Stockage local des données remplies dans cette page de formulaire
       this.localstockage.setData(this.therapiesAlterForm.value).then((message) => {
-        console.log('Thérapies alternatives : ' + message);
         //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
         this.localstockage.getData("idForm").then((val)=> {
           this.localstockage.getAllData().then((dataForm)=>{
@@ -119,12 +140,12 @@ export class TherapiesAlter{
             }
           });
         });
+        if (this.therapiesAlterForm.controls.phytoForm.value || this.therapiesAlterForm.controls.vitamineForm.value || this.therapiesAlterForm.controls.boissonForm.value) {
+          this.navCtrl.push(TraitementNom);
+        } else {
+          this.navCtrl.push(InfoPerso);
+        }
       });
-      if (this.therapiesAlterForm.controls.phytoForm.value || this.therapiesAlterForm.controls.vitamineForm.value || this.therapiesAlterForm.controls.boissonForm.value) {
-        this.navCtrl.push(TraitementNom);
-      } else {
-        this.navCtrl.push(InfoPerso);
-      }
     }
   }
 }

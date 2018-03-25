@@ -24,7 +24,7 @@ export class InfoPerso{
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public inactif: Inactif) {
     this.infoPersoForm = formBuilder.group({
       sexeForm: ['', Validators.required],
-      date_naissanceForm: ['', Validators.required],
+      date_naissanceForm: ['', Validators.compose([ Validators.pattern('([0-9]{2,3})'), Validators.required])],
       tabacForm: ['',Validators.required],
       frequenceForm: ['']
     },{ validator: TabacValidator.isValid});
@@ -82,7 +82,6 @@ export class InfoPerso{
       loader.present();
       //Stockage local des données remplies dans cette page de formulaire
       this.localstockage.setData(this.infoPersoForm.value).then((message) => {
-        console.log('Informations générales : ' + message);
         //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
         this.localstockage.getData("idForm").then((val)=> {
           this.localstockage.getAllData().then((dataForm)=>{

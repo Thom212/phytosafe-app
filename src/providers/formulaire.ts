@@ -47,7 +47,7 @@ export class Formulaire {
       .subscribe(res => {
         // Si la requête est un succès, l'identifiant du formulaire est stocké localement
         if (res.status == 'success') {
-          var idCreaForm: idObjet = {idForm : res.data.id}; // Le stockage de l'identifiant du formulaire doit avoir le nom idForm.
+          var idCreaForm: idObjet = {idForm : res.data}; // Le stockage de l'identifiant du formulaire doit avoir le nom idForm.
           this.localstockage.setData(idCreaForm);
           this.localstockage.removeData(dataForm);//Il faut ensuite supprimer toutes les données qui ont été enregistrées sur le serveur, sauf l'identifiant du formulaire.
         }

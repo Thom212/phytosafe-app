@@ -47,10 +47,12 @@
   "FORM_RADIO_OPTION_1": "oui",
   "FORM_RADIO_OPTION_2": "prévue",
   "FORM_RADIO_OPTION_3": "non",
+  "FORM_RADIO_OPTION_4": "je ne sais pas",
   "FORM_CHIRURGIE_CHECK" : "Chirurgie",
   "FORM_CHIRURGIE_OPTION_1": "oui",
   "FORM_CHIRURGIE_OPTION_2": "prévue",
   "FORM_CHIRURGIE_OPTION_3": "non",
+  "FORM_CHIRURGIE_OPTION_4": "je ne sais pas",
   
   "FORM_THERAPIES_ALTERNATIVES" : "Thérapies alternatives",
   "FORM_INFO_ALTERNATIF" : "Informations sur les thérapies alternatives utilisées : ",
@@ -65,6 +67,7 @@
   "FORM_THERAPIES_OPTION_6" : "autres",
   "FORM_CHECK_THERAPIE_ALERTE" : "Précisez les thérapies utilisées.",
   "FORM_THERAPIES_OPTION_7" : "aucune",
+  "FORM_THERAPIES_OPTION_8" : "je ne sais pas",
   
   "FORM_PHYTO" : "Nom des thérapies",
   "FORM_INFO_PHYTO" : "Informations sur les thérapies alternatives prises : ",

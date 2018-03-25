@@ -46,7 +46,11 @@
         <ion-label>{{ 'FORM_THERAPIES_OPTION_7' | translate }}</ion-label>
         <ion-checkbox formControlName="aucunForm" (click)="aucun()"></ion-checkbox>
       </ion-item>
-      
+      <ion-item no-lines>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_8' | translate }}</ion-label>
+        <ion-checkbox formControlName="inconnuForm" (click)="inconnu()"></ion-checkbox>
+      </ion-item>
+
     </ion-list>
     <p *ngIf="!therapiesAlterForm.valid && submitAttempt">{{ 'FORM_CHECK_THERAPIE_ALERTE' | translate }}</p>
   

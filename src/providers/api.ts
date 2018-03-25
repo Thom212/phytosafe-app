@@ -19,7 +19,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Api {
   
-  url: string = 'http://192.168.1.28:3000/api/v1';//'http://51.255.38.12/api/v1';
+  url: string = 'http://192.168.1.4:3000/api/v1';//'http://51.255.38.12/api/v1';
 
   constructor(public http: Http) {}
 
@@ -78,10 +78,6 @@ export class Api {
    * @method patch
    */
   patch(endpoint: string, body: any, options?: RequestOptions) {
-    /* var body: any;
-    body = JSON.stringify(data);
-    console.log(data)
-    console.log('body :' + body) */
     return this.http.patch(this.url + '/' + endpoint, body, options);
   }
 }

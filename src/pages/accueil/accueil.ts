@@ -66,7 +66,6 @@ export class Accueil {
         dateCreaForm.latitudeForm = resp.coords.latitude;
         dateCreaForm.longitudeForm = resp.coords.longitude;
         this.localstockage.setData(dateCreaForm).then((message) => {
-          console.log('Date de création du formulaire : ' + message);
           //Création d'un nouveau formulaire. La première donnée à entrer dans le formulaire est la date de création.
           this.formulaire.createForm(dateCreaForm);
         });

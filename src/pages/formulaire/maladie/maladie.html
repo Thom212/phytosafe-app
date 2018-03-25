@@ -31,10 +31,10 @@
     <div *ngIf="questionOrgane">
       <button type="button" ion-item class="buttonModal" (click)="showOrganeModal()" no-lines>
         <ion-label class="labelModalstackedOrgane" [class.cache]="!organeChoix" stacked>{{ 'FORM_ORGANE_PRIMITIF' | translate }}</ion-label>
-        <ion-label class="labelModal" *ngIf="!organeChoix" [class.invalid]="!maladieForm.controls.organeForm.valid && (maladieForm.controls.organeForm.dirty || submitAttempt)">{{ 'FORM_ORGANE_PRIMITIF' | translate }}</ion-label>
-        <ion-label class="nomModal" *ngIf="organeChoix" [class.invalid]="!maladieForm.controls.organeForm.valid && (maladieForm.controls.organeForm.dirty || submitAttempt)">{{organeChoix}}</ion-label>
+        <ion-label class="labelModal" *ngIf="!organeChoix" [class.invalid]="!maladieForm.controls.nom_organeForm.valid && (maladieForm.controls.nom_organeForm.dirty || submitAttempt)">{{ 'FORM_ORGANE_PRIMITIF' | translate }}</ion-label>
+        <ion-label class="nomModal" *ngIf="organeChoix" [class.invalid]="!maladieForm.controls.nom_organeForm.valid && (maladieForm.controls.nom_organeForm.dirty || submitAttempt)">{{organeChoix}}</ion-label>
       </button>
-      <p *ngIf="!maladieForm.controls.organeForm.valid  && (maladieForm.controls.organeForm.dirty || submitAttempt)">{{ 'FORM_ORGANE_PRIMITIF_ALERTE' | translate }}</p>
+      <p *ngIf="!maladieForm.controls.nom_organeForm.valid  && (maladieForm.controls.nom_organeForm.dirty || submitAttempt)">{{ 'FORM_ORGANE_PRIMITIF_ALERTE' | translate }}</p>
     </div>
 
     <ion-list radio-group formControlName="etatForm">

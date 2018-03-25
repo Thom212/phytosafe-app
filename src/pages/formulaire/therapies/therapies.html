@@ -29,6 +29,10 @@
           <ion-label [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_RADIO_OPTION_3' | translate }}</ion-label>
           <ion-radio value="{{ 'FORM_RADIO_OPTION_3' | translate }}" [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)"></ion-radio>
         </ion-item>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_RADIO_OPTION_4' | translate }}</ion-label>
+          <ion-radio value="{{ 'FORM_RADIO_OPTION_4' | translate }}" [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
       </ion-list>
       <p *ngIf="!therapiesForm.controls.radioForm.valid  && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
       
@@ -45,6 +49,10 @@
         <ion-item no-lines>
           <ion-label [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)">{{ 'FORM_CHIRURGIE_OPTION_3' | translate }}</ion-label>
           <ion-radio value="{{ 'FORM_CHIRURGIE_OPTION_3' | translate }}" [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)">{{ 'FORM_CHIRURGIE_OPTION_4' | translate }}</ion-label>
+          <ion-radio value="{{ 'FORM_CHIRURGIE_OPTION_4' | translate }}" [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)"></ion-radio>
         </ion-item>
       </ion-list>
       <p *ngIf="!therapiesForm.controls.chirurgieForm.valid  && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>

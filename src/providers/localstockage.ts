@@ -69,7 +69,7 @@ export class LocalStockage {
       this.storage.forEach((value, key, index) => {
         if (typeof key === 'string' && key.endsWith('Form')){
           dataStorage[key]=value;
-          console.log('la valeur est ' + value + ' et la key est ' + key);
+          //console.log('la valeur est ' + value + ' et la key est ' + key);
         }
       }).then(() => {      
         resolve(dataStorage);
@@ -88,7 +88,7 @@ export class LocalStockage {
       this.storage.forEach( (value, key, index) => {
         if (!key.startsWith('Saved_Form')){
           this.storage.remove(key).then(() => {
-            console.log(key + ' supprimée : ' + value);
+            //console.log(key + ' supprimée : ' + value);
           });
         }
       }).then(() => {      
@@ -137,7 +137,7 @@ export class LocalStockage {
    */
   clearStoreData(key){
     return this.storage.remove(key).then(() => {
-      console.log(key + ' supprimée');
+      //console.log(key + ' supprimée');
     });
   }
 }

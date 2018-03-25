@@ -76,11 +76,21 @@ export class Therapies implements OnInit {
       traitementnomControl : FormControl,
       traitementidControl : FormControl
     };
-    var traitement: traitementObjet = {
-      traitementnom: "traitementnom_"+this.nbTraitement.toString()+"_Form",
-      traitementid: "traitementid_"+this.nbTraitement.toString()+"_Form",
-      traitementnomControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ]{1})([0-9a-zA-Zéèêëàäâùüûïîöôçÿ\\- \']*)([0-9a-zA-Zéèêëàäâùüûïîöôçÿ]{1})'), Validators.required])),
-      traitementidControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9]*)'), Validators.required]))
+    var traitement: traitementObjet;
+    if (this.nbTraitement == 1) {
+      traitement = {
+        traitementnom: "traitementnom_"+this.nbTraitement.toString()+"_Form",
+        traitementid: "traitementid_"+this.nbTraitement.toString()+"_Form",
+        traitementnomControl : new FormControl ('', Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿœ\\- \'\(\)]*)')),
+        traitementidControl : new FormControl ('', Validators.pattern('([0-9]*)'))
+      }
+    } else {
+      traitement = {
+        traitementnom: "traitementnom_"+this.nbTraitement.toString()+"_Form",
+        traitementid: "traitementid_"+this.nbTraitement.toString()+"_Form",
+        traitementnomControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿœ\\- \'\(\)]*)'), Validators.required])),
+        traitementidControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9]*)'), Validators.required]))
+      }
     }
     this.anticancerTable.push(traitement);
   }
@@ -203,9 +213,7 @@ export class Therapies implements OnInit {
 
       //Stockage local des données remplies dans cette page de formulaire
       this.localstockage.setData(this.therapiesForm.value).then((message) => {
-        console.log('Therapies : ' + message);
         this.localstockage.setData(this.anticancerForm.value).then((message) => {
-          console.log('Anti Cancéreux : ' + message);
           //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
           this.localstockage.getData("idForm").then((val)=> {
             this.localstockage.getAllData().then((dataForm)=>{
@@ -219,9 +227,9 @@ export class Therapies implements OnInit {
               }
             });
           });
+          //Navigation à la page du formulaire - Traitements Alternatifs
+          this.navCtrl.push(TherapiesAlter);
         });
-        //Navigation à la page du formulaire - Traitements Alternatifs
-        this.navCtrl.push(TherapiesAlter);
       });
     }
   }

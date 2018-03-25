@@ -33,8 +33,8 @@ export class Maladie implements OnInit {
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public organe: Cancer, public keyboard: Keyboard, public diacritics: Diacritics, public inactif: Inactif) {
     this.maladieForm = formBuilder.group({
       organeboolForm : ['', Validators.required],
-      organeForm: [''],
-      nom_organeForm: [''],
+      organeForm: ['', Validators.pattern('([A-Z ]{3,5})')],
+      nom_organeForm: ['', Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ\u0152\u0153\\- \'\(\)]*)')],
       etatForm:  ['', Validators.required]
     },{ validator: MaladieValidator.isValid});
     this.organeNom = [];
@@ -135,7 +135,6 @@ export class Maladie implements OnInit {
 
       //Stockage local des données remplies dans cette page de formulaire
       this.localstockage.setData(this.maladieForm.value).then((message) => {
-        console.log('Maladie : ' + message);
         //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
         this.localstockage.getData("idForm").then((val)=> {
           this.localstockage.getAllData().then((dataForm)=>{

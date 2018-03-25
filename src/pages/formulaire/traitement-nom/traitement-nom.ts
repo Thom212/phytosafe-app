@@ -71,11 +71,21 @@ export class TraitementNom implements OnInit{
       phytonomControl : FormControl,
       phytoidControl : FormControl
     };
-    var phytoForm: traitementObjet = {
-      phytonom: "phytonom_"+this.nbTraitement.toString()+"_Form",
-      phytoid: "phytoid_"+this.nbTraitement.toString()+"_Form",
-      phytonomControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ]{1})([0-9a-zA-Zéèêëàäâùüûïîöôçÿ\\- \']*)([0-9a-zA-Zéèêëàäâùüûïîöôçÿ]{1})'), Validators.required])),
-      phytoidControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9]*)'), Validators.required]))
+    var phytoForm: traitementObjet;
+    if (this.nbTraitement == 1) {
+      phytoForm = {
+        phytonom: "phytonom_"+this.nbTraitement.toString()+"_Form",
+        phytoid: "phytoid_"+this.nbTraitement.toString()+"_Form",
+        phytonomControl : new FormControl ('', Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ\u0153\\- \'\(\)]*)')),
+        phytoidControl : new FormControl ('', Validators.pattern('([0-9]*)'))
+      }
+    } else {
+      phytoForm = {
+        phytonom: "phytonom_"+this.nbTraitement.toString()+"_Form",
+        phytoid: "phytoid_"+this.nbTraitement.toString()+"_Form",
+        phytonomControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ\u0153\\- \'\(\)]*)'), Validators.required])),
+        phytoidControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9]*)'), Validators.required]))
+      }
     }
     this.traitementTable.push(phytoForm);
   }
@@ -131,7 +141,6 @@ export class TraitementNom implements OnInit{
     var suppressionObjet = {}
     suppressionObjet[this.traitementTable[i].phytonom] = this.traitementNomForm.value[this.traitementTable[i].phytonom];
     suppressionObjet[this.traitementTable[i].phytoid] = this.traitementNomForm.value[this.traitementTable[i].phytoid];
-    console.log(suppressionObjet);
     this.localstockage.removeData(suppressionObjet);
     this.traitementNomForm.removeControl(this.traitementTable[i].phytonom);
     this.traitementNomForm.removeControl(this.traitementTable[i].phytoid);
@@ -195,8 +204,6 @@ export class TraitementNom implements OnInit{
     if(this.traitementNomForm.valid){
       //Stockage local des données remplies dans cette page de formulaire
       this.localstockage.setData(this.traitementNomForm.value).then((message) => {
-        console.log('********************************************************');
-        console.log('Nom des Thérapies : ' + message);
         //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
         this.localstockage.getData("idForm").then((val)=> {
           this.localstockage.getAllData().then((dataForm)=>{
@@ -209,10 +216,10 @@ export class TraitementNom implements OnInit{
               this.formulaire.updateForm(dataForm);
             }
           });
-        });
+        });    
+        //Navigation à la page du formulaire - Informations Générales
+        this.navCtrl.push(InfoPerso);
       });
-      //Navigation à la page du formulaire - Informations Générales
-      this.navCtrl.push(InfoPerso);
     }
   }
 }
