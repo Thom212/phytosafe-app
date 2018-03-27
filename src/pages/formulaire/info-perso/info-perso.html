@@ -16,20 +16,11 @@
       {{ 'FORM_INFO_PATIENT_DETAILS' | translate }}
     </h3>
     <ion-item class="naissanceInput" no-lines>
-      <!--ion-label [class.cache]="!dateNaissance" class="labelModalstacked" stacked>{{ 'FORM_DATE_NAISSANCE' | translate }}</ion-label>
-      <ion-label *ngIf="!dateNaissance" [class.invalid]="!infoPersoForm.controls.date_naissanceForm.valid && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)" class="labelModal" (click)="showInputNaissance()">{{ 'FORM_DATE_NAISSANCE' | translate }}</ion-label>
-      <ion-input *ngIf="dateNaissance" [class.invalid]="!infoPersoForm.controls.date_naissanceForm.valid && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)" formControlName="date_naissanceForm" type="number" pattern="\\d*" (ionBlur)="checkInputNaissance()"></ion-input-->
       <ion-label [class.blur]="dateNaissance" floating>{{ 'FORM_DATE_NAISSANCE' | translate }}</ion-label>
-      <ion-input [class.invalid]="!infoPersoForm.controls.date_naissanceForm.valid && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)" formControlName="date_naissanceForm" type="number" pattern="\\d*" (ionBlur)="labelBlur()" (ionFocus)="labelFocus()"></ion-input>
+      <ion-input [class.invalid]="!infoPersoForm.controls.date_naissanceForm.valid && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)" formControlName="date_naissanceForm" type="number" pattern="\d*" (ionBlur)="labelBlur()" (ionFocus)="labelFocus()"></ion-input>
     </ion-item>
     <p *ngIf="!infoPersoForm.controls.date_naissanceForm.valid  && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)">{{ 'FORM_DATE_NAISSANCE_ALERTE' | translate }}</p>
-    
-    <!--ion-item no-lines>
-      <ion-label floating>{{ 'FORM_DATE_NAISSANCE' | translate }}</ion-label>
-      <ion-datetime cancelText="annuler" doneText="valider" [class.invalid]="!infoPersoForm.controls.date_naissanceForm.valid && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)" formControlName="date_naissanceForm" displayFormat="YYYY"></ion-datetime>
-    </ion-item-->
-    
-    
+        
     <ion-list radio-group formControlName="sexeForm">
       <p>{{ 'FORM_SEX_CHECK' | translate }}</p>
       <ion-item no-lines>

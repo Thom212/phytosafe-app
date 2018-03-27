@@ -78,9 +78,9 @@
 
   "FORM_INFO_PERSO": "Informations générales",
   "FORM_INFO_PATIENT": "Informations relatives au patient : ",
-  "FORM_INFO_PATIENT_DETAILS": "renseignez votre année de naissance et votre genre.",
-  "FORM_DATE_NAISSANCE" : "Année de naissance",
-  "FORM_DATE_NAISSANCE_ALERTE" : "Entrez une année de naissance.",
+  "FORM_INFO_PATIENT_DETAILS": "renseignez votre âge et votre genre.",
+  "FORM_DATE_NAISSANCE" : "Age",
+  "FORM_DATE_NAISSANCE_ALERTE" : "Entrez un âge.",
   "FORM_SEX_CHECK": "Genre",
   "FORM_SEX_FEMME": "Femme",
   "FORM_SEX_HOMME": "Homme",
