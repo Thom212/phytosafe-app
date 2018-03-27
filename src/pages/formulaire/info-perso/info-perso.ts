@@ -20,6 +20,7 @@ export class InfoPerso{
   infoPersoForm: FormGroup;
   submitAttempt: boolean = false;
   questionTabac: boolean = false;
+  dateNaissance: boolean = false;
   
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public inactif: Inactif) {
     this.infoPersoForm = formBuilder.group({
@@ -37,6 +38,50 @@ export class InfoPerso{
 
   ionViewWillLeave(){
     this.inactif.idleStop();
+  }
+
+  /**
+   * Fonction qui permet d'entrer l'année de naissance et qui gère les labels.
+   * @method showInputNaissance
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  showInputNaissance() {
+    this.dateNaissance = true;
+  }
+
+  /**
+   * Fonction qui elève le champ INPUT si rien n'est entré.
+   * @method checkInputNaissance
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  checkInputNaissance() {
+    if (this.infoPersoForm.value['date_naissanceForm'] === '') {
+      this.dateNaissance = false;
+    }
+  }
+
+  /**
+   * Fonction qui permet de modifier la classe CSS de l'étiquette.
+   * @method labelBlur
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  labelBlur() {
+    if (this.infoPersoForm.value['date_naissanceForm'] === '') {
+      this.dateNaissance = false;
+    }
+  }
+
+  /**
+   * Fonction qui permet de modifier la classe CSS de l'étiquette.
+   * @method labelFocus
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  labelFocus() {
+    this.dateNaissance = true;
   }
 
   /**

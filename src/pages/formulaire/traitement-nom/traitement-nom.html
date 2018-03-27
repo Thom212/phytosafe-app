@@ -33,7 +33,7 @@
     </button>
   </form>
 
-  <button class="buttonValide" ion-button icon-end large clear (click)="nextPage()">
+  <button class="buttonValide" [class.invalid]="!traitementNomForm.valid && submitAttempt" ion-button icon-end large clear (click)="nextPage()">
     {{ 'CONTINUE_BOUTON' | translate }}
     <ion-icon name="arrow-forward"></ion-icon>
   </button>

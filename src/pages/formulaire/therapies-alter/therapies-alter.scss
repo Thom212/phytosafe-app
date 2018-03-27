@@ -1,73 +1,17 @@
 .ios, .md{
   therapies-alter {
-    ion-header{
-      h2{
-        text-align: center;
-        padding-right: 100px;
-      }
-    }
     ion-content{
       .FormAlerte{
-        padding-left: 10px;
         margin-bottom: 50px;
-        font-size: 1.2em;
-        color: #ea6153;
-      }
-      .buttonValide{
-        margin: auto;
-        margin-top: 50px;
-        margin-bottom: 50px;
-        display: block;
-        border: 3px #488aff solid;
-      }
-      
+      } 
       form{
-        padding: 0px;
-        h3{
-          span{
-            font-weight: bold;
-          }
-          font-size: 1.2em;
-          font-weight: normal;
-          color: #488aff;
-          padding: 0px;
-          margin: 50px 10px 0px 15px; 
-          text-align:justify;
-        }
-        p{
-          font-size: 1em;
-          color: #ea6153;
-          margin-left: 10px;
-        }
-
-        ion-list{ 
-          p{
-            font-size: 0.9em;
-            color: #999999;
-            margin: 15px 0px 4px 25px;
-          }
-          ion-item{
-            background-color: #f2f2f2;
-            margin-left: 16px;
-            width: auto;
-            margin-right: 10px;
-            margin-bottom: 0px;
-            padding-left: 10px;
-          }
-          ion-label{
-            margin: 0px;
-            padding: 0px 20px 0px 0px;
-            color: #999999;
-          }
+        ion-list{
           ion-input{
             background-color: #ffffff;
             padding: 0px 0px 0px 10px;
-            margin: 0px 50% 20px 50px;
-            width: 60%;
+            margin: 0px 50px 20px 50px;
+            width: 100%;
           }
-        }
-        .invalid {
-          border: 2px solid #ea6153;
         }
       }
     } 

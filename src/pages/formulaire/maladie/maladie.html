@@ -30,7 +30,7 @@
 
     <div *ngIf="questionOrgane">
       <button type="button" ion-item class="buttonModal" (click)="showOrganeModal()" no-lines>
-        <ion-label class="labelModalstackedOrgane" [class.cache]="!organeChoix" stacked>{{ 'FORM_ORGANE_PRIMITIF' | translate }}</ion-label>
+        <ion-label class="labelModalstacked" [class.cache]="!organeChoix" stacked>{{ 'FORM_ORGANE_PRIMITIF' | translate }}</ion-label>
         <ion-label class="labelModal" *ngIf="!organeChoix" [class.invalid]="!maladieForm.controls.nom_organeForm.valid && (maladieForm.controls.nom_organeForm.dirty || submitAttempt)">{{ 'FORM_ORGANE_PRIMITIF' | translate }}</ion-label>
         <ion-label class="nomModal" *ngIf="organeChoix" [class.invalid]="!maladieForm.controls.nom_organeForm.valid && (maladieForm.controls.nom_organeForm.dirty || submitAttempt)">{{organeChoix}}</ion-label>
       </button>
@@ -56,7 +56,7 @@
   
   </form>
 
-  <button class="buttonValide" ion-button icon-end large clear (click)="nextPage()">
+  <button class="buttonValide" [class.invalid]="!maladieForm.valid && submitAttempt" ion-button icon-end large clear (click)="nextPage()">
     {{ 'CONTINUE_BOUTON' | translate }}
     <ion-icon name="arrow-forward"></ion-icon>
   </button>

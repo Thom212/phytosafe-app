@@ -146,7 +146,6 @@ export class Therapies implements OnInit {
     var suppressionObjet = {}
     suppressionObjet[this.anticancerTable[i].traitementnom] = this.anticancerForm.value[this.anticancerTable[i].traitementnom];
     suppressionObjet[this.anticancerTable[i].traitementid] = this.anticancerForm.value[this.anticancerTable[i].traitementid];
-    console.log(suppressionObjet);
     this.localstockage.removeData(suppressionObjet);
     this.anticancerForm.removeControl(this.anticancerTable[i].traitementnom);
     this.anticancerForm.removeControl(this.anticancerTable[i].traitementid);

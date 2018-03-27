@@ -1,100 +1,10 @@
 .ios, .md{
   maladie {
-    ion-header{
-      h2{
-        text-align: center;
-        padding-right: 100px;
-      }
-    }
-    ion-content{
-      .FormAlerte{
-        padding-left: 10px;
-        font-size: 1.2em;
-        color: #ea6153;
-      }
-      .buttonValide{
-        margin: auto;
-        margin-bottom: 50px;
-        margin-top: 50px;
-        display: block;
-        border: 3px #488aff solid;
-      }
-      
+    ion-content{      
       form{
-        padding: 0px;
-        h3{
-          span{
-            font-weight: bold;
-          }
-          font-size: 1.2em;
-          font-weight: normal;
-          color: #488aff;
-          padding: 0px;
-          margin: 50px 10px 0px 15px; 
-          text-align:justify;
-        }
-        p{
-          font-size: 1em;
-          color: #ea6153;
-          margin-left: 10px;
-        }
         div{
           padding: 0px;
           margin: 0px;
-        }
-        ion-label {
-          padding-left: 10px;
-        }
-        .buttonModal{
-          background: rgba(0,0,0,0);
-          .labelModalstackedOrgane{
-            font-size: 0.8em;
-            color: #999999;
-            margin: 15px 0px 4px 0px;
-          }
-          .cache{
-            color: #ffffff;
-          }
-          .labelModal{
-            background-color: #f2f2f2;
-            padding: 10px 0px 10px 10px;
-            margin: 0px;
-            color: #999999;
-          }
-          .nomModal{
-            background-color: #f2f2f2;
-            padding: 10px 0px 10px 10px;
-            margin: 0px;
-            color: #000000;
-          }
-        }
-        ion-list{
-          margin-bottom: 0px;
-          margin-top: 20px;
-          p{
-            font-size: 0.9em;
-            color: #999999;
-            margin: 15px 0px 4px 25px;
-          }
-          ion-item{
-            background-color: #f2f2f2;
-            margin-left: 16px;
-            width: auto;
-            margin-right: 10px;
-            margin-bottom: 0px;
-            padding-left: 10px;
-          }
-          ion-label, ion-radio{
-            margin: 0px;
-            padding: 0px 20px 0px 0px;
-            color: #999999;
-          }
-        }
-        .invalid {
-          border: 2px solid #ea6153;
-        }
-        .invalid-bis{
-          color: #ea6153;
         }
       }
     } 

@@ -13,11 +13,11 @@
       <span>{{ 'FORM_INFO_ALTERNATIF' | translate }}</span>
       {{ 'FORM_INFO_ALTERNATIF_DETAILS' | translate }}
     </h3>
-    <ion-list>
+    <ion-list text-wrap>
       <p>{{ 'FORM_THERAPIES_TYPES' | translate }}</p>
       <ion-item no-lines>
         <ion-label>{{ 'FORM_THERAPIES_OPTION_1' | translate }}</ion-label>
-        <ion-checkbox formControlName="phytoForm" (click)="therapie()"></ion-checkbox>
+        <ion-checkbox  formControlName="phytoForm" (click)="therapie()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines>
         <ion-label>{{ 'FORM_THERAPIES_OPTION_2' | translate }}</ion-label>
@@ -56,7 +56,7 @@
   
   </form>
   
-  <button class="buttonValide" ion-button icon-end large clear (click)="nextPage()">
+  <button class="buttonValide" [class.invalid]="!therapiesAlterForm.valid && submitAttempt" ion-button icon-end large clear (click)="nextPage()">
     {{ 'CONTINUE_BOUTON' | translate }}
     <ion-icon name="arrow-forward"></ion-icon>
   </button>

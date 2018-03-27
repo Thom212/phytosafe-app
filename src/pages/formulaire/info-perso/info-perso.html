@@ -15,9 +15,12 @@
       <span>{{ 'FORM_INFO_PATIENT' | translate }}</span>
       {{ 'FORM_INFO_PATIENT_DETAILS' | translate }}
     </h3>
-    <ion-item no-lines>
-      <ion-label floating>{{ 'FORM_DATE_NAISSANCE' | translate }}</ion-label>
-      <ion-input [class.invalid]="!infoPersoForm.controls.date_naissanceForm.valid && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)" formControlName="date_naissanceForm" type="number" pattern="\\d*"></ion-input>
+    <ion-item class="naissanceInput" no-lines>
+      <!--ion-label [class.cache]="!dateNaissance" class="labelModalstacked" stacked>{{ 'FORM_DATE_NAISSANCE' | translate }}</ion-label>
+      <ion-label *ngIf="!dateNaissance" [class.invalid]="!infoPersoForm.controls.date_naissanceForm.valid && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)" class="labelModal" (click)="showInputNaissance()">{{ 'FORM_DATE_NAISSANCE' | translate }}</ion-label>
+      <ion-input *ngIf="dateNaissance" [class.invalid]="!infoPersoForm.controls.date_naissanceForm.valid && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)" formControlName="date_naissanceForm" type="number" pattern="\\d*" (ionBlur)="checkInputNaissance()"></ion-input-->
+      <ion-label [class.blur]="dateNaissance" floating>{{ 'FORM_DATE_NAISSANCE' | translate }}</ion-label>
+      <ion-input [class.invalid]="!infoPersoForm.controls.date_naissanceForm.valid && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)" formControlName="date_naissanceForm" type="number" pattern="\\d*" (ionBlur)="labelBlur()" (ionFocus)="labelFocus()"></ion-input>
     </ion-item>
     <p *ngIf="!infoPersoForm.controls.date_naissanceForm.valid  && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)">{{ 'FORM_DATE_NAISSANCE_ALERTE' | translate }}</p>
     
@@ -82,7 +85,7 @@
     </ion-list>
     <p *ngIf="!infoPersoForm.controls.frequenceForm.valid  && (infoPersoForm.controls.frequenceForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
   </form>
-  <button class="buttonValide" ion-button icon-end large clear (click)="nextPage()">
+  <button class="buttonValide" [class.invalid]="!infoPersoForm.valid && submitAttempt" ion-button icon-end large clear (click)="nextPage()">
     {{ 'FIN_BOUTON' | translate }}
     <ion-icon name="arrow-forward"></ion-icon>
   </button>
