@@ -57,8 +57,6 @@ export class Traitement {
             if (element.nom !== 'autres_phyto' && element.nom !== 'autres_ttcan') {
               traitementList.push(element.nom.charAt(0).toUpperCase() + element.nom.slice(1).toLowerCase());
               traitementTab.push(element);
-            }else{
-              console.log(element.id);
             }
           });
         }).catch((err)=>{
