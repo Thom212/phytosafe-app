@@ -9,6 +9,7 @@ import { InfoPerso } from '../info-perso/info-perso';
 
 import { Formulaire } from '../../../providers/formulaire';
 import { LocalStockage } from '../../../providers/localstockage';
+import { Traitement } from '../../../providers/traitement';
 import { TherapieValidator } from '../../../providers/validators';
 import { Inactif } from '../../../providers/inactif';
 
@@ -21,8 +22,9 @@ export class TherapiesAlter{
   therapiesAlterForm: FormGroup;
   submitAttempt: boolean = false;
   checkAutres: boolean = false;
+  traitementListe: any;
   
-  constructor(public navCtrl: NavController, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public inactif: Inactif) {
+  constructor(public navCtrl: NavController, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public traitement: Traitement, public localstockage: LocalStockage, public inactif: Inactif) {
     this.therapiesAlterForm = formBuilder.group({
         phytoForm: [false],
         boissonForm: [false],
@@ -34,6 +36,12 @@ export class TherapiesAlter{
         autresboolForm: [false],
         autresForm: ['', Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ\u0153\\- \'\(\)]*)')]
     },{ validator: TherapieValidator.isValid}); 
+  }
+
+  ngOnInit(){
+    this.traitement.makeTraitList(['PHYTO']).then((liste) =>{
+      this.traitementListe = liste;
+    });
   }
 
   ionViewDidEnter(){
@@ -48,10 +56,10 @@ export class TherapiesAlter{
   /**
    * Fonction qui permet le déploiement d'un champ permettant d'entrer le nom d'une thérapie alternative, après que l'utilisateur ait dit avoir recours à des thérapies alternatives qui ne sont pas listées dans le formulaire.
    * @method autres
-   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @param {id} - un identifiant css est passé à la fonction.
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
-  autres(){
+  autres(inputAutres){
     if(this.checkAutres == false){
       this.checkAutres = true;
       this.therapiesAlterForm.controls.aucunForm.setValue(false);
@@ -60,6 +68,7 @@ export class TherapiesAlter{
       this.checkAutres = false;
       this.therapiesAlterForm.controls.autresboolForm.setValue(false);
       this.therapiesAlterForm.controls.autresForm.setValue('');
+      inputAutres.setFocus();
     }
   }
   
@@ -141,7 +150,9 @@ export class TherapiesAlter{
           });
         });
         if (this.therapiesAlterForm.controls.phytoForm.value || this.therapiesAlterForm.controls.vitamineForm.value || this.therapiesAlterForm.controls.boissonForm.value) {
-          this.navCtrl.push(TraitementNom);
+          this.navCtrl.push(TraitementNom, {
+            liste : this.traitementListe
+          });
         } else {
           this.navCtrl.push(InfoPerso);
         }

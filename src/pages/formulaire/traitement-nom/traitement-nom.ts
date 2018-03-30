@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit} from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, NavParams } from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -29,12 +29,14 @@ export class TraitementNom implements OnInit{
   traitementElement: any;
   traitementTitre: string;
   traitementPlaceholder: string;
+  liste = [];
   traitementChoix = [];
   
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public diacritics: Diacritics, public inactif: Inactif) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public diacritics: Diacritics, public inactif: Inactif) {
     this.traitementNomForm = formBuilder.group({});
     this.traitementNom = [];
     this.traitementElement = [];
+    this.liste = this.navParams.get('liste');
   }
 
   ngOnInit(){
@@ -42,10 +44,12 @@ export class TraitementNom implements OnInit{
     this.createChoixObjet();
     this.traitementNomForm.addControl(this.traitementTable[0].phytonom, this.traitementTable[0].phytonomControl);
     this.traitementNomForm.addControl(this.traitementTable[0].phytoid, this.traitementTable[0].phytoidControl);
-    this.traitement.makeTraitList(['PHYTO']).then((liste) =>{
+    /*this.traitement.makeTraitList(['PHYTO']).then((liste) =>{
       this.traitementNom = liste[0];
       this.traitementElement = liste[1];
-    });
+    });*/
+    this.traitementNom = this.liste[0];
+    this.traitementElement = this.liste[1];
   }
 
   ionViewDidEnter(){
@@ -165,24 +169,26 @@ export class TraitementNom implements OnInit{
     });
     let modal = this.modalCtrl.create(Autocomplete, {dataAutocomplete: this.traitementNom, titreAutocomplete: this.traitementTitre, placeholderAutocomplete: this.traitementPlaceholder});
     modal.onDidDismiss(data => {
-      this.traitementChoix[i].choixTest = true;
-      this.traitementChoix[i].choixNom = data;
-      var traitementData = this.traitementElement.find((val)=>{
-        let strVal = this.diacritics.replaceDiacritics(val.nom.toLowerCase());
-        let strData = this.diacritics.replaceDiacritics(data.toLowerCase());
-        if(strVal.indexOf(strData) > -1){
-          return val;
+      if (data && data.replace(/\s/g, '').length!=0){
+        this.traitementChoix[i].choixTest = true;
+        this.traitementChoix[i].choixNom = data;
+        var traitementData = this.traitementElement.find((val)=>{
+          let strVal = this.diacritics.replaceDiacritics(val.nom.toLowerCase());
+          let strData = this.diacritics.replaceDiacritics(data.toLowerCase());
+          if(strVal.indexOf(strData) > -1){
+            return val;
+          }
+        });
+        let dataObj =  {};
+        if(traitementData){
+          dataObj[this.traitementTable[i].phytonom] = traitementData.nom;
+          dataObj[this.traitementTable[i].phytoid] = traitementData.id;
+        } else {
+          dataObj[this.traitementTable[i].phytonom] = data;
+          dataObj[this.traitementTable[i].phytoid] = 0;
         }
-      });
-      let dataObj =  {};
-      if(traitementData){
-        dataObj[this.traitementTable[i].phytonom] = traitementData.nom;
-        dataObj[this.traitementTable[i].phytoid] = traitementData.id;
-      } else {
-        dataObj[this.traitementTable[i].phytonom] = data;
-        dataObj[this.traitementTable[i].phytoid] = 0;
+        this.traitementNomForm.patchValue(dataObj);
       }
-      this.traitementNomForm.patchValue(dataObj);
     });
     modal.present();
   }
