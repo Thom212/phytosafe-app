@@ -1,14 +1,12 @@
 {
+  //Page d'accueil
   "TITRE_APPLI": "INFORMATION ET CONSENTEMENT",
   "FONCTION_APPLI": "Le questionnaire électronique suivant fait partie du projet de recherche intitulé « Prévention des interactions entre les phytothérapies et les traitements du cancer par un questionnaire automatisé sur smartphone et tablette ». Il s’agit d’un questionnaire électronique visant à montrer que l’on peut dépister des interactions entre les traitements complémentaires à base de plantes, ou les compléments alimentaires, à l’aide d’une application smartphone et tablette.",
   "DISCLAIMER_APPLI": "Dans le cadre de cette étude, il ne vous sera pas rendu de résultat d’interaction potentielle. Le questionnaire est totalement anonyme et les données sont utilisées à des visées de recherche uniquement. Dans le cas où vous avez une question sur les interactions potentielles entre votre traitement du cancer et les phytothérapies ou autres compléments que vous prenez, parlez-en à votre oncologue référent.",
   "CONFIDENTIALITE_APPLI": "En cliquant ci-dessous, vous acceptez que les données soient utilisées à des fins de recherche.",
   "DEBUT_BOUTON": "Commencer le formulaire",
 
-  "CONTINUE_BOUTON": "Continuer le formulaire",
-  "FORM_ALERTE" : "Veuillez remplir le formulaire correctement.",
-  "FORM_OPTION_ALERTE" : "Sélectionnez une option.",
-
+  //Textes de l'alerte liée à l'inactivité de l'utilisateur
   "TITRE_ALERTE": "Attention !",
   "SOUSTITRE_ALERTE": "Vous allez être redirigés vers la page d'accueil du formulaire dans ",
   "SOUSTITRE_UNIT_ALERTE": " secondes.",
@@ -16,12 +14,19 @@
   "BOUTON_CONFIRM_ALERTE": "OK",
   "BOUTON_ANNUL_ALERTE": "Annuler",
 
+  //Textes communs à toutes les pages sauf la page d'accueil
+  "CONTINUE_BOUTON": "Continuer le formulaire",
+  "FORM_ALERTE" : "Veuillez remplir le formulaire correctement.",
+  "FORM_OPTION_ALERTE" : "Sélectionnez une option.",
+
+  //Page Autocomplete
   "TITRE_MODAL_ORGANE": "Organe primitif atteint",
   "PLACEHOLDER_MODAL_ORGANE": "nom de l'organe",
   "TITRE_MODAL_TRAITEMENT": "Nom du traitement anti-cancéreux",
   "TITRE_MODAL_TRAITEMENT_BIS": "Thérapie alternative",
   "PLACEHOLDER_MODAL_TRAITEMENT": "nom du traitement",
   
+  //Page maladie
   "FORM_MALADIE" : "Maladie",
   "FORM_INFO_MALADIE" : "Informations sur le cancer : ",
   "FORM_INFO_MALADIE_DETAILS" : "renseignez l'organe sur lequel la tumeur est apparue et si elle s'est propagée sur d'autres organes.",
@@ -35,6 +40,7 @@
   "FORM_MALADIE_OPTION_2" : "tumeur métastasée",
   "FORM_MALADIE_OPTION_3" : "je ne sais pas",
   
+  //Page Thérapies
   "FORM_THERAPIES" : "Thérapies",
   "FORM_INFO_THERAPIE" : "Informations sur les thérapies utilisées : ",
   "FORM_INFO_THERAPIE_DETAILS" : "renseignez si vous avez reçu, ou si vous allez recevoir, une radiothérapie ou une chirurgie.",
@@ -54,6 +60,7 @@
   "FORM_CHIRURGIE_OPTION_3": "non",
   "FORM_CHIRURGIE_OPTION_4": "je ne sais pas",
   
+  //Page Thérapies alternatives
   "FORM_THERAPIES_ALTERNATIVES" : "Thérapies alternatives",
   "FORM_INFO_ALTERNATIF" : "Informations sur les thérapies alternatives utilisées : ",
   "FORM_INFO_ALTERNATIF_DETAILS" : "renseignez les types de thérapies alternatives que vous utilisez, que ce soit pour le traitement de votre cancer ou pour votre bien-être.",
@@ -69,6 +76,7 @@
   "FORM_THERAPIES_OPTION_7" : "aucune",
   "FORM_THERAPIES_OPTION_8" : "je ne sais pas",
   
+  //Page Nom des thérapies
   "FORM_PHYTO" : "Nom des thérapies",
   "FORM_INFO_PHYTO" : "Informations sur les thérapies alternatives prises : ",
   "FORM_INFO_PHYTO_DETAILS" : "renseignez les noms des thérapies alternatives que vous prenez.",
@@ -76,6 +84,7 @@
   "FORM_PHYTO_NOM_ALERTE" : "Entrez un nom de thérapie valide.",
   "FORM_PHYTO_PLUS" : "Ajouter une thérapie",
 
+  //Page Informations générales
   "FORM_INFO_PERSO": "Informations générales",
   "FORM_INFO_PATIENT": "Informations relatives au patient : ",
   "FORM_INFO_PATIENT_DETAILS": "renseignez votre âge et votre genre.",
@@ -97,6 +106,7 @@
   "FORM_FREQUENCE_5" : ">20",
   "FIN_BOUTON": "Terminer le formulaire",
 
+  //Page Fin de formulaire
   "REMERCIEMENT_APPLI" : "Merci d'avoir pris le temps de remplir ce formulaire !",
   "SUCCES_FORMULAIRE_APPLI" : "Ce formulaire a bien été enregistré.",
   "ERREUR_FORMULAIRE_APPLI" : "Un problème a eu lieu lors de l'enregistrement du formulaire. Nous sommes désolé et nous vous invitons à recommencer.",

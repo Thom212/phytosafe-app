@@ -1,13 +1,15 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
-
 import { TranslateService } from '@ngx-translate/core';
 import { Keyboard } from '@ionic-native/keyboard';
 
+//page suivante
 import { Therapies } from '../therapies/therapies';
+//page autocomplete
 import{ Autocomplete } from '../../autocomplete/autocomplete';
 
+//providers
 import { Formulaire } from '../../../providers/formulaire';
 import { LocalStockage } from '../../../providers/localstockage';
 import { Cancer } from '../../../providers/cancer';
@@ -33,7 +35,7 @@ export class Maladie implements OnInit {
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public organe: Cancer, public keyboard: Keyboard, public diacritics: Diacritics, public inactif: Inactif) {
     this.maladieForm = formBuilder.group({
       organeboolForm : ['', Validators.required],
-      organeForm: ['', Validators.pattern('([A-Z ]{3,5})')],
+      organeForm: ['', Validators.pattern('([A-Z ]{5})')],
       nom_organeForm: ['', Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ\u0152\u0153\\- \'\(\)]*)')],
       etatForm:  ['', Validators.required]
     },{ validator: MaladieValidator.isValid});
@@ -42,6 +44,7 @@ export class Maladie implements OnInit {
   }
 
   ngOnInit(){
+    //Réuperation des données (id et nom) de la table cancer
     this.organe.makeCancerList().then((liste) =>{
       this.organeNom = liste[0];
       this.organeElement = liste[1];
@@ -90,30 +93,40 @@ export class Maladie implements OnInit {
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
   showOrganeModal(){
+    //Création de la page modale en insérant les textes nécessaires
     this.translate.get('TITRE_MODAL_ORGANE').subscribe(value => {
       this.organeTitre = value;
     });
     this.translate.get('PLACEHOLDER_MODAL_ORGANE').subscribe(value => {
       this.organePlaceholder = value;
     });
+    //Création de la page d'autocompletion
     let modal = this.modalCtrl.create(Autocomplete, {dataAutocomplete: this.organeNom, titreAutocomplete: this.organeTitre, placeholderAutocomplete: this.organePlaceholder});
+    //Traitements lors de la fermeture de la page d'autocompletion
     modal.onDidDismiss(data => {
-      this.organeChoix = data;
-      var organeData = this.organeElement.find((val)=>{
-        let strVal = this.diacritics.replaceDiacritics(val.nom.toLowerCase());
-        let strData = this.diacritics.replaceDiacritics(data.toLowerCase());
-        if(strVal.indexOf(strData) > -1){
-          return val;
+      //Vérification que la donnée passée existe et n'est pas seulement des espaces
+      if (data && data.replace(/\s/g, '').length!=0){
+        //Récupération des données de la page autocompletion
+        this.organeChoix = data;
+        //Comparaison avec la table cancer
+        var organeData = this.organeElement.find((val)=>{
+          let strVal = this.diacritics.replaceDiacritics(val.nom.toLowerCase());
+          let strData = this.diacritics.replaceDiacritics(data.toLowerCase());
+          if(strVal.indexOf(strData) > -1){
+            return val;
+          }
+        });
+        //Attribution de valeurs aux champs du formulaire (organeForm et nom_organeForm)
+        if(organeData){
+          this.maladieForm.patchValue({organeForm: organeData.id});
+          this.maladieForm.patchValue({nom_organeForm: organeData.nom});
+        } else {
+          this.maladieForm.patchValue({organeForm: 'AUCUN'});
+          this.maladieForm.patchValue({nom_organeForm: this.organeChoix});
         }
-      });
-      if(organeData){
-        this.maladieForm.patchValue({organeForm: organeData.id});
-        this.maladieForm.patchValue({nom_organeForm: organeData.nom});
-      } else {
-        this.maladieForm.patchValue({organeForm: 'AUCUN'});
-        this.maladieForm.patchValue({nom_organeForm: this.organeChoix});
       }
     });
+    //Affichage de la page d'autocompletion
     modal.present();
   }
 
@@ -130,9 +143,9 @@ export class Maladie implements OnInit {
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
   nextPage() {
+    //Booléen qui indique s'il faut ou non afficher les erreurs sur la page HTML
     this.submitAttempt = true;
     if(this.maladieForm.valid){
-
       //Stockage local des données remplies dans cette page de formulaire
       this.localstockage.setData(this.maladieForm.value).then((message) => {
         //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
