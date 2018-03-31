@@ -14,12 +14,12 @@ import { LocalStockage } from './localstockage';
 @Injectable()
 export class Inactif {
 
-  idleCount: number = 15; //Fixe le temps avant que l'utilisateur, une fois inactif, soit redirigé vers la page d'accueil.
+  idleCount: number = 60; //Fixe le temps avant que l'utilisateur, une fois inactif, soit redirigé vers la page d'accueil.
   idleState: any;
 
   constructor(public alertCtrl: AlertController, public translate: TranslateService, private idle: Idle, public localstockage: LocalStockage, public formulaire: Formulaire) {
     // Temps à partir duquel on estime que l'utilisateur est inactif.
-    idle.setIdle(120);
+    idle.setIdle(300);
     // Actions qui terminent l'inactivité.
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
   }
