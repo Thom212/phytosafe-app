@@ -1,13 +1,15 @@
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
-
 import { TranslateService } from '@ngx-translate/core';
 import { Keyboard } from '@ionic-native/keyboard';
 
+//Page suivante
 import { TherapiesAlter } from '../therapies-alter/therapies-alter';
+//Page d'autocompletion
 import{ Autocomplete } from '../../autocomplete/autocomplete';
 
+//Providers
 import { Formulaire } from '../../../providers/formulaire';
 import { LocalStockage } from '../../../providers/localstockage';
 import { Traitement } from '../../../providers/traitement';
@@ -45,8 +47,10 @@ export class Therapies implements OnInit {
   ngOnInit(){
     this.createTraitObjet();
     this.createChoixObjet();
+    //Création du contenu du formulaire anticancerForm (nom et validateur)
     this.anticancerForm.addControl(this.anticancerTable[0].traitementnom, this.anticancerTable[0].traitementnomControl);
     this.anticancerForm.addControl(this.anticancerTable[0].traitementid, this.anticancerTable[0].traitementidControl);
+    //Récupération de la liste des traitements anti-cancéreux
     this.traitement.makeTraitList(['TTCAN']).then((liste) =>{
       this.traitementNom = liste[0];
       this.traitementElement = liste[1];
@@ -77,6 +81,7 @@ export class Therapies implements OnInit {
       traitementidControl : FormControl
     };
     var traitement: traitementObjet;
+    //Distinction du premier traitement si on veut traiter spécialement le premier traitement (le rendre obligatoire)
     if (this.nbTraitement == 1) {
       traitement = {
         traitementnom: "traitementnom_"+this.nbTraitement.toString()+"_Form",
@@ -89,7 +94,7 @@ export class Therapies implements OnInit {
         traitementnom: "traitementnom_"+this.nbTraitement.toString()+"_Form",
         traitementid: "traitementid_"+this.nbTraitement.toString()+"_Form",
         traitementnomControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿœ\\- \'\(\)]*)'), Validators.required])),
-        traitementidControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9]*)'), Validators.required]))
+        traitementidControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9]*)')]))
       }
     }
     this.anticancerTable.push(traitement);
@@ -122,6 +127,7 @@ export class Therapies implements OnInit {
   addTrait() {
     if (this.anticancerForm.valid){
       let i: number = this.anticancerTable.length;
+      //Ajout d'un traitement dans le tableau
       this.createTraitObjet();
       this.createChoixObjet();
       // add treatment to the list
@@ -170,9 +176,12 @@ export class Therapies implements OnInit {
     });
     let modal = this.modalCtrl.create(Autocomplete, {dataAutocomplete: this.traitementNom, titreAutocomplete: this.traitementTitre, placeholderAutocomplete: this.traitementPlaceholder});
     modal.onDidDismiss(data => {
+      //Vérification que la donnée passée existe et n'est pas seulement des espaces
       if (data && data.replace(/\s/g, '').length!=0){
+        //Récupération des données de la page autocompletion
         this.choixTable[i].choixTest = true;
         this.choixTable[i].choixNom = data;
+        //Comparaison avec la table traitement
         var traitementData = this.traitementElement.find((val)=>{
           let strVal = this.diacritics.replaceDiacritics(val.nom.toLowerCase());
           let strData = this.diacritics.replaceDiacritics(data.toLowerCase());
@@ -180,6 +189,7 @@ export class Therapies implements OnInit {
             return val;
           }
         });
+        //Attribution de valeurs aux champs du formulaire (traitementnom et traitementid)
         let dataObj =  {};      
         if(traitementData){
           dataObj[this.anticancerTable[i].traitementnom] = traitementData.nom;
