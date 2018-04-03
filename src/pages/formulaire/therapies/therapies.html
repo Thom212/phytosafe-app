@@ -7,7 +7,6 @@
   </ion-header>
   
   <ion-content no-bounce overflow-scroll="true">
-    <p *ngIf="(!therapiesForm.valid || !anticancerForm.valid) && submitAttempt" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
     
     <form [formGroup]="therapiesForm" novalidate>
            
@@ -84,7 +83,8 @@
       </button>
   
     </form>
-  
+    
+    <p *ngIf="(!therapiesForm.valid || !anticancerForm.valid) && submitAttempt" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
     <button class="buttonValide" [class.invalid]="(!therapiesForm.valid || !anticancerForm.valid) && submitAttempt" ion-button icon-end large clear (click)="nextPage()">
       {{ 'CONTINUE_BOUTON' | translate }}
       <ion-icon name="arrow-forward"></ion-icon>

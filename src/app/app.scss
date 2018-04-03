@@ -69,20 +69,23 @@
   }
   ion-content{
     .FormAlerte{
+      padding-top: 15px;
       padding-left: 10px;
       font-size: 1.2em;
       color: #ea6153;
+      text-align: center;
     }
     .buttonValide{
-      font-size: 1.3em;
+      font-size: 1.2em;
       margin: auto;
       margin-bottom: 50px;
       margin-top: 50px;
       display: block;
-      border: 3px #488aff solid;
+      border: 2px #488aff solid;
     }
     .invalid {
-      border: 3px solid #ea6153;
+      margin-top: 20px;
+      border: 2px solid #ea6153;
       color: #ea6153;
     }
     form{

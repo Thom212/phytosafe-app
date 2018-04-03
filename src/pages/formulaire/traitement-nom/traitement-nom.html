@@ -7,7 +7,6 @@
 </ion-header>
 
 <ion-content no-bounce overflow-scroll="true">
-  <p *ngIf="!traitementNomForm.valid && (submitAttempt || checkTraitement)" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
   
   <form [formGroup]="traitementNomForm" novalidate>  
     <h3>
@@ -32,7 +31,8 @@
       {{ 'FORM_PHYTO_PLUS' | translate }}
     </button>
   </form>
-
+  
+  <p *ngIf="!traitementNomForm.valid && (submitAttempt || checkTraitement)" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
   <button class="buttonValide" [class.invalid]="!traitementNomForm.valid && submitAttempt" ion-button icon-end large clear (click)="nextPage()">
     {{ 'CONTINUE_BOUTON' | translate }}
     <ion-icon name="arrow-forward"></ion-icon>

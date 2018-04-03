@@ -168,7 +168,7 @@ export class TraitementNom implements OnInit{
     this.translate.get('PLACEHOLDER_MODAL_TRAITEMENT').subscribe(value => {
       this.traitementPlaceholder = value;
     });
-    let modal = this.modalCtrl.create(Autocomplete, {entryAutocomplete: this.traitementTable[i].phytonom, dataAutocomplete: this.traitementNom, titreAutocomplete: this.traitementTitre, placeholderAutocomplete: this.traitementPlaceholder});
+    let modal = this.modalCtrl.create(Autocomplete, {entryAutocomplete: this.traitementTable[i].phytonomControl.value, dataAutocomplete: this.traitementNom, titreAutocomplete: this.traitementTitre, placeholderAutocomplete: this.traitementPlaceholder});
     modal.onDidDismiss(data => {
       if (data && data.replace(/\s/g, '').length!=0){
         this.traitementChoix[i].choixTest = true;

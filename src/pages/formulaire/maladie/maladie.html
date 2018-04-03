@@ -7,7 +7,12 @@
 </ion-header>
 
 <ion-content no-bounce overflow-scroll="true">
-  <p *ngIf="!maladieForm.valid && submitAttempt" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
+
+    <ion-fab right bottom>
+      <button *ngIf="showScrollFab" ion-fab mini (click)="scrollDownContent()">
+        <ion-icon name="arrow-dropdown"></ion-icon>
+      </button>
+    </ion-fab>
   
   <form [formGroup]="maladieForm" novalidate>
    
@@ -55,7 +60,7 @@
     <p *ngIf="!maladieForm.controls.etatForm.valid  && (maladieForm.controls.etatForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
   
   </form>
-
+  <p *ngIf="!maladieForm.valid && submitAttempt" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
   <button class="buttonValide" [class.invalid]="!maladieForm.valid && submitAttempt" ion-button icon-end large clear (click)="nextPage()">
     {{ 'CONTINUE_BOUTON' | translate }}
     <ion-icon name="arrow-forward"></ion-icon>

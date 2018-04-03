@@ -175,7 +175,7 @@ export class Therapies implements OnInit {
     this.translate.get('PLACEHOLDER_MODAL_TRAITEMENT').subscribe(value => {
       this.traitementPlaceholder = value;
     });
-    let modal = this.modalCtrl.create(Autocomplete, {entryAutocomplete: this.anticancerTable[i].traitementnom, dataAutocomplete: this.traitementNom, titreAutocomplete: this.traitementTitre, placeholderAutocomplete: this.traitementPlaceholder});
+    let modal = this.modalCtrl.create(Autocomplete, {entryAutocomplete: this.anticancerTable[i].traitementnomControl.value, dataAutocomplete: this.traitementNom, titreAutocomplete: this.traitementTitre, placeholderAutocomplete: this.traitementPlaceholder});
     modal.onDidDismiss(data => {
       //Vérification que la donnée passée existe et n'est pas seulement des espaces
       if (data && data.replace(/\s/g, '').length!=0){
