@@ -21,11 +21,12 @@ export class InfoPerso{
   submitAttempt: boolean = false;
   questionTabac: boolean = false;
   dateNaissance: boolean = false;
+  contentLoader: string;
   
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public inactif: Inactif) {
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public inactif: Inactif) {
     this.infoPersoForm = formBuilder.group({
       sexeForm: ['', Validators.required],
-      date_naissanceForm: ['', Validators.compose([ Validators.pattern('([0-9]{2,3})'), Validators.required])],
+      date_naissanceForm: ['', Validators.compose([ Validators.pattern('([0-9]{1,3})'), Validators.required])],
       tabacForm: ['',Validators.required],
       frequenceForm: ['']
     },{ validator: TabacValidator.isValid});
@@ -34,32 +35,13 @@ export class InfoPerso{
   ionViewDidEnter(){
     //Si l'utilisateur est inactif, une alerte est envoyée avec la possibilité de continuer ou de recommencer le questionnaire.
     this.inactif.idleSet(this.navCtrl);
+    this.translate.get('CONTENT_LOADER').subscribe(value => {
+      this.contentLoader = value;
+    });
   }
 
   ionViewWillLeave(){
     this.inactif.idleStop();
-  }
-
-  /**
-   * Fonction qui permet d'entrer l'année de naissance et qui gère les labels.
-   * @method showInputNaissance
-   * @param {} - aucun paramètre n'est passé à la fonction.
-   * @returns {} - aucune valeur n'est retournée par la fonction.
-   */
-  showInputNaissance() {
-    this.dateNaissance = true;
-  }
-
-  /**
-   * Fonction qui elève le champ INPUT si rien n'est entré.
-   * @method checkInputNaissance
-   * @param {} - aucun paramètre n'est passé à la fonction.
-   * @returns {} - aucune valeur n'est retournée par la fonction.
-   */
-  checkInputNaissance() {
-    if (this.infoPersoForm.value['date_naissanceForm'] === '') {
-      this.dateNaissance = false;
-    }
   }
 
   /**
@@ -122,8 +104,9 @@ export class InfoPerso{
     this.submitAttempt = true;
     if(this.infoPersoForm.valid){
       let loader = this.loadingCtrl.create({
-        content: "Enregistrement du formulaire. Veuillez patienter..."
+        content: ''
       });
+      loader.setContent(this.contentLoader);
       loader.present();
       //Stockage local des données remplies dans cette page de formulaire
       this.localstockage.setData(this.infoPersoForm.value).then((message) => {

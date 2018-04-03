@@ -19,7 +19,7 @@ export class Accueil {
   
   /**
    * Fonction appelée lors du clic sur le bouton "Commencer le formulaire" sur la page d'accueil.
-   * Elle récupère la date et l'heure au moment où le bouton est cliqué et stocke cette valeur localement. 
+   * Elle récupère la date et l'heure au moment où le bouton est cliqué et stocke cette valeur localement.
    * Une fois cette valeur stockée, elle crée un nouveau formulaire et affiche la première page du formulaire - Données Personnelles.
    * @method nextPage
    * @requires providers/localstockage - la fonction utilise la méthode setData.
@@ -81,7 +81,7 @@ export class Accueil {
         });
       }).catch((error) => {
          console.log('Error getting location', error);
-         //Création d'un nouveau formulaire. La première donnée à entrer dans le formulaire est la date de création.
+         //Création d'un nouveau formulaire sans les données de géolocalisation.
          this.formulaire.createForm(dateCreaForm);
       });
       //Navigation à la page du formulaire - Maladie

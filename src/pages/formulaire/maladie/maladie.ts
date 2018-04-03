@@ -112,7 +112,7 @@ export class Maladie implements OnInit {
         var organeData = this.organeElement.find((val)=>{
           let strVal = this.diacritics.replaceDiacritics(val.nom.toLowerCase());
           let strData = this.diacritics.replaceDiacritics(data.toLowerCase());
-          if(strVal.indexOf(strData) > -1){
+          if(strVal === strData){
             return val;
           }
         });

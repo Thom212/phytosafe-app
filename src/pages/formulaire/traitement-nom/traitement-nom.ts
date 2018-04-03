@@ -128,6 +128,7 @@ export class TraitementNom implements OnInit{
       this.traitementNomForm.addControl(this.traitementTable[i].phytoid, this.traitementTable[i].phytoidControl);
       this.checkTraitement = false;
       this.submitAttempt = false;
+      this.showTraitementModal(i);
     }else{
       this.checkTraitement = true;
     }
@@ -167,7 +168,7 @@ export class TraitementNom implements OnInit{
     this.translate.get('PLACEHOLDER_MODAL_TRAITEMENT').subscribe(value => {
       this.traitementPlaceholder = value;
     });
-    let modal = this.modalCtrl.create(Autocomplete, {dataAutocomplete: this.traitementNom, titreAutocomplete: this.traitementTitre, placeholderAutocomplete: this.traitementPlaceholder});
+    let modal = this.modalCtrl.create(Autocomplete, {entryAutocomplete: this.traitementTable[i].phytonom, dataAutocomplete: this.traitementNom, titreAutocomplete: this.traitementTitre, placeholderAutocomplete: this.traitementPlaceholder});
     modal.onDidDismiss(data => {
       if (data && data.replace(/\s/g, '').length!=0){
         this.traitementChoix[i].choixTest = true;
@@ -175,7 +176,7 @@ export class TraitementNom implements OnInit{
         var traitementData = this.traitementElement.find((val)=>{
           let strVal = this.diacritics.replaceDiacritics(val.nom.toLowerCase());
           let strData = this.diacritics.replaceDiacritics(data.toLowerCase());
-          if(strVal.indexOf(strData) > -1){
+          if(strVal === strData){
             return val;
           }
         });

@@ -9,16 +9,14 @@ import { Diacritics } from '../../providers/diacritics';
 })
 
 export class Autocomplete {
-  autocompleteItems;
-  autocompleteEntry;
+  autocompleteItems: any;
+  autocompleteEntry: string;
 
   @ViewChild(Searchbar) searchbar:Searchbar;
 
   constructor (public viewCtrl: ViewController, public params: NavParams, public diacritics: Diacritics) {
     this.autocompleteItems = [];
-    this.autocompleteEntry = {
-      query: ''
-    };
+    this.autocompleteEntry = this.params.get('entryAutocomplete');
   }
 
   ionViewDidEnter() {
@@ -34,7 +32,7 @@ export class Autocomplete {
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
   dismiss() {
-    this.viewCtrl.dismiss(this.autocompleteEntry.query);
+    this.viewCtrl.dismiss(this.autocompleteEntry);
   }
 
   /**
@@ -44,7 +42,7 @@ export class Autocomplete {
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
   chooseItem(item: any) {
-    this.autocompleteEntry.query = item;
+    this.autocompleteEntry = item;
     this.viewCtrl.dismiss(item);
   }
 
@@ -55,12 +53,12 @@ export class Autocomplete {
    * @returns {string} - une liste mise à jour suite à la nouvelle saisie de l'utilisateur est retournée par la fonction.
    */
   updateSearch() {
-    if (this.autocompleteEntry.query == '') {
+    if (this.autocompleteEntry == '') {
       this.autocompleteItems = [];
     } else {
       this.autocompleteItems = this.params.get('dataAutocomplete').filter((val)=>{
         let strVal = this.diacritics.replaceDiacritics(val.toLowerCase());
-        let strEntry = this.diacritics.replaceDiacritics(this.autocompleteEntry.query.toLowerCase());
+        let strEntry = this.diacritics.replaceDiacritics(this.autocompleteEntry.toLowerCase());
         return strVal.indexOf(strEntry) > -1;
       });
     }

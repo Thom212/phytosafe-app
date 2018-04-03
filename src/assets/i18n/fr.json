@@ -104,6 +104,7 @@
   "FORM_FREQUENCE_3" : "10-15",
   "FORM_FREQUENCE_4" : "15-20",
   "FORM_FREQUENCE_5" : ">20",
+  "CONTENT_LOADER" : "Enregistrement du formulaire. Veuillez patienter...",
   "FIN_BOUTON": "Terminer le formulaire",
 
   //Page Fin de formulaire

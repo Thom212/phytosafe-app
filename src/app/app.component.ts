@@ -22,11 +22,8 @@ export class MyApp {
   ionViewDidLoad() {
     this.platform.ready().then(() => {
       this.storage.ready().then(()=>{
-        // Suppression des valeurs stockées localement au lancement de l'application
-        this.storage.clear().then(()=>{  
-          this.statusBar.styleDefault();
-          this.splashScreen.hide();
-        });
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
       });
     });
   }
