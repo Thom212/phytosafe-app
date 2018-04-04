@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component, ViewChild, NgZone } from '@angular/core';
+import { NavController, Content } from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -19,12 +19,16 @@ import { Inactif } from '../../../providers/inactif';
 })
 export class TherapiesAlter{
 
+  @ViewChild(Content) content: Content;
+
   therapiesAlterForm: FormGroup;
   submitAttempt: boolean = false;
   checkAutres: boolean = false;
   traitementListe: any;
+  showScrollFabTherapiesAlter: boolean = false;
+  contentDimensions: any;
   
-  constructor(public navCtrl: NavController, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public traitement: Traitement, public localstockage: LocalStockage, public inactif: Inactif) {
+  constructor(public navCtrl: NavController, public zone: NgZone, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public traitement: Traitement, public localstockage: LocalStockage, public inactif: Inactif) {
     this.therapiesAlterForm = formBuilder.group({
         phytoForm: [false],
         boissonForm: [false],
@@ -35,7 +39,8 @@ export class TherapiesAlter{
         inconnuForm: [false],
         autresboolForm: [false],
         autresForm: ['', Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ\u0153\\- \'\(\)]*)')]
-    },{ validator: TherapieValidator.isValid}); 
+    },{ validator: TherapieValidator.isValid});
+    this.contentDimensions = {};
   }
 
   ngOnInit(){
@@ -47,10 +52,41 @@ export class TherapiesAlter{
   ionViewDidEnter(){
     //Si l'utilisateur est inactif, une alerte est envoyée avec la possibilité de continuer ou de recommencer le questionnaire.
     this.inactif.idleSet(this.navCtrl);
+    this.contentDimensions = this.content.getContentDimensions();
+    if (this.contentDimensions.contentHeight + 50 < this.contentDimensions.scrollHeight) {
+      this.showScrollFabTherapiesAlter = true;
+    }
   }
 
   ionViewWillLeave(){
     this.inactif.idleStop();
+  }
+
+  /**
+   * Fonction qui permet d'afficher ou de cahcer le boutton fab.
+   * @method displayFab
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  displayFab(){
+    this.zone.run(() => {
+      this.contentDimensions = this.content.getContentDimensions();
+      if (this.contentDimensions.contentHeight + 50 + this.contentDimensions.scrollTop < this.contentDimensions.scrollHeight) {
+        this.showScrollFabTherapiesAlter = true;
+      } else {
+        this.showScrollFabTherapiesAlter = false;
+      }
+    });
+  }
+  
+  /**
+   * Fonction qui permet de scroller tout en bas du contenu.
+   * @method scrollDownContent
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  scrollDownContent() {
+    this.content.scrollToBottom();
   }
 
   /**

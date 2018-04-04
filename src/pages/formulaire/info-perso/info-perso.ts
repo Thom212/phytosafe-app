@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { Component, ViewChild, NgZone } from '@angular/core';
+import { NavController, LoadingController, Content } from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -17,19 +17,24 @@ import { Inactif } from '../../../providers/inactif';
 })
 export class InfoPerso{
 
+  @ViewChild(Content) content: Content;
+
   infoPersoForm: FormGroup;
   submitAttempt: boolean = false;
   questionTabac: boolean = false;
   dateNaissance: boolean = false;
   contentLoader: string;
+  showScrollFabInfoPerso: boolean = false;
+  contentDimensions: any;
   
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public inactif: Inactif) {
+  constructor(public navCtrl: NavController, public zone: NgZone, public loadingCtrl: LoadingController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public inactif: Inactif) {
     this.infoPersoForm = formBuilder.group({
       sexeForm: ['', Validators.required],
       date_naissanceForm: ['', Validators.compose([ Validators.pattern('([0-9]{1,3})'), Validators.required])],
       tabacForm: ['',Validators.required],
       frequenceForm: ['']
     },{ validator: TabacValidator.isValid});
+    this.contentDimensions = {};
   }
 
   ionViewDidEnter(){
@@ -38,10 +43,41 @@ export class InfoPerso{
     this.translate.get('CONTENT_LOADER').subscribe(value => {
       this.contentLoader = value;
     });
+    this.contentDimensions = this.content.getContentDimensions();
+    if (this.contentDimensions.contentHeight + 50 < this.contentDimensions.scrollHeight) {
+      this.showScrollFabInfoPerso = true;
+    }
   }
 
   ionViewWillLeave(){
     this.inactif.idleStop();
+  }
+
+  /**
+   * Fonction qui permet d'afficher ou de cahcer le boutton fab.
+   * @method displayFab
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  displayFab(){
+    this.zone.run(() => {
+      this.contentDimensions = this.content.getContentDimensions();
+      if (this.contentDimensions.contentHeight + 50 + this.contentDimensions.scrollTop < this.contentDimensions.scrollHeight) {
+        this.showScrollFabInfoPerso = true;
+      } else {
+        this.showScrollFabInfoPerso = false;
+      }
+    });
+  }
+
+  /**
+   * Fonction qui permet de scroller tout en bas du contenu.
+   * @method scrollDownContent
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  scrollDownContent() {
+    this.content.scrollToBottom();
   }
 
   /**

@@ -1,5 +1,5 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { NavController, ModalController, Content } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Keyboard } from '@ionic-native/keyboard';
@@ -33,9 +33,10 @@ export class Maladie implements OnInit {
   organePlaceholder: string;
   organeChoix: string;
   questionOrgane: boolean = false;
-  showScrollFab: boolean = true;
+  showScrollFabMaladie: boolean = false;
+  contentDimensions: any;
   
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public organe: Cancer, public keyboard: Keyboard, public diacritics: Diacritics, public inactif: Inactif) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public zone: NgZone, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public organe: Cancer, public keyboard: Keyboard, public diacritics: Diacritics, public inactif: Inactif) {
     this.maladieForm = formBuilder.group({
       organeboolForm : ['', Validators.required],
       organeForm: ['', Validators.pattern('([A-Z ]{5})')],
@@ -44,6 +45,7 @@ export class Maladie implements OnInit {
     },{ validator: MaladieValidator.isValid});
     this.organeNom = [];
     this.organeElement = [];
+    this.contentDimensions = {};
   }
 
   ngOnInit(){
@@ -58,13 +60,31 @@ export class Maladie implements OnInit {
   ionViewDidEnter(){
     //Si l'utilisateur est inactif, une alerte est envoyée avec la possibilité de continuer ou de recommencer le questionnaire.
     this.inactif.idleSet(this.navCtrl);
-    this.content.ionScrollEnd.subscribe((data)=>{
-      this.showScrollFab = false;
-    });
+    this.contentDimensions = this.content.getContentDimensions();
+    if (this.contentDimensions.contentHeight + 50 < this.contentDimensions.scrollHeight) {
+      this.showScrollFabMaladie = true;
+    }
   }
 
   ionViewWillLeave(){
     this.inactif.idleStop();
+  }
+
+  /**
+   * Fonction qui permet d'afficher ou de cahcer le boutton fab.
+   * @method displayFab
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  displayFab(){
+    this.zone.run(() => {
+      this.contentDimensions = this.content.getContentDimensions();
+      if (this.contentDimensions.contentHeight + 50 + this.contentDimensions.scrollTop < this.contentDimensions.scrollHeight) {
+        this.showScrollFabMaladie = true;
+      } else {
+        this.showScrollFabMaladie = false;
+      }
+    });
   }
 
   /**

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>{{this.params.get('titreAutocomplete')}}</ion-title>
-    <ion-searchbar placeholder="{{this.params.get('placeholderAutocomplete')}}" [(ngModel)]="autocompleteEntry" [showCancelButton]="true" type="text" (ionInput)="updateSearch()" (ionCancel)="dismiss()" (search)="dismiss()"></ion-searchbar>
+    <ion-searchbar placeholder="{{this.params.get('placeholderAutocomplete')}}" [(ngModel)]="autocompleteEntry" [showCancelButton]="true" type="text" (ionInput)="updateSearch()" (ionCancel)="dismiss()" (keyup.enter)="dismiss()"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 <ion-content>

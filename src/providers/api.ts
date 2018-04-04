@@ -19,7 +19,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Api {
   
-  url: string = 'http://192.168.43.10:3000/api/v1';//'http://51.255.38.12/api/v1';
+  url: string = 'http://51.255.38.12/api/v1';
 
   constructor(public http: Http) {}
 

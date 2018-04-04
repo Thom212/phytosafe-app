@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import { NavController, ModalController, Content } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Keyboard } from '@ionic-native/keyboard';
 
@@ -22,6 +22,8 @@ import { Inactif } from '../../../providers/inactif';
 })
 export class Therapies implements OnInit {
 
+  @ViewChild(Content) content: Content;
+
   therapiesForm: FormGroup;
   anticancerForm: FormGroup;
   anticancerTable = [];
@@ -33,8 +35,10 @@ export class Therapies implements OnInit {
   traitementElement: any;
   traitementTitre: string;
   traitementPlaceholder: string;
+  showScrollFabTherapies: boolean = false;
+  contentDimensions: any;
   
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public keyboard: Keyboard, public diacritics: Diacritics, public inactif: Inactif) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public zone: NgZone, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public keyboard: Keyboard, public diacritics: Diacritics, public inactif: Inactif) {
     this.therapiesForm = formBuilder.group({
       radioForm:  ['', Validators.required],
       chirurgieForm:  ['', Validators.required]
@@ -42,6 +46,7 @@ export class Therapies implements OnInit {
     this.anticancerForm = formBuilder.group({});
     this.traitementNom = [];
     this.traitementElement = [];
+    this.contentDimensions = {};
   }
 
   ngOnInit(){
@@ -60,10 +65,41 @@ export class Therapies implements OnInit {
   ionViewDidEnter(){
     //Si l'utilisateur est inactif, une alerte est envoyée avec la possibilité de continuer ou de recommencer le questionnaire.
     this.inactif.idleSet(this.navCtrl);
+    this.contentDimensions = this.content.getContentDimensions();
+    if (this.contentDimensions.contentHeight + 50 < this.contentDimensions.scrollHeight) {
+      this.showScrollFabTherapies = true;
+    }
   }
 
   ionViewWillLeave(){
     this.inactif.idleStop();
+  }
+
+  /**
+   * Fonction qui permet d'afficher ou de cahcer le boutton fab.
+   * @method displayFab
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  displayFab(){
+    this.zone.run(() => {
+      this.contentDimensions = this.content.getContentDimensions();
+      if (this.contentDimensions.contentHeight + 50 + this.contentDimensions.scrollTop < this.contentDimensions.scrollHeight) {
+        this.showScrollFabTherapies = true;
+      } else {
+        this.showScrollFabTherapies = false;
+      }
+    });
+  }
+
+  /**
+   * Fonction qui permet de scroller tout en bas du contenu.
+   * @method scrollDownContent
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  scrollDownContent() {
+    this.content.scrollToBottom();
   }
 
   /**

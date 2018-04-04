@@ -6,9 +6,16 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content no-bounce overflow-scroll="true">
+<ion-content no-bounce overflow-scroll="true" (ionScroll)="displayFab()">
   
-  <form [formGroup]="traitementNomForm" novalidate>  
+  <ion-fab *ngIf="showScrollFabTraitement" right bottom>
+    <button ion-fab mini (click)="scrollDownContent()">
+      <ion-icon name="arrow-dropdown"></ion-icon>
+    </button>
+  </ion-fab>
+  
+  <form [formGroup]="traitementNomForm" novalidate>
+    
     <h3>
       <span>{{ 'FORM_INFO_PHYTO' | translate }}</span>
       {{ 'FORM_INFO_PHYTO_DETAILS' | translate }}

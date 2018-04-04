@@ -6,13 +6,13 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content no-bounce overflow-scroll="true">
+<ion-content no-bounce overflow-scroll="true" (ionScroll)="displayFab()">
 
-    <ion-fab right bottom>
-      <button *ngIf="showScrollFab" ion-fab mini (click)="scrollDownContent()">
-        <ion-icon name="arrow-dropdown"></ion-icon>
-      </button>
-    </ion-fab>
+  <ion-fab *ngIf="showScrollFabMaladie" right bottom>
+    <button ion-fab mini (click)="scrollDownContent()">
+      <ion-icon name="arrow-dropdown"></ion-icon>
+    </button>
+  </ion-fab>
   
   <form [formGroup]="maladieForm" novalidate>
    
