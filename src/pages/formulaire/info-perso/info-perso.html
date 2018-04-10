@@ -80,21 +80,21 @@
       </ion-item>
     </ion-list>
     <p *ngIf="!infoPersoForm.controls.frequenceForm.valid  && (infoPersoForm.controls.frequenceForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
+
+    <ion-list radio-group formControlName="cannabisForm">
+      <p>{{ 'FORM_CANNABIS_CHECK' | translate }}</p>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!infoPersoForm.controls.cannabisForm.valid && (infoPersoForm.controls.cannabisForm.dirty || submitAttempt)">{{ 'FORM_CANNABIS_OUI' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_CANNABIS_OUI' | translate }}" [class.invalid-bis]="!infoPersoForm.controls.cannabisForm.valid && (infoPersoForm.controls.cannabisForm.dirty || submitAttempt)"></ion-radio>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!infoPersoForm.controls.cannabisForm.valid && (infoPersoForm.controls.cannabisForm.dirty || submitAttempt)">{{ 'FORM_CANNABIS_NON' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_CANNABIS_NON' | translate }}" [class.invalid-bis]="!infoPersoForm.controls.cannabisForm.valid && (infoPersoForm.controls.cannabisForm.dirty || submitAttempt)"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <p *ngIf="!infoPersoForm.controls.cannabisForm.valid  && (infoPersoForm.controls.cannabisForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
   </form>
   <p *ngIf="!infoPersoForm.valid && submitAttempt" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
-  
-  <ion-list radio-group formControlName="cannabisForm">
-    <p>{{ 'FORM_CANNABIS_CHECK' | translate }}</p>
-    <ion-item no-lines>
-      <ion-label [class.invalid-bis]="!infoPersoForm.controls.cannabisForm.valid && (infoPersoForm.controls.cannabisForm.dirty || submitAttempt)">{{ 'FORM_CANNABIS_OUI' | translate }}</ion-label>
-      <ion-radio value="{{ 'FORM_CANNABIS_OUI' | translate }}" [class.invalid-bis]="!infoPersoForm.controls.cannabisForm.valid && (infoPersoForm.controls.cannabisForm.dirty || submitAttempt)"></ion-radio>
-    </ion-item>
-    <ion-item no-lines>
-      <ion-label [class.invalid-bis]="!infoPersoForm.controls.cannabisForm.valid && (infoPersoForm.controls.cannabisForm.dirty || submitAttempt)">{{ 'FORM_CANNABIS_NON' | translate }}</ion-label>
-      <ion-radio value="{{ 'FORM_CANNABIS_NON' | translate }}" [class.invalid-bis]="!infoPersoForm.controls.cannabisForm.valid && (infoPersoForm.controls.cannabisForm.dirty || submitAttempt)"></ion-radio>
-    </ion-item>
-  </ion-list>
-  <p *ngIf="!infoPersoForm.controls.cannabisForm.valid  && (infoPersoForm.controls.cannabisForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
 
   <button class="buttonValide" [class.invalid]="!infoPersoForm.valid && submitAttempt" ion-button icon-end large clear (click)="nextPage()">
     {{ 'FIN_BOUTON' | translate }}
