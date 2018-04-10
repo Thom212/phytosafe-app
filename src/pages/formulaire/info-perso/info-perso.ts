@@ -32,7 +32,8 @@ export class InfoPerso{
       sexeForm: ['', Validators.required],
       date_naissanceForm: ['', Validators.compose([ Validators.pattern('([0-9]{1,3})'), Validators.required])],
       tabacForm: ['',Validators.required],
-      frequenceForm: ['']
+      frequenceForm: [''],
+      cannabisForm: ['',Validators.required]
     },{ validator: TabacValidator.isValid});
     this.contentDimensions = {};
   }
@@ -154,20 +155,21 @@ export class InfoPerso{
               //Si le formulaire n'a pas été créé, il faut le créer
               this.formulaire.createForm(dataForm).toPromise().then((res) => {
                 loader.dismiss();
-                this.localstockage.clearStoreData("idForm");
+                //this.localstockage.clearStoreData("idForm");
                 //Navigation à la page de fin du formulaire - FinFormulaire
                 this.navCtrl.push(FinFormulaire, {
                   succesForm : true
                 });
               }).catch((err)=>{
-                loader.dismiss();
                 console.error('ERROR', err);
                 this.localstockage.storeAllData(dataForm).then((res) => {
+                  loader.dismiss();
                   this.navCtrl.push(FinFormulaire, {
                     succesForm : true
                   });
                 }).catch((err)=>{
                   console.error('ERROR', err);
+                  loader.dismiss();
                   this.navCtrl.push(FinFormulaire, {
                     succesForm : false
                   });
@@ -177,21 +179,22 @@ export class InfoPerso{
               //Sinon, il faut le mettre à jour
               this.formulaire.updateForm(dataForm).toPromise().then((res) => {
                 loader.dismiss();
-                this.localstockage.clearStoreData("idForm");
+                //this.localstockage.clearStoreData("idForm");
                 //Navigation à la page de fin du formulaire - FinFormulaire
                 this.navCtrl.push(FinFormulaire, {
                   succesForm : true
                 });
               }).catch((err)=>{
-                loader.dismiss();
-                this.localstockage.clearStoreData("idForm");
+                //this.localstockage.clearStoreData("idForm");
                 console.error('ERROR', err);
                 this.localstockage.storeAllData(dataForm).then((res) => {
+                  loader.dismiss();
                   this.navCtrl.push(FinFormulaire, {
                     succesForm : true
                   });
                 }).catch((err)=>{
                   console.error('ERROR', err);
+                  loader.dismiss();
                   this.navCtrl.push(FinFormulaire, {
                     succesForm : false
                   });

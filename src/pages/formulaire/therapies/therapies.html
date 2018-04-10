@@ -38,6 +38,10 @@
           <ion-label [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_RADIO_OPTION_4' | translate }}</ion-label>
           <ion-radio value="{{ 'FORM_RADIO_OPTION_4' | translate }}" [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)"></ion-radio>
         </ion-item>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_RADIO_OPTION_5' | translate }}</ion-label>
+          <ion-radio value="{{ 'FORM_RADIO_OPTION_5' | translate }}" [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
       </ion-list>
       <p *ngIf="!therapiesForm.controls.radioForm.valid  && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
       

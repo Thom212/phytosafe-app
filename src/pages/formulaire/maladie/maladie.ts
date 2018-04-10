@@ -105,6 +105,7 @@ export class Maladie implements OnInit {
    */
   organeOui() {
     this.questionOrgane = true;
+    this.showOrganeModal();
   }
 
   /**

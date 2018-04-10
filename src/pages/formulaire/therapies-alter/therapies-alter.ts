@@ -181,7 +181,7 @@ export class TherapiesAlter{
               this.formulaire.createForm(dataForm);  
             } else {
               //Sinon, il faut le mettre à jour
-              this.formulaire.updateForm(dataForm)
+              this.formulaire.updateForm(dataForm);
             }
           });
         });
