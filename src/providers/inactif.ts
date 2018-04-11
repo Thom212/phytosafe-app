@@ -19,7 +19,7 @@ export class Inactif {
 
   constructor(public alertCtrl: AlertController, public translate: TranslateService, private idle: Idle, public localstockage: LocalStockage, public formulaire: Formulaire) {
     // Temps à partir duquel on estime que l'utilisateur est inactif.
-    idle.setIdle(300);
+    idle.setIdle(1000);
     // Actions qui terminent l'inactivité.
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
   }
@@ -116,7 +116,6 @@ export class Inactif {
               this.idleSet(navCtrl);
             });
             return false;//La fermeture de l'alerte est faite manuellement, par alert.dismiss(), une fois la suppression des données effectuées.
-            //alert.dismiss();
           }
         }
       ]

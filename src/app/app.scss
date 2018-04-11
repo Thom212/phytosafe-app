@@ -53,11 +53,14 @@
     .ParagConfid,.ParagRedir{
       font-weight: bold;
     }
-    .ButtonValide{
-      font-size: 1.3em;
+    .ButtonValide, .RefusValide{
+      font-size: 1.2em;
       margin: auto;
       display: block;
-      border: 3px #488aff solid;
+      border: 2px #488aff solid;
+    }
+    .RefusValide{
+      margin-top: 10px;
     }
   }
   ion-header{

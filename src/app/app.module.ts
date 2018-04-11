@@ -28,6 +28,7 @@ import { TherapiesAlter } from '../pages/formulaire/therapies-alter/therapies-al
 import { TraitementNom } from '../pages/formulaire/traitement-nom/traitement-nom';
 import { InfoPerso } from '../pages/formulaire/info-perso/info-perso';
 import { FinFormulaire } from '../pages/formulaire/fin-formulaire/fin-formulaire';
+import { RefusFormulaire } from '../pages/formulaire/refus-formulaire/refus-formulaire';
 import { Autocomplete } from '../pages/autocomplete/autocomplete';
 
 //Modules créés pour l'application (providers)
@@ -50,6 +51,7 @@ import { TherapieValidator } from '../providers/validators';
     TraitementNom,
     InfoPerso,
     FinFormulaire,
+    RefusFormulaire,
     Autocomplete
   ],
   imports: [
@@ -76,6 +78,7 @@ import { TherapieValidator } from '../providers/validators';
     TraitementNom,
     InfoPerso,
     FinFormulaire,
+    RefusFormulaire,
     Autocomplete
   ],
   providers: [

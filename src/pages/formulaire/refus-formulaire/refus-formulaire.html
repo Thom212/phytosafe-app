@@ -1,0 +1,13 @@
+<ion-content scroll="false">
+    <div padding>
+      <h2>{{ 'REMERCIEMENT_REFUS_APPLI' | translate }}</h2>
+      <p>{{ 'REFUS_FORMULAIRE_APPLI' | translate }}</p>
+      <p class="ParagRedir">{{ 'REDIRECTION_APPLI' | translate }}<a>{{timerCount}}</a>{{ 'UNITE_APPLI' | translate }}</p>    
+    </div>
+    <div padding>
+      <button class="ButtonValide" ion-button icon-end large clear (click)="nextPage()">
+        {{ 'REDIRECTION_BOUTON' | translate }}
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </div>
+  </ion-content>
