@@ -28,6 +28,7 @@ import { TherapiesAlter } from '../pages/formulaire/therapies-alter/therapies-al
 import { TraitementNom } from '../pages/formulaire/traitement-nom/traitement-nom';
 import { InfoPerso } from '../pages/formulaire/info-perso/info-perso';
 import { FinFormulaire } from '../pages/formulaire/fin-formulaire/fin-formulaire';
+import { RaisonRefusFormulaire } from '../pages/formulaire/raison-refus-formulaire/raison-refus-formulaire';
 import { RefusFormulaire } from '../pages/formulaire/refus-formulaire/refus-formulaire';
 import { Autocomplete } from '../pages/autocomplete/autocomplete';
 
@@ -51,6 +52,7 @@ import { TherapieValidator } from '../providers/validators';
     TraitementNom,
     InfoPerso,
     FinFormulaire,
+    RaisonRefusFormulaire,
     RefusFormulaire,
     Autocomplete
   ],
@@ -78,6 +80,7 @@ import { TherapieValidator } from '../providers/validators';
     TraitementNom,
     InfoPerso,
     FinFormulaire,
+    RaisonRefusFormulaire,
     RefusFormulaire,
     Autocomplete
   ],

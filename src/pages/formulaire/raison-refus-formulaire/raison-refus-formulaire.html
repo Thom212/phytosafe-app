@@ -1,0 +1,36 @@
+<ion-content scroll="false">
+
+  <form [formGroup]="refusForm" novalidate>
+
+    <ion-list radio-group formControlName="raisonRefusForm">
+        <p>{{ 'RAISON_REFUS_TITRE' | translate }}</p>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!refusForm.controls.raisonRefusForm.valid && (refusForm.controls.raisonRefusForm.dirty || submitAttempt)">{{ 'RAISON_REFUS_1' | translate }}</ion-label>
+          <ion-radio value="{{ 'RAISON_REFUS_1' | translate }}" [class.invalid-bis]="!refusForm.controls.raisonRefusForm.valid && (refusForm.controls.raisonRefusForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!refusForm.controls.raisonRefusForm.valid && (refusForm.controls.raisonRefusForm.dirty || submitAttempt)">{{ 'RAISON_REFUS_2' | translate }}</ion-label>
+          <ion-radio value="{{ 'RAISON_REFUS_2' | translate }}" [class.invalid-bis]="!refusForm.controls.raisonRefusForm.valid && (refusForm.controls.raisonRefusForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!refusForm.controls.raisonRefusForm.valid && (refusForm.controls.raisonRefusForm.dirty || submitAttempt)">{{ 'RAISON_REFUS_3' | translate }}</ion-label>
+          <ion-radio value="{{ 'RAISON_REFUS_3' | translate }}" [class.invalid-bis]="!refusForm.controls.raisonRefusForm.valid && (refusForm.controls.raisonRefusForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!refusForm.controls.raisonRefusForm.valid && (refusForm.controls.raisonRefusForm.dirty || submitAttempt)">{{ 'RAISON_REFUS_4' | translate }}</ion-label>
+          <ion-radio value="{{ 'RAISON_REFUS_4' | translate }}" [class.invalid-bis]="!refusForm.controls.raisonRefusForm.valid && (refusForm.controls.raisonRefusForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!refusForm.controls.raisonRefusForm.valid && (refusForm.controls.raisonRefusForm.dirty || submitAttempt)">{{ 'RAISON_REFUS_5' | translate }}</ion-label>
+          <ion-radio value="{{ 'RAISON_REFUS_5' | translate }}" [class.invalid-bis]="!refusForm.controls.raisonRefusForm.valid && (refusForm.controls.raisonRefusForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>       
+      </ion-list>
+      <p *ngIf="!refusForm.controls.raisonRefusForm.valid  && (refusForm.controls.raisonRefusForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
+    
+    </form>
+
+    <button class="buttonValide" [class.invalid]="(!refusForm.valid) && submitAttempt" ion-button icon-end large clear (click)="nextPage()">
+        {{ 'CONTINUE_BOUTON' | translate }}
+        <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </ion-content>

@@ -4,7 +4,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 //page suivante
 import { Maladie } from '../formulaire/maladie/maladie';
-import { RefusFormulaire } from '../formulaire/refus-formulaire/refus-formulaire';
+import { RaisonRefusFormulaire } from '../formulaire/raison-refus-formulaire/raison-refus-formulaire';
 
 //providers
 import { Formulaire } from '../../providers/formulaire';
@@ -158,7 +158,7 @@ export class Accueil {
          this.formulaire.createForm(dateCreaForm);
       });
       //Navigation à la page du formulaire - Refus formulaire
-      this.navCtrl.push(RefusFormulaire);
+      this.navCtrl.push(RaisonRefusFormulaire);
     });
   }
 }
