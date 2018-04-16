@@ -1,102 +1,102 @@
 <ion-header no-shadow>
-    <ion-navbar>
-      <ion-title>
-        <h2 class="slide-title">{{ 'FORM_THERAPIES' | translate }}</h2>
-      </ion-title>
-    </ion-navbar>
-  </ion-header>
-  
-  <ion-content no-bounce overflow-scroll="true" (ionScroll)="displayFab()">
+  <ion-navbar>
+    <ion-title>
+      <h2 class="slide-title">{{ 'FORM_THERAPIES' | translate }}</h2>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
 
-    <ion-fab *ngIf="showScrollFabTherapies" right bottom>
-      <button ion-fab mini (click)="scrollDownContent()">
-        <ion-icon name="arrow-dropdown"></ion-icon>
-      </button>
-    </ion-fab>
+<ion-content no-bounce overflow-scroll="true" (ionScroll)="displayFab()">
 
-    <form [formGroup]="therapiesForm" novalidate>
-           
-      <h3>
-        <span>{{ 'FORM_INFO_THERAPIE' | translate }}</span>
-        {{ 'FORM_INFO_THERAPIE_DETAILS' | translate }}
-      </h3>
-      <ion-list radio-group formControlName="radioForm">
-        <p>{{ 'FORM_RADIO_CHECK' | translate }}</p>
-        <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_RADIO_OPTION_1' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_RADIO_OPTION_1' | translate }}" [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)"></ion-radio>
-        </ion-item>
-        <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_RADIO_OPTION_2' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_RADIO_OPTION_2' | translate }}" [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)"></ion-radio>
-        </ion-item>
-        <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_RADIO_OPTION_3' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_RADIO_OPTION_3' | translate }}" [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)"></ion-radio>
-        </ion-item>
-        <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_RADIO_OPTION_4' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_RADIO_OPTION_4' | translate }}" [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)"></ion-radio>
-        </ion-item>
-        <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_RADIO_OPTION_5' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_RADIO_OPTION_5' | translate }}" [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)"></ion-radio>
-        </ion-item>
-      </ion-list>
-      <p *ngIf="!therapiesForm.controls.radioForm.valid  && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
-      
-      <ion-list radio-group formControlName="chirurgieForm">  
-        <p>{{ 'FORM_CHIRURGIE_CHECK' | translate }}</p>
-        <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)">{{ 'FORM_CHIRURGIE_OPTION_1' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_CHIRURGIE_OPTION_1' | translate }}" [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)"></ion-radio>
-        </ion-item>
-        <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)">{{ 'FORM_CHIRURGIE_OPTION_2' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_CHIRURGIE_OPTION_2' | translate }}" [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)"></ion-radio>
-        </ion-item>
-        <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)">{{ 'FORM_CHIRURGIE_OPTION_3' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_CHIRURGIE_OPTION_3' | translate }}" [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)"></ion-radio>
-        </ion-item>
-        <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)">{{ 'FORM_CHIRURGIE_OPTION_4' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_CHIRURGIE_OPTION_4' | translate }}" [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)"></ion-radio>
-        </ion-item>
-      </ion-list>
-      <p *ngIf="!therapiesForm.controls.chirurgieForm.valid  && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
-    
-    </form>
-  
-    <form [formGroup]="anticancerForm" novalidate>
-      
-      <h3>
-        <span>{{ 'FORM_INFO_TRAITEMENT' | translate }}</span>
-        {{ 'FORM_INFO_TRAITEMENT_DETAILS' | translate }}
-      </h3>
-      <div>
-        <ion-list class="listTraitement" ion-row no-lines *ngFor="let traitement of anticancerTable; let i=index">
-          <button ion-col type="button" ion-item class="buttonModal" (click)="showTraitementModal(i)" no-lines>
-            <ion-label class="labelModalstacked" [class.cache]="!choixTable[i].choixTest" stacked>{{ 'FORM_NOM_TRAITEMENT' | translate }}</ion-label>
-            <ion-label class="labelModal" *ngIf="!choixTable[i].choixTest" [class.invalid]="!traitement.traitementnomControl.valid && (traitement.traitementnomControl.dirty || submitAttempt || checkTraitement)">{{ 'FORM_NOM_TRAITEMENT' | translate }}</ion-label>
-            <ion-label class="nomModal" *ngIf="choixTable[i].choixTest" [class.invalid]="!traitement.traitementnomControl.valid && (traitement.traitementnomControl.dirty || submitAttempt || checkTraitement)">{{choixTable[i].choixNom}}</ion-label>
-          </button>
-          <button *ngIf="anticancerTable.length > 1" ion-col col-auto icon-only class="buttonRemove" (click)="removeTrait(i)">
-            <ion-icon name="close"></ion-icon>
-          </button>
-        </ion-list>
-        <p class="col" *ngIf="!anticancerForm.valid && (submitAttempt || checkTraitement)">{{ 'FORM_NOM_TRAITEMENT_ALERTE' | translate }}</p>
-      </div>
-      <button class="buttonAjout" ion-button icon-start medium clear (click)="addTrait()">
-        <ion-icon name="add"></ion-icon>
-        {{ 'FORM_NOM_TRAITEMENT_PLUS' | translate }}
-      </button>
-  
-    </form>
-    
-    <p *ngIf="(!therapiesForm.valid || !anticancerForm.valid) && submitAttempt" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
-    <button class="buttonValide" [class.invalid]="(!therapiesForm.valid || !anticancerForm.valid) && submitAttempt" ion-button icon-end large clear (click)="nextPage()">
-      {{ 'CONTINUE_BOUTON' | translate }}
-      <ion-icon name="arrow-forward"></ion-icon>
+  <ion-fab *ngIf="showScrollFabTherapies" right bottom>
+    <button ion-fab mini (click)="scrollDownContent()">
+      <ion-icon name="arrow-dropdown"></ion-icon>
     </button>
-  </ion-content>
+  </ion-fab>
+
+  <form [formGroup]="therapiesForm" novalidate>
+          
+    <h3>
+      <span>{{ 'FORM_INFO_THERAPIE' | translate }}</span>
+      {{ 'FORM_INFO_THERAPIE_DETAILS' | translate }}
+    </h3>
+    <ion-list radio-group formControlName="radioForm">
+      <p>{{ 'FORM_RADIO_CHECK' | translate }}</p>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_RADIO_OPTION_1' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_RADIO_OPTION_1' | translate }}" [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)"></ion-radio>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_RADIO_OPTION_2' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_RADIO_OPTION_2' | translate }}" [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)"></ion-radio>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_RADIO_OPTION_3' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_RADIO_OPTION_3' | translate }}" [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)"></ion-radio>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_RADIO_OPTION_4' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_RADIO_OPTION_4' | translate }}" [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)"></ion-radio>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_RADIO_OPTION_5' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_RADIO_OPTION_5' | translate }}" [class.invalid-bis]="!therapiesForm.controls.radioForm.valid && (therapiesForm.controls.radioForm.dirty || submitAttempt)"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <p *ngIf="!therapiesForm.controls.radioForm.valid  && (therapiesForm.controls.radioForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
+    
+    <ion-list radio-group formControlName="chirurgieForm">  
+      <p>{{ 'FORM_CHIRURGIE_CHECK' | translate }}</p>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)">{{ 'FORM_CHIRURGIE_OPTION_1' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_CHIRURGIE_OPTION_1' | translate }}" [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)"></ion-radio>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)">{{ 'FORM_CHIRURGIE_OPTION_2' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_CHIRURGIE_OPTION_2' | translate }}" [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)"></ion-radio>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)">{{ 'FORM_CHIRURGIE_OPTION_3' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_CHIRURGIE_OPTION_3' | translate }}" [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)"></ion-radio>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)">{{ 'FORM_CHIRURGIE_OPTION_4' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_CHIRURGIE_OPTION_4' | translate }}" [class.invalid-bis]="!therapiesForm.controls.chirurgieForm.valid && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <p *ngIf="!therapiesForm.controls.chirurgieForm.valid  && (therapiesForm.controls.chirurgieForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
+  
+  </form>
+
+  <form [formGroup]="anticancerForm" novalidate>
+    
+    <h3>
+      <span>{{ 'FORM_INFO_TRAITEMENT' | translate }}</span>
+      {{ 'FORM_INFO_TRAITEMENT_DETAILS' | translate }}
+    </h3>
+    <div>
+      <ion-list class="listTraitement" ion-row no-lines *ngFor="let traitement of anticancerTable; let i=index">
+        <button ion-col type="button" ion-item class="buttonModal" (click)="showTraitementModal(i)" no-lines>
+          <ion-label class="labelModalstacked" [class.cache]="!choixTable[i].choixTest" stacked>{{ 'FORM_NOM_TRAITEMENT' | translate }}</ion-label>
+          <ion-label class="labelModal" *ngIf="!choixTable[i].choixTest" [class.invalid]="!traitement.traitementnomControl.valid && (traitement.traitementnomControl.dirty || submitAttempt || checkTraitement)">{{ 'FORM_NOM_TRAITEMENT' | translate }}</ion-label>
+          <ion-label class="nomModal" *ngIf="choixTable[i].choixTest" [class.invalid]="!traitement.traitementnomControl.valid && (traitement.traitementnomControl.dirty || submitAttempt || checkTraitement)">{{choixTable[i].choixNom}}</ion-label>
+        </button>
+        <button *ngIf="anticancerTable.length > 1" ion-col col-auto icon-only class="buttonRemove" (click)="removeTrait(i)">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-list>
+      <p class="col" *ngIf="!anticancerForm.valid && (submitAttempt || checkTraitement)">{{ 'FORM_NOM_TRAITEMENT_ALERTE' | translate }}</p>
+    </div>
+    <button class="buttonAjout" ion-button icon-start medium clear (click)="addTrait()">
+      <ion-icon name="add"></ion-icon>
+      {{ 'FORM_NOM_TRAITEMENT_PLUS' | translate }}
+    </button>
+
+  </form>
+  
+  <p *ngIf="(!therapiesForm.valid || !anticancerForm.valid) && submitAttempt" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
+  <button class="buttonValide" [class.invalid]="(!therapiesForm.valid || !anticancerForm.valid) && submitAttempt" ion-button icon-end large clear (click)="nextPage()">
+    {{ 'CONTINUE_BOUTON' | translate }}
+    <ion-icon name="arrow-forward"></ion-icon>
+  </button>
+</ion-content>
