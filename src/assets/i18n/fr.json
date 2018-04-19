@@ -29,6 +29,7 @@
   "FORM_ORGANE_CHECK" : "Connaissez-vous l'organe sur lequel la tumeur est apparue ?",
   "FORM_ORGANE_OUI" : "oui",
   "FORM_ORGANE_NON" : "non",
+  "FORM_ORGANE_HEMATO" : "maladie hématologique (lymphome, leucémie, myélome)",
   "FORM_ORGANE_PRIMITIF" : "Organe primitif atteint",
   "FORM_ORGANE_PRIMITIF_ALERTE" : "Entrez un nom d'organe valide.",
   "FORM_MALADIE_CHECK" : "Stade de la maladie",

@@ -32,6 +32,7 @@ export class Maladie implements OnInit {
   organeTitre: string;
   organePlaceholder: string;
   organeChoix: string;
+  isHemato: boolean = false;
   questionOrgane: boolean = false;
   showScrollFabMaladie: boolean = false;
   contentDimensions: any;
@@ -104,6 +105,7 @@ export class Maladie implements OnInit {
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
   organeOui() {
+    this.isHemato = false;
     this.questionOrgane = true;
     this.showOrganeModal();
   }
@@ -115,10 +117,23 @@ export class Maladie implements OnInit {
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
   organeNon() {
+    this.isHemato = false;
     this.questionOrgane = false;
     this.maladieForm.patchValue({organeForm: ''});
     this.maladieForm.patchValue({nom_organeForm: ''});
     this.organeChoix = '';
+  }
+
+   /**
+   * Fonction qui permet l'entrée du nom de l'hematologie.
+   * @method hemato
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  hemato() {
+    this.isHemato = true;
+    this.questionOrgane = true;
+    this.showOrganeModal();
   }
 
   /**
