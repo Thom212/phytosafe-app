@@ -27,7 +27,7 @@
     <div class="itemInput">
       <p>{{ 'FORM_DATE_NAISSANCE' | translate }}</p>
       <!--ion-item no-lines-->
-        <ion-input class="inputNaissance" [class.invalid]="!infoPersoForm.controls.date_naissanceForm.valid && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)" formControlName="date_naissanceForm" placeholder="{{ 'FORM_DATE_NAISSANCE_PLACEHOLDER' | translate }}" type="number" pattern="\d*"></ion-input>
+        <ion-input class="inputNaissance" [class.invalid]="!infoPersoForm.controls.date_naissanceForm.valid && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)" formControlName="date_naissanceForm" placeholder="{{ 'FORM_DATE_NAISSANCE_PLACEHOLDER' | translate }}" type="number" pattern="[0-9]*"></ion-input>
       <!--/ion-item-->
     </div>
     <p *ngIf="!infoPersoForm.controls.date_naissanceForm.valid  && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)">{{ 'FORM_DATE_NAISSANCE_ALERTE' | translate }}</p>
