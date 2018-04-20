@@ -43,7 +43,9 @@ export class Maladie implements OnInit {
       organeForm: ['', Validators.pattern('([A-Z ]{5})')],
       nom_organeForm: ['', Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ\u0152\u0153\\- \'\(\)]*)')],
       etatForm:  ['', Validators.required]
+      //TODO à voir si on met pas un validateur conditionnel pour le cas hemato https://stackoverflow.com/questions/36118721/angular-2-conditional-validators-required
     },{ validator: MaladieValidator.isValid});
+    this.maladieForm.get('etatForm').setValidators([Validators.required]);
     this.organeNom = [];
     this.organeElement = [];
     this.contentDimensions = {};
@@ -107,6 +109,7 @@ export class Maladie implements OnInit {
   organeOui() {
     this.isHemato = false;
     this.questionOrgane = true;
+    this.maladieForm.get('etatForm').enable();
     this.showOrganeModal();
   }
 
@@ -119,6 +122,7 @@ export class Maladie implements OnInit {
   organeNon() {
     this.isHemato = false;
     this.questionOrgane = false;
+    this.maladieForm.get('etatForm').enable();
     this.maladieForm.patchValue({organeForm: ''});
     this.maladieForm.patchValue({nom_organeForm: ''});
     this.organeChoix = '';
@@ -133,6 +137,7 @@ export class Maladie implements OnInit {
   hemato() {
     this.isHemato = true;
     this.questionOrgane = true;
+    this.maladieForm.get('etatForm').disable();
     this.showOrganeModal();
   }
 

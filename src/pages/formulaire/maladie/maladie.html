@@ -50,19 +50,19 @@
       <ion-list radio-group formControlName="etatForm">
         <p>{{ 'FORM_MALADIE_CHECK' | translate }}</p>
         <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!maladieForm.controls.etatForm.valid && (maladieForm.controls.etatForm.dirty || submitAttempt)">{{ 'FORM_MALADIE_OPTION_1' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_MALADIE_OPTION_1' | translate }}" [class.invalid-bis]="!maladieForm.controls.etatForm.valid && (maladieForm.controls.etatForm.dirty || submitAttempt)"></ion-radio>
+          <ion-label [class.invalid-bis]="!maladieForm.controls.etatForm.valid && (maladieForm.controls.etatForm.dirty || submitAttempt) && !isHemato">{{ 'FORM_MALADIE_OPTION_1' | translate }}</ion-label>
+          <ion-radio value="{{ 'FORM_MALADIE_OPTION_1' | translate }}" [class.invalid-bis]="!maladieForm.controls.etatForm.valid && (maladieForm.controls.etatForm.dirty || submitAttempt) && !isHemato"></ion-radio>
         </ion-item>
         <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!maladieForm.controls.etatForm.valid && (maladieForm.controls.etatForm.dirty || submitAttempt)">{{ 'FORM_MALADIE_OPTION_2' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_MALADIE_OPTION_2' | translate }}" [class.invalid-bis]="!maladieForm.controls.etatForm.valid && (maladieForm.controls.etatForm.dirty || submitAttempt)"></ion-radio>
+          <ion-label [class.invalid-bis]="!maladieForm.controls.etatForm.valid && (maladieForm.controls.etatForm.dirty || submitAttempt) && !isHemato">{{ 'FORM_MALADIE_OPTION_2' | translate }}</ion-label>
+          <ion-radio value="{{ 'FORM_MALADIE_OPTION_2' | translate }}" [class.invalid-bis]="!maladieForm.controls.etatForm.valid && (maladieForm.controls.etatForm.dirty || submitAttempt) && !isHemato"></ion-radio>
         </ion-item>
         <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!maladieForm.controls.etatForm.valid && (maladieForm.controls.etatForm.dirty || submitAttempt)">{{ 'FORM_MALADIE_OPTION_3' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_MALADIE_OPTION_3' | translate }}" [class.invalid-bis]="!maladieForm.controls.etatForm.valid && (maladieForm.controls.etatForm.dirty || submitAttempt)"></ion-radio>
+          <ion-label [class.invalid-bis]="!maladieForm.controls.etatForm.valid && (maladieForm.controls.etatForm.dirty || submitAttempt) && !isHemato">{{ 'FORM_MALADIE_OPTION_3' | translate }}</ion-label>
+          <ion-radio value="{{ 'FORM_MALADIE_OPTION_3' | translate }}" [class.invalid-bis]="!maladieForm.controls.etatForm.valid && (maladieForm.controls.etatForm.dirty || submitAttempt) && !isHemato"></ion-radio>
         </ion-item>
       </ion-list>
-      <p *ngIf="!maladieForm.controls.etatForm.valid  && (maladieForm.controls.etatForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
+      <p *ngIf="!maladieForm.controls.etatForm.valid  && (maladieForm.controls.etatForm.dirty || submitAttempt) && !isHemato">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
     </div>
 
   </form>

@@ -38,7 +38,8 @@ export class MaladieValidator {
   static isValid(group: FormGroup): any {
     var organeboolForm = group.controls.organeboolForm.value;
     var nom_organeForm = group.controls.nom_organeForm.value;
-    if (organeboolForm=='oui' && nom_organeForm==''){
+    //TODO || organeboolForm=='hemato'
+    if (organeboolForm=='oui'  && nom_organeForm==''){
       group.controls.nom_organeForm.setErrors({"empty": true});
     }
   }
