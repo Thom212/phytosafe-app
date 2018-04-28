@@ -131,11 +131,11 @@ export class LocalStockage {
 
   /**
    * Méthode qui supprime une paire key/value stockée
-   * @method clearStoreData
+   * @method clearData
    * @param {string} - la key de la paire à supprimer est passée à la méthode.
    * @returns {Promise} - une promesse est renvoyée lorsque la donnée a été supprimée. 
    */
-  clearStoreData(key){
+  clearData(key){
     return this.storage.remove(key).then(() => {
       //console.log(key + ' supprimée');
     });

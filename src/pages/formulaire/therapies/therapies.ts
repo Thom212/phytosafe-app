@@ -37,24 +37,23 @@ export class Therapies implements OnInit {
   traitementPlaceholder: string;
   showScrollFabTherapies: boolean = false;
   contentDimensions: any;
+  isTraitement: boolean = false;
   
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public zone: NgZone, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public traitement: Traitement, public keyboard: Keyboard, public diacritics: Diacritics, public inactif: Inactif) {
     this.therapiesForm = formBuilder.group({
       radioForm:  ['', Validators.required],
-      chirurgieForm:  ['', Validators.required]
+      chirurgieForm:  ['', Validators.required],
+      gastrectomieForm:  ['', Validators.required]
     });
-    this.anticancerForm = formBuilder.group({});
+    this.anticancerForm = formBuilder.group({
+      traitementboolForm: ['', Validators.required]
+    });
     this.traitementNom = [];
     this.traitementElement = [];
     this.contentDimensions = {};
   }
 
   ngOnInit(){
-    this.createTraitObjet();
-    this.createChoixObjet();
-    //Création du contenu du formulaire anticancerForm (nom et validateur)
-    this.anticancerForm.addControl(this.anticancerTable[0].traitementnom, this.anticancerTable[0].traitementnomControl);
-    this.anticancerForm.addControl(this.anticancerTable[0].traitementid, this.anticancerTable[0].traitementidControl);
     //Récupération de la liste des traitements anti-cancéreux
     this.traitement.makeTraitList(['TTCAN']).then((liste) =>{
       this.traitementNom = liste[0];
@@ -116,22 +115,12 @@ export class Therapies implements OnInit {
       traitementnomControl : FormControl,
       traitementidControl : FormControl
     };
-    var traitement: traitementObjet;
-    //Distinction du premier traitement si on veut traiter spécialement le premier traitement (le rendre obligatoire)
-    if (this.nbTraitement == 1) {
-      traitement = {
-        traitementnom: "traitementnom_"+this.nbTraitement.toString()+"_Form",
-        traitementid: "traitementid_"+this.nbTraitement.toString()+"_Form",
-        traitementnomControl : new FormControl ('', Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿœ\\- \'\(\)]*)')),
-        traitementidControl : new FormControl ('', Validators.pattern('([0-9]*)'))
-      }
-    } else {
-      traitement = {
-        traitementnom: "traitementnom_"+this.nbTraitement.toString()+"_Form",
-        traitementid: "traitementid_"+this.nbTraitement.toString()+"_Form",
-        traitementnomControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿœ\\- \'\(\)]*)'), Validators.required])),
-        traitementidControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9]*)')]))
-      }
+    var traitement: traitementObjet;  
+    traitement = {
+      traitementnom: "traitementnom_"+this.nbTraitement.toString()+"_Form",
+      traitementid: "traitementid_"+this.nbTraitement.toString()+"_Form",
+      traitementnomControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿœ\\- \'\(\)]*)'), Validators.required])),
+      traitementidControl : new FormControl ('', Validators.compose([ Validators.pattern('([0-9]*)')]))
     }
     this.anticancerTable.push(traitement);
   }
@@ -194,6 +183,45 @@ export class Therapies implements OnInit {
     this.anticancerForm.removeControl(this.anticancerTable[i].traitementid);
     this.anticancerTable.splice(i,1);
     this.choixTable.splice(i,1);
+  }
+
+  /**
+   * Fonction qui permet l'entrée du nom des traitements anti-cancéreux.
+   * @method traitementOui
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  traitementOui() {
+    this.isTraitement = true;
+    this.createTraitObjet();
+    this.createChoixObjet();
+    //Création du contenu du formulaire anticancerForm (nom et validateur)
+    this.anticancerForm.addControl(this.anticancerTable[0].traitementnom, this.anticancerTable[0].traitementnomControl);
+    this.anticancerForm.addControl(this.anticancerTable[0].traitementid, this.anticancerTable[0].traitementidControl);
+    this.showTraitementModal(0);
+  }
+
+  /**
+   * Fonction qui supprime l'entrée du nom des traitements anti-cancéreux.
+   * @method traitementNon
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  traitementNon() {
+    this.isTraitement = false;
+    let arrayLength: number = this.anticancerTable.length;
+    for (var i = 0; i<arrayLength;i++) {
+      var suppressionObjet = {}
+      suppressionObjet[this.anticancerTable[i].traitementnom] = this.anticancerForm.value[this.anticancerTable[i].traitementnom];
+      suppressionObjet[this.anticancerTable[i].traitementid] = this.anticancerForm.value[this.anticancerTable[i].traitementid];
+      this.localstockage.removeData(suppressionObjet);
+      this.anticancerForm.removeControl(this.anticancerTable[i].traitementnom);
+      this.anticancerForm.removeControl(this.anticancerTable[i].traitementid);
+    }
+    this.anticancerTable = [];
+    this.choixTable = [];
+    this.checkTraitement = false;
+    this.nbTraitement = 0;
   }
 
   /**

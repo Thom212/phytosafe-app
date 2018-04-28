@@ -4,7 +4,7 @@ import { NavController, ModalController, NavParams, Content } from 'ionic-angula
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { InfoPerso } from '../info-perso/info-perso';
+import { Aliments } from '../aliments/aliments';
 import{ Autocomplete } from '../../autocomplete/autocomplete';
 
 import { Formulaire } from '../../../providers/formulaire';
@@ -257,7 +257,7 @@ export class TraitementNom implements OnInit{
           });
         });    
         //Navigation à la page du formulaire - Informations Générales
-        this.navCtrl.push(InfoPerso);
+        this.navCtrl.push(Aliments);
       });
     }
   }

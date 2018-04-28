@@ -5,7 +5,7 @@ import { NavController, Content } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { TraitementNom } from '../traitement-nom/traitement-nom';
-import { InfoPerso } from '../info-perso/info-perso';
+import { Aliments } from '../aliments/aliments';
 
 import { Formulaire } from '../../../providers/formulaire';
 import { LocalStockage } from '../../../providers/localstockage';
@@ -31,7 +31,6 @@ export class TherapiesAlter{
   constructor(public navCtrl: NavController, public zone: NgZone, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public traitement: Traitement, public localstockage: LocalStockage, public inactif: Inactif) {
     this.therapiesAlterForm = formBuilder.group({
         phytoForm: [false],
-        boissonForm: [false],
         aromaForm: [false],
         vitamineForm: [false],
         homeoForm: [false],
@@ -117,7 +116,6 @@ export class TherapiesAlter{
   aucun() {
     this.checkAutres = false;
     this.therapiesAlterForm.controls.phytoForm.setValue(false);
-    this.therapiesAlterForm.controls.boissonForm.setValue(false);
     this.therapiesAlterForm.controls.aromaForm.setValue(false);
     this.therapiesAlterForm.controls.vitamineForm.setValue(false);
     this.therapiesAlterForm.controls.homeoForm.setValue(false);
@@ -135,7 +133,6 @@ export class TherapiesAlter{
   inconnu() {
     this.checkAutres = false;
     this.therapiesAlterForm.controls.phytoForm.setValue(false);
-    this.therapiesAlterForm.controls.boissonForm.setValue(false);
     this.therapiesAlterForm.controls.aromaForm.setValue(false);
     this.therapiesAlterForm.controls.vitamineForm.setValue(false);
     this.therapiesAlterForm.controls.homeoForm.setValue(false);
@@ -185,12 +182,12 @@ export class TherapiesAlter{
             }
           });
         });
-        if (this.therapiesAlterForm.controls.phytoForm.value || this.therapiesAlterForm.controls.vitamineForm.value || this.therapiesAlterForm.controls.boissonForm.value) {
+        if (this.therapiesAlterForm.controls.phytoForm.value || this.therapiesAlterForm.controls.vitamineForm.value || this.therapiesAlterForm.controls.aromaForm.value) {
           this.navCtrl.push(TraitementNom, {
             liste : this.traitementListe
           });
         } else {
-          this.navCtrl.push(InfoPerso);
+          this.navCtrl.push(Aliments);
         }
       });
     }

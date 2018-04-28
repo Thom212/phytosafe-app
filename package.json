@@ -6,7 +6,7 @@
     "private": true,
     "scripts": {
         "clean": "ionic-app-scripts clean",
-        "build": "ionic-app-scripts build",
+        "build": "ionic-app-scripts build --prod --minifycss --minifyjs --optimizejs",
         "lint": "ionic-app-scripts lint",
         "ionic:build": "ionic-app-scripts build",
         "ionic:serve": "ionic-app-scripts serve"
@@ -34,6 +34,7 @@
         "@ngx-translate/core": "6.0.1",
         "@ngx-translate/http-loader": "0.0.3",
         "cordova-android": "^6.2.3",
+        "cordova-ios": "^4.4.0",
         "cordova-plugin-compat": "^1.0.0",
         "cordova-plugin-console": "^1.0.5",
         "cordova-plugin-device": "^1.1.4",
@@ -70,7 +71,11 @@
             }
         },
         "platforms": [
-            "android"
+            "android",
+            "ios"
         ]
+    },
+    "config": {
+        "ionic_source_map": "source-map"
     }
 }

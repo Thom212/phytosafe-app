@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 
 //page suivante
@@ -16,8 +16,30 @@ import { LocalStockage } from '../../providers/localstockage';
 })
 export class Accueil {
 
-  constructor(public navCtrl: NavController, public formulaire: Formulaire, public localstockage: LocalStockage, private geolocation: Geolocation) {}
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public formulaire: Formulaire, public localstockage: LocalStockage, private geolocation: Geolocation) {}
   
+  /**
+   * Fonction qui permet de fixer le centre.
+   * Elle ouvre une page modale pour sélectionner le centre.
+   * Une fois la valeur choisie, elle la stocke localement.
+   * @method setCenter
+   * @requires providers/localstockage - la fonction utilise la méthode setData.
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  setCenter() {
+    this.localstockage.getData("setCenter").then((val)=> {
+      //Création de la page modale
+      let centerModal = this.modalCtrl.create(Center, {centerData : val});
+      //Traitements lors de la fermeture de la page d'autocompletion
+      centerModal.onDidDismiss(data => {
+        this.localstockage.setData(data)
+      });
+      //Affichage de la page d'autocompletion
+      centerModal.present();
+    });
+  }
+
   /**
    * Fonction appelée lors du clic sur le bouton "Commencer le formulaire" sur la page d'accueil.
    * Elle récupère la date et l'heure au moment où le bouton est cliqué et stocke cette valeur localement.
@@ -30,9 +52,23 @@ export class Accueil {
    */
   nextPage() {
     //Date de création du nouveau formulaire
-    interface dateObjet { dateForm: Date, latitudeForm: Number, longitudeForm: Number, accordForm: Boolean};
+    interface dateObjet { dateForm: Date, accordForm: Boolean};
     var currentTime = new Date();
-    var dateCreaForm: dateObjet = {dateForm : currentTime, latitudeForm : null, longitudeForm : null, accordForm : true};
+    var dateCreaForm: dateObjet = {dateForm : currentTime, accordForm : true};
+
+    //Coordonnées GPS du patient
+    interface coordObjet {latitudeForm: Number, longitudeForm: Number};
+    var coordForm: coordObjet = {latitudeForm : null, longitudeForm : null};
+
+    //Récupération des coordonnées GPS du device
+    this.geolocation.getCurrentPosition().then((resp) => {
+      coordForm.latitudeForm = resp.coords.latitude;
+      coordForm.longitudeForm = resp.coords.longitude;
+      //Enregistrement des données (coordonnées GPS) localement
+      this.localstockage.setData(coordForm);
+    }).catch((error) => {
+       console.log('Error getting location', error);
+    });
 
     //Suppression du serveur des formulaires qui n'ont pas été terminés
     this.localstockage.getData("idForm").then((val)=> {
@@ -53,7 +89,7 @@ export class Accueil {
             //Dans ce cas, il faut le créer côté serveur
             this.formulaire.createForm(data).toPromise().then((res) => {
               //Suppression du formulaire qui vient d'être envoyé sur le serveur
-              this.localstockage.clearStoreData(propertyName);
+              this.localstockage.clearData(propertyName);
             }).catch((err)=>{
               console.error('ERROR', err);
             });
@@ -62,7 +98,7 @@ export class Accueil {
             //Dans ce cas, il faut le mettre à jour côté serveur
             this.formulaire.updateForm(data).toPromise().then((res) => {
               //Suppression du formulaire qui vient d'être envoyé sur le serveur
-              this.localstockage.clearStoreData(propertyName);
+              this.localstockage.clearData(propertyName);
             }).catch((err)=>{
               console.error('ERROR', err);
             });
@@ -71,20 +107,13 @@ export class Accueil {
         }
       });
 
-      //Récupération des coordonnées GPS du device
-      this.geolocation.getCurrentPosition().then((resp) => {
-        dateCreaForm.latitudeForm = resp.coords.latitude;
-        dateCreaForm.longitudeForm = resp.coords.longitude;
-        //Enregistrement des données (date de création du formulaire, coordonnées GPS) localement
-        this.localstockage.setData(dateCreaForm).then((message) => {
-          //Création d'un nouveau formulaire. La première donnée à entrer dans le formulaire est la date de création.
-          this.formulaire.createForm(dateCreaForm);
+      //Création du formulaire
+      this.localstockage.setData(dateCreaForm).then((message) => {
+        this.localstockage.getAllData().then((dataForm)=>{
+          this.formulaire.createForm(dataForm);
         });
-      }).catch((error) => {
-         console.log('Error getting location', error);
-         //Création d'un nouveau formulaire sans les données de géolocalisation.
-         this.formulaire.createForm(dateCreaForm);
       });
+      
       //Navigation à la page du formulaire - Maladie
       this.navCtrl.push(Maladie);
     });
@@ -102,9 +131,23 @@ export class Accueil {
    */
   refusPage() {
     //Date de création du nouveau formulaire
-    interface dateObjet { dateForm: Date, latitudeForm: Number, longitudeForm: Number, accordForm: Boolean};
+    interface dateObjet { dateForm: Date, accordForm: Boolean};
     var currentTime = new Date();
-    var dateCreaForm: dateObjet = {dateForm : currentTime, latitudeForm : null, longitudeForm : null, accordForm : false};
+    var dateCreaForm: dateObjet = {dateForm : currentTime, accordForm : true};
+
+    //Coordonnées GPS du patient
+    interface coordObjet {latitudeForm: Number, longitudeForm: Number};
+    var coordForm: coordObjet = {latitudeForm : null, longitudeForm : null};
+
+    //Récupération des coordonnées GPS du device
+    this.geolocation.getCurrentPosition().then((resp) => {
+      coordForm.latitudeForm = resp.coords.latitude;
+      coordForm.longitudeForm = resp.coords.longitude;
+      //Enregistrement des données (coordonnées GPS) localement
+      this.localstockage.setData(coordForm);
+    }).catch((error) => {
+       console.log('Error getting location', error);
+    });
 
     //Suppression du serveur des formulaires qui n'ont pas été terminés
     this.localstockage.getData("idForm").then((val)=> {
@@ -125,7 +168,7 @@ export class Accueil {
             //Dans ce cas, il faut le créer côté serveur
             this.formulaire.createForm(data).toPromise().then((res) => {
               //Suppression du formulaire qui vient d'être envoyé sur le serveur
-              this.localstockage.clearStoreData(propertyName);
+              this.localstockage.clearData(propertyName);
             }).catch((err)=>{
               console.error('ERROR', err);
             });
@@ -134,7 +177,7 @@ export class Accueil {
             //Dans ce cas, il faut le mettre à jour côté serveur
             this.formulaire.updateForm(data).toPromise().then((res) => {
               //Suppression du formulaire qui vient d'être envoyé sur le serveur
-              this.localstockage.clearStoreData(propertyName);
+              this.localstockage.clearData(propertyName);
             }).catch((err)=>{
               console.error('ERROR', err);
             });
@@ -143,20 +186,13 @@ export class Accueil {
         }
       });
 
-      //Récupération des coordonnées GPS du device
-      this.geolocation.getCurrentPosition().then((resp) => {
-        dateCreaForm.latitudeForm = resp.coords.latitude;
-        dateCreaForm.longitudeForm = resp.coords.longitude;
-        //Enregistrement des données (date de création du formulaire, coordonnées GPS) localement
-        this.localstockage.setData(dateCreaForm).then((message) => {
-          //Création d'un nouveau formulaire. La première donnée à entrer dans le formulaire est la date de création.
-          this.formulaire.createForm(dateCreaForm);
+      //Création du formulaire
+      this.localstockage.setData(dateCreaForm).then((message) => {
+        this.localstockage.getAllData().then((dataForm)=>{
+          this.formulaire.createForm(dataForm);
         });
-      }).catch((error) => {
-         console.log('Error getting location', error);
-         //Création d'un nouveau formulaire sans les données de géolocalisation.
-         this.formulaire.createForm(dateCreaForm);
       });
+
       //Navigation à la page du formulaire - Refus formulaire
       this.navCtrl.push(RaisonRefusFormulaire);
     });

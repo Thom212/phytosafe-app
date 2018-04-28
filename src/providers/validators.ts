@@ -3,7 +3,6 @@ import { FormGroup } from '@angular/forms';
 export class TherapieValidator {
   static isValid(group: FormGroup): any {
     var phytoForm = group.controls.phytoForm.value;
-    var boissonForm = group.controls.boissonForm.value;
     var aromaForm = group.controls.aromaForm.value;
     var vitamineForm = group.controls.vitamineForm.value;
     var homeoForm = group.controls.homeoForm.value;
@@ -14,7 +13,7 @@ export class TherapieValidator {
     if (autresboolForm && autresForm==''){
       group.controls.autresForm.setErrors({"autres_empty": true});
     }
-    if (!phytoForm && !boissonForm && !aromaForm && !vitamineForm && !homeoForm && !autresboolForm && !aucunForm && !inconnuForm){
+    if (!phytoForm && !aromaForm && !vitamineForm && !homeoForm && !autresboolForm && !aucunForm && !inconnuForm){
       return {
           "empty": true
       };
@@ -36,11 +35,24 @@ export class TabacValidator {
 
 export class MaladieValidator {
   static isValid(group: FormGroup): any {
+    var typeboolForm = group.controls.typeboolForm.value;
     var organeboolForm = group.controls.organeboolForm.value;
     var nom_organeForm = group.controls.nom_organeForm.value;
-    //TODO || organeboolForm=='hemato'
-    if (organeboolForm=='oui'  && nom_organeForm==''){
+    var etatForm = group.controls.etatForm.value;
+    if (typeboolForm == 'non' || typeboolForm == 'je ne sais pas') {
+      if (organeboolForm == '') {
+        group.controls.organeboolForm.setErrors({"empty": true});
+      } else if (organeboolForm =='oui'  && nom_organeForm=='') {
+        group.controls.nom_organeForm.setErrors({"empty": true});
+      }
+      if (etatForm == ''){
+        group.controls.etatForm.setErrors({"empty": true});
+      }
+    } else if (typeboolForm == 'oui' && nom_organeForm == '') {
       group.controls.nom_organeForm.setErrors({"empty": true});
+      group.controls.organeboolForm.setErrors(null);
+      group.controls.etatForm.setErrors(null);
+
     }
   }
 }

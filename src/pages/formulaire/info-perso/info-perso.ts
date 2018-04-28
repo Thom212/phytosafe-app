@@ -155,7 +155,7 @@ export class InfoPerso{
               //Si le formulaire n'a pas été créé, il faut le créer
               this.formulaire.createForm(dataForm).toPromise().then((res) => {
                 loader.dismiss();
-                this.localstockage.clearStoreData("idForm");
+                this.localstockage.clearData("idForm");
                 //Navigation à la page de fin du formulaire - FinFormulaire
                 this.navCtrl.push(FinFormulaire, {
                   succesForm : true
@@ -179,13 +179,13 @@ export class InfoPerso{
               //Sinon, il faut le mettre à jour
               this.formulaire.updateForm(dataForm).toPromise().then((res) => {
                 loader.dismiss();
-                this.localstockage.clearStoreData("idForm");
+                this.localstockage.clearData("idForm");
                 //Navigation à la page de fin du formulaire - FinFormulaire
                 this.navCtrl.push(FinFormulaire, {
                   succesForm : true
                 });
               }).catch((err)=>{
-                this.localstockage.clearStoreData("idForm");
+                this.localstockage.clearData("idForm");
                 console.error('ERROR', err);
                 this.localstockage.storeAllData(dataForm).then((res) => {
                   loader.dismiss();

@@ -50,19 +50,25 @@ export class Cancer {
   makeCancerList(){
 
     return new Promise((resolve,reject) => {
-      let organeList = [];
-      let organeTab = [];
+      let organeListHemato = [];
+      let organeTabHemato = [];
+      let organeListOrgane = [];
+      let organeTabOrgane = [];
       this.getCancer().toPromise().then((res) => {
         var auxTab = res.json().data;
         auxTab.forEach((element) => {
-          organeList.push(element.nom.charAt(0).toUpperCase() + element.nom.slice(1).toLowerCase());
-          organeTab.push(element);
-        })
-        return organeList;
+          if (element.hemato) {
+            organeListHemato.push(element.nom.charAt(0).toUpperCase() + element.nom.slice(1).toLowerCase());
+            organeTabHemato.push(element);
+          } else {
+            organeListOrgane.push(element.nom.charAt(0).toUpperCase() + element.nom.slice(1).toLowerCase());
+            organeTabOrgane.push(element);
+          }
+        });
       }).catch((err)=>{
         console.error('ERROR', err);
       });
-      resolve([organeList,organeTab]);
+      resolve([organeListHemato,organeTabHemato,organeListOrgane,organeTabOrgane]);
     });
   } 
 }

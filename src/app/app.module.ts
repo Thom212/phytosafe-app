@@ -1,5 +1,5 @@
 //Modules auto-générés à la création de l'application 
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, Injectable, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, Http } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -26,6 +26,7 @@ import { Maladie } from '../pages/formulaire/maladie/maladie';
 import { Therapies } from '../pages/formulaire/therapies/therapies';
 import { TherapiesAlter } from '../pages/formulaire/therapies-alter/therapies-alter';
 import { TraitementNom } from '../pages/formulaire/traitement-nom/traitement-nom';
+import { Aliments } from '../pages/formulaire/aliments/aliments';
 import { InfoPerso } from '../pages/formulaire/info-perso/info-perso';
 import { FinFormulaire } from '../pages/formulaire/fin-formulaire/fin-formulaire';
 import { RaisonRefusFormulaire } from '../pages/formulaire/raison-refus-formulaire/raison-refus-formulaire';
@@ -42,6 +43,34 @@ import { Traitement } from '../providers/traitement';
 import { Cancer } from '../providers/cancer';
 import { TherapieValidator } from '../providers/validators';
 
+// Module importé pour Pro Client avec Monitoring & Deploy,
+import { Pro } from '@ionic/pro';
+
+Pro.init('0176cb0d', {
+  appVersion: '0.0.1'
+})
+
+@Injectable()
+export class MyErrorHandler implements ErrorHandler {
+  ionicErrorHandler: IonicErrorHandler;
+
+  constructor(injector: Injector) {
+    try {
+      this.ionicErrorHandler = injector.get(IonicErrorHandler);
+    } catch(e) {
+      // Unable to get the IonicErrorHandler provider, ensure
+      // IonicErrorHandler has been added to the providers list below
+    }
+  }
+
+  handleError(err: any): void {
+    Pro.monitoring.handleNewError(err);
+    // Remove this if you want to disable Ionic's auto exception handling
+    // in development mode.
+    this.ionicErrorHandler && this.ionicErrorHandler.handleError(err);
+  }
+}
+
 @NgModule({
   declarations: [
     MyApp,
@@ -50,6 +79,7 @@ import { TherapieValidator } from '../providers/validators';
     Therapies,
     TherapiesAlter,
     TraitementNom,
+    Aliments,
     InfoPerso,
     FinFormulaire,
     RaisonRefusFormulaire,
@@ -78,6 +108,7 @@ import { TherapieValidator } from '../providers/validators';
     Therapies,
     TherapiesAlter,
     TraitementNom,
+    Aliments,
     InfoPerso,
     FinFormulaire,
     RaisonRefusFormulaire,
@@ -97,8 +128,8 @@ import { TherapieValidator } from '../providers/validators';
     StatusBar,
     Keyboard,
     Geolocation,
-    // Keep this to enable Ionic's runtime error handling during development
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    IonicErrorHandler,
+    [{ provide: ErrorHandler, useClass: MyErrorHandler }]
   ]
 })
 export class AppModule { }

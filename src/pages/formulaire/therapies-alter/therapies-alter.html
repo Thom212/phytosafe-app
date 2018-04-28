@@ -28,33 +28,29 @@
       </ion-item>
       <ion-item no-lines>
         <ion-label>{{ 'FORM_THERAPIES_OPTION_2' | translate }}</ion-label>
-        <ion-checkbox formControlName="boissonForm" (click)="therapie()"></ion-checkbox>
-      </ion-item>
-      <ion-item no-lines>
-        <ion-label>{{ 'FORM_THERAPIES_OPTION_3' | translate }}</ion-label>
         <ion-checkbox formControlName="aromaForm" (click)="therapie()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines>
-        <ion-label>{{ 'FORM_THERAPIES_OPTION_4' | translate }}</ion-label>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_3' | translate }}</ion-label>
         <ion-checkbox formControlName="vitamineForm" (click)="therapie()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines>
-        <ion-label>{{ 'FORM_THERAPIES_OPTION_5' | translate }}</ion-label>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_4' | translate }}</ion-label>
         <ion-checkbox formControlName="homeoForm" (click)="therapie()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines>
-        <ion-label >{{ 'FORM_THERAPIES_OPTION_6' | translate }}</ion-label>
+        <ion-label >{{ 'FORM_THERAPIES_OPTION_5' | translate }}</ion-label>
         <ion-checkbox formControlName="autresboolForm" (click)="autres(inputAutres)"></ion-checkbox>
       </ion-item>
       <ion-item no-lines *ngIf="checkAutres">
         <ion-input #inputAutres [class.invalid]="!therapiesAlterForm.controls.autresForm.valid && (therapiesAlterForm.controls.autresForm.dirty || submitAttempt)" formControlName="autresForm" type="text"></ion-input>
       </ion-item>
       <ion-item no-lines>
-        <ion-label>{{ 'FORM_THERAPIES_OPTION_7' | translate }}</ion-label>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_6' | translate }}</ion-label>
         <ion-checkbox formControlName="aucunForm" (click)="aucun()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines>
-        <ion-label>{{ 'FORM_THERAPIES_OPTION_8' | translate }}</ion-label>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_7' | translate }}</ion-label>
         <ion-checkbox formControlName="inconnuForm" (click)="inconnu()"></ion-checkbox>
       </ion-item>
 

@@ -1,4 +1,9 @@
 <ion-content scroll="false">
+  <ion-fab left bottom>
+    <button ion-fab mini (click)="setCenter()">
+      <ion-icon name="settings"></ion-icon>
+    </button>
+  </ion-fab>
   <div padding>
     <h2>{{ 'TITRE_APPLI' | translate }}</h2>
     <p>{{ 'FONCTION_APPLI' | translate }}</p>

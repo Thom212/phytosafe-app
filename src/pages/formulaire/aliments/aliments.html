@@ -1,0 +1,72 @@
+<ion-header no-shadow>
+    <ion-navbar>
+      <ion-title>
+        <h2 class="slide-title">{{ 'FORM_ALIMENTS' | translate }}</h2>
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content no-bounce overflow-scroll="true" (ionScroll)="displayFab()">
+  
+    <ion-fab *ngIf="showScrollFabTherapies" right bottom>
+      <button ion-fab mini (click)="scrollDownContent()">
+        <ion-icon name="arrow-dropdown"></ion-icon>
+      </button>
+    </ion-fab>
+  
+    <form [formGroup]="alimentationForm" novalidate>
+            
+      <h3>
+        <span>{{ 'FORM_INFO_ALIMENTS' | translate }}</span>
+        {{ 'FORM_INFO_ALIMENTS_DETAILS' | translate }}
+      </h3>
+      <ion-list radio-group formControlName="alimentsForm">
+        <p>{{ 'FORM_ALIMENTS_CHECK' | translate }}</p>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)">{{ 'FORM_ALIMENTS_OPTION_1' | translate }}</ion-label>
+          <ion-radio value="{{ 'FORM_ALIMENTS_OPTION_1' | translate }}" [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)">{{ 'FORM_ALIMENTS_OPTION_2' | translate }}</ion-label>
+          <ion-radio value="{{ 'FORM_ALIMENTS_OPTION_2' | translate }}" [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)">{{ 'FORM_ALIMENTS_OPTION_3' | translate }}</ion-label>
+          <ion-radio value="{{ 'FORM_ALIMENTS_OPTION_3' | translate }}" [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)">{{ 'FORM_ALIMENTS_OPTION_4' | translate }}</ion-label>
+          <ion-radio value="{{ 'FORM_ALIMENTS_OPTION_4' | translate }}" [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
+      </ion-list>
+      <p *ngIf="!alimentationForm.controls.alimentsForm.valid  && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
+      
+      <ion-list radio-group formControlName="fruitsForm">  
+        <p>{{ 'FORM_FRUITS_CHECK' | translate }}</p>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)">{{ 'FORM_FRUITS_OPTION_1' | translate }}</ion-label>
+          <ion-radio value="{{ 'FORM_FRUITS_OPTION_1' | translate }}" [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)">{{ 'FORM_FRUITS_OPTION_2' | translate }}</ion-label>
+          <ion-radio value="{{ 'FORM_FRUITS_OPTION_2' | translate }}" [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)">{{ 'FORM_FRUITS_OPTION_3' | translate }}</ion-label>
+          <ion-radio value="{{ 'FORM_FRUITS_OPTION_3' | translate }}" [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
+        <ion-item no-lines>
+          <ion-label [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)">{{ 'FORM_FRUITS_OPTION_4' | translate }}</ion-label>
+          <ion-radio value="{{ 'FORM_FRUITS_OPTION_4' | translate }}" [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)"></ion-radio>
+        </ion-item>
+      </ion-list>
+      <p *ngIf="!alimentationForm.controls.fruitsForm.valid  && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
+      
+    </form>  
+    
+    <p *ngIf="!alimentationForm.valid && submitAttempt" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
+    <button class="buttonValide" [class.invalid]="!alimentationForm.valid && submitAttempt" ion-button icon-end large clear (click)="nextPage()">
+      {{ 'CONTINUE_BOUTON' | translate }}
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </ion-content>

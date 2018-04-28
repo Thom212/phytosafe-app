@@ -1,6 +1,6 @@
 {
   "name": "phytosafe-app",
-  "app_id": "",
+  "app_id": "0176cb0d",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

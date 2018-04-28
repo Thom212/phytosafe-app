@@ -6,6 +6,7 @@ import { Keyboard } from '@ionic-native/keyboard';
 
 //page suivante
 import { Therapies } from '../therapies/therapies';
+
 //page autocomplete
 import{ Autocomplete } from '../../autocomplete/autocomplete';
 
@@ -29,33 +30,41 @@ export class Maladie implements OnInit {
   submitAttempt: boolean = false;
   organeNom: any;
   organeElement: any;
+  hematoNom: any;
+  hematoElement: any;
   organeTitre: string;
   organePlaceholder: string;
+  hematoTitre: string;
+  hematoPlaceholder: string;
   organeChoix: string;
   isHemato: boolean = false;
-  questionOrgane: boolean = false;
+  isNotHemato: boolean = false;
+  isOrgane: boolean = false;
   showScrollFabMaladie: boolean = false;
   contentDimensions: any;
   
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public zone: NgZone, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public organe: Cancer, public keyboard: Keyboard, public diacritics: Diacritics, public inactif: Inactif) {
     this.maladieForm = formBuilder.group({
-      organeboolForm : ['', Validators.required],
+      typeboolForm : ['', Validators.required],
+      organeboolForm : [''],
       organeForm: ['', Validators.pattern('([A-Z ]{5})')],
       nom_organeForm: ['', Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ\u0152\u0153\\- \'\(\)]*)')],
-      etatForm:  ['', Validators.required]
-      //TODO à voir si on met pas un validateur conditionnel pour le cas hemato https://stackoverflow.com/questions/36118721/angular-2-conditional-validators-required
+      etatForm:  ['']
     },{ validator: MaladieValidator.isValid});
-    this.maladieForm.get('etatForm').setValidators([Validators.required]);
     this.organeNom = [];
     this.organeElement = [];
+    this.hematoNom = [];
+    this.hematoElement = [];
     this.contentDimensions = {};
   }
 
   ngOnInit(){
     //Réuperation des données (id et nom) de la table cancer
     this.organe.makeCancerList().then((liste) =>{
-      this.organeNom = liste[0];
-      this.organeElement = liste[1];
+      this.hematoNom = liste[0];
+      this.hematoElement = liste[1];
+      this.organeNom = liste[2];
+      this.organeElement = liste[3];
     });
     this.organeChoix = '';
   }
@@ -74,7 +83,7 @@ export class Maladie implements OnInit {
   }
 
   /**
-   * Fonction qui permet d'afficher ou de cahcer le boutton fab.
+   * Fonction qui permet d'afficher ou de cacher le boutton fab.
    * @method displayFab
    * @param {} - aucun paramètre n'est passé à la fonction.
    * @returns {} - aucune valeur n'est retournée par la fonction.
@@ -101,6 +110,36 @@ export class Maladie implements OnInit {
   }
 
   /**
+   * Fonction qui permet l'entrée du type de cancer.
+   * @method hematoOui()
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  hematoOui() {
+    this.isHemato = true;
+    this.isNotHemato = false;
+    this.isOrgane = false;
+    this.maladieForm.patchValue({organeForm: ''});
+    this.maladieForm.patchValue({nom_organeForm: ''});
+    this.organeChoix = '';
+    this.showHematoModal();
+  }
+
+  /**
+   * Fonction qui permet d'afficher de continuer le formulaire avec des cancers qui ne sont pas hématologiques.
+   * @method hematoNon()
+   * @param {} - aucun paramètre n'est passé à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  hematoNon() {
+    this.isHemato = false;
+    this.isNotHemato = true;
+    this.maladieForm.patchValue({organeForm: ''});
+    this.maladieForm.patchValue({nom_organeForm: ''});
+    this.organeChoix = '';
+  }
+
+  /**
    * Fonction qui permet l'entrée du nom de l'organe primitif atteint.
    * @method organeOui
    * @param {} - aucun paramètre n'est passé à la fonction.
@@ -108,8 +147,8 @@ export class Maladie implements OnInit {
    */
   organeOui() {
     this.isHemato = false;
-    this.questionOrgane = true;
-    this.maladieForm.get('etatForm').enable();
+    this.isNotHemato = true;
+    this.isOrgane = true;
     this.showOrganeModal();
   }
 
@@ -121,24 +160,56 @@ export class Maladie implements OnInit {
    */
   organeNon() {
     this.isHemato = false;
-    this.questionOrgane = false;
-    this.maladieForm.get('etatForm').enable();
-    this.maladieForm.patchValue({organeForm: ''});
-    this.maladieForm.patchValue({nom_organeForm: ''});
+    this.isOrgane = false;
+    this.maladieForm.patchValue({organeForm: 'SAITP'});
+    this.maladieForm.patchValue({nom_organeForm: 'ne sais pas'});
     this.organeChoix = '';
   }
 
-   /**
-   * Fonction qui permet l'entrée du nom de l'hematologie.
-   * @method hemato
+  /**
+   * Fonction qui est liée au champ "Maladie hématologique" sur la deuxième page du formulaire - Maladie.
+   * Elle permet d'ouvrir une page modale (pages/autocomplete) qui propose, en fonction des entrées de l'utilisateur une liste de noms possibles : autocompletion.
+   * @method showHematoModal
+   * @requires pages/autocomplete - elle appelle la page autocomplete.ts.
    * @param {} - aucun paramètre n'est passé à la fonction.
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
-  hemato() {
-    this.isHemato = true;
-    this.questionOrgane = true;
-    this.maladieForm.get('etatForm').disable();
-    this.showOrganeModal();
+  showHematoModal(){
+    //Création de la page modale en insérant les textes nécessaires
+    this.translate.get('TITRE_MODAL_HEMATO').subscribe(value => {
+      this.hematoTitre = value;
+    });
+    this.translate.get('PLACEHOLDER_MODAL_HEMATO').subscribe(value => {
+      this.hematoPlaceholder = value;
+    });
+    //Création de la page d'autocompletion
+    let hematoModal = this.modalCtrl.create(Autocomplete, {entryAutocomplete: this.organeChoix, dataAutocomplete: this.hematoNom, titreAutocomplete: this.hematoTitre, placeholderAutocomplete: this.hematoPlaceholder});
+    //Traitements lors de la fermeture de la page d'autocompletion
+    hematoModal.onDidDismiss(data => {
+      //Vérification que la donnée passée existe et n'est pas seulement des espaces
+      if (data && data.replace(/\s/g, '').length!=0){
+        //Récupération des données de la page autocompletion
+        this.organeChoix = data;
+        //Comparaison avec la table cancer
+        var organeData = this.hematoElement.find((val)=>{
+          let strVal = this.diacritics.replaceDiacritics(val.nom.toLowerCase());
+          let strData = this.diacritics.replaceDiacritics(data.toLowerCase());
+          if(strVal === strData){
+            return val;
+          }
+        });
+        //Attribution de valeurs aux champs du formulaire (organeForm et nom_organeForm)
+        if(organeData){
+          this.maladieForm.patchValue({organeForm: organeData.id});
+          this.maladieForm.patchValue({nom_organeForm: organeData.nom});
+        } else {
+          this.maladieForm.patchValue({organeForm: 'AUCUN'});
+          this.maladieForm.patchValue({nom_organeForm: this.organeChoix});
+        }
+      }
+    });
+    //Affichage de la page d'autocompletion
+    hematoModal.present();
   }
 
   /**
@@ -158,9 +229,9 @@ export class Maladie implements OnInit {
       this.organePlaceholder = value;
     });
     //Création de la page d'autocompletion
-    let modal = this.modalCtrl.create(Autocomplete, {entryAutocomplete: this.organeChoix, dataAutocomplete: this.organeNom, titreAutocomplete: this.organeTitre, placeholderAutocomplete: this.organePlaceholder});
+    let organeModal = this.modalCtrl.create(Autocomplete, {entryAutocomplete: this.organeChoix, dataAutocomplete: this.organeNom, titreAutocomplete: this.organeTitre, placeholderAutocomplete: this.organePlaceholder});
     //Traitements lors de la fermeture de la page d'autocompletion
-    modal.onDidDismiss(data => {
+    organeModal.onDidDismiss(data => {
       //Vérification que la donnée passée existe et n'est pas seulement des espaces
       if (data && data.replace(/\s/g, '').length!=0){
         //Récupération des données de la page autocompletion
@@ -174,7 +245,7 @@ export class Maladie implements OnInit {
           }
         });
         //Attribution de valeurs aux champs du formulaire (organeForm et nom_organeForm)
-        if(organeData){
+        if (organeData) {
           this.maladieForm.patchValue({organeForm: organeData.id});
           this.maladieForm.patchValue({nom_organeForm: organeData.nom});
         } else {
@@ -184,7 +255,7 @@ export class Maladie implements OnInit {
       }
     });
     //Affichage de la page d'autocompletion
-    modal.present();
+    organeModal.present();
   }
 
   /**

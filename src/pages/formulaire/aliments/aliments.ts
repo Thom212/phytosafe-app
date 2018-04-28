@@ -1,36 +1,35 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { NavController, ModalController, LoadingController, Content } from 'ionic-angular';
+import { NavController, Content } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { Keyboard } from '@ionic-native/keyboard';
 
-//page suivante
-import { RefusFormulaire } from '../../formulaire/refus-formulaire/refus-formulaire';
+//Page suivante
+import { InfoPerso } from '../info-perso/info-perso';
 
 //Providers
 import { Formulaire } from '../../../providers/formulaire';
 import { LocalStockage } from '../../../providers/localstockage';
+import { Diacritics } from '../../../providers/diacritics';
 import { Inactif } from '../../../providers/inactif';
 
-
 @Component({
-  selector: 'raison-refus-formulaire',
-  templateUrl: 'raison-refus-formulaire.html'
+  selector: 'aliments',
+  templateUrl: 'aliments.html'
 })
-
-export class RaisonRefusFormulaire {
+export class Aliments {
 
   @ViewChild(Content) content: Content;
 
-  refusForm: FormGroup;
+  alimentationForm: FormGroup;
   submitAttempt: boolean = false;
   showScrollFabTherapies: boolean = false;
-  contentLoader: string;
-  showScrollFabInfoPerso: boolean = false;
   contentDimensions: any;
   
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public zone: NgZone, public loadingCtrl: LoadingController, public localstockage: LocalStockage, public formulaire: Formulaire, public translate: TranslateService, public formBuilder: FormBuilder, public inactif: Inactif) {
-    this.refusForm = formBuilder.group({
-      raisonRefusForm:  ['', Validators.required]
+  constructor(public navCtrl: NavController, public zone: NgZone, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public keyboard: Keyboard, public diacritics: Diacritics, public inactif: Inactif) {
+    this.alimentationForm = formBuilder.group({
+      alimentsForm:  [''],
+      fruitsForm:  [''],
     });
     this.contentDimensions = {};
   }
@@ -38,12 +37,9 @@ export class RaisonRefusFormulaire {
   ionViewDidEnter(){
     //Si l'utilisateur est inactif, une alerte est envoyée avec la possibilité de continuer ou de recommencer le questionnaire.
     this.inactif.idleSet(this.navCtrl);
-    this.translate.get('CONTENT_LOADER').subscribe(value => {
-      this.contentLoader = value;
-    });
     this.contentDimensions = this.content.getContentDimensions();
     if (this.contentDimensions.contentHeight + 50 < this.contentDimensions.scrollHeight) {
-      this.showScrollFabInfoPerso = true;
+      this.showScrollFabTherapies = true;
     }
   }
 
@@ -52,7 +48,7 @@ export class RaisonRefusFormulaire {
   }
 
   /**
-   * Fonction qui permet d'afficher ou de cacher le boutton fab.
+   * Fonction qui permet d'afficher ou de cahcer le boutton fab.
    * @method displayFab
    * @param {} - aucun paramètre n'est passé à la fonction.
    * @returns {} - aucune valeur n'est retournée par la fonction.
@@ -79,11 +75,11 @@ export class RaisonRefusFormulaire {
   }
 
   /**
-   * Fonction qui est liée au bouton "Continuer" sur la page du formulaire - Informations Générales.
+   * Fonction qui est liée au bouton "Continuer" sur la page du formulaire - Aliments.
    * Elle valide les valeurs entrées dans les champs du formulaire et les stocke localement. 
    * Une fois ces valeurs stockées, elle récupère la valeur stockée correspondant à l'identificant du formulaire. 
    * Si aucun identifiant n'a été stocké, elle créé un nouveau formulaire avec toutes les données stockées. Sinon, elle met à jour le formulaire avec ces mêmes données.
-   * Elle affiche ensuite la page de fin du formulaire - FinFormulaire.
+   * Elle affiche ensuite la dernière page du formulaire - Informations Personnelles.
    * @method nextPage
    * @requires providers/localstockage - la fonction utilise les méthodes setData, getData, getAllData.
    * @requires providers/formulaire - la fonction utilise les méthodes createForm et updateForm.
@@ -92,57 +88,24 @@ export class RaisonRefusFormulaire {
    */
   nextPage() {
     this.submitAttempt = true;
-    if(this.refusForm.valid){
-      let loader = this.loadingCtrl.create({
-        content: ''
-      });
-      loader.setContent(this.contentLoader);
-      loader.present();
+    if(this.alimentationForm.valid){
+
       //Stockage local des données remplies dans cette page de formulaire
-      this.localstockage.setData(this.refusForm.value).then((message) => {
+      this.localstockage.setData(this.alimentationForm.value).then((message) => {
         //Mise à jour/création du formulaire sur le serveur avec les données entrées sur cette page du formulaire
         this.localstockage.getData("idForm").then((val)=> {
           this.localstockage.getAllData().then((dataForm)=>{
             //il faut créer/mettre à jour le formulaire avec toutes les données stockées
             if (val==null){
               //Si le formulaire n'a pas été créé, il faut le créer
-              this.formulaire.createForm(dataForm).toPromise().then((res) => {
-                loader.dismiss();
-                this.localstockage.clearData("idForm");
-                //Navigation à la page de fin du formulaire - FinFormulaire
-                this.navCtrl.push(RefusFormulaire);
-              }).catch((err)=>{
-                console.error('ERROR', err);
-                this.localstockage.storeAllData(dataForm).then((res) => {
-                  loader.dismiss();
-                  this.navCtrl.push(RefusFormulaire);
-                }).catch((err)=>{
-                  console.error('ERROR', err);
-                  loader.dismiss();
-                  this.navCtrl.push(RefusFormulaire);
-                });
-              });
+              this.formulaire.createForm(dataForm);
             } else {
               //Sinon, il faut le mettre à jour
-              this.formulaire.updateForm(dataForm).toPromise().then((res) => {
-                loader.dismiss();
-                this.localstockage.clearData("idForm");
-                //Navigation à la page de fin du formulaire - FinFormulaire
-                this.navCtrl.push(RefusFormulaire);
-              }).catch((err)=>{
-                this.localstockage.clearData("idForm");
-                console.error('ERROR', err);
-                this.localstockage.storeAllData(dataForm).then((res) => {
-                  loader.dismiss();
-                  this.navCtrl.push(RefusFormulaire);
-                }).catch((err)=>{
-                  console.error('ERROR', err);
-                  loader.dismiss();
-                  this.navCtrl.push(RefusFormulaire);
-                });
-              });
+              this.formulaire.updateForm(dataForm);
             }
           });
+          //Navigation à la page du formulaire - Traitements Alternatifs
+          this.navCtrl.push(InfoPerso);
         });
       });
     }

@@ -36,8 +36,12 @@ $colors: (
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
-
-
+$text-input-ios-highlight-color: #ffffff;
+$text-input-ios-highlight-color-valid:#ffffff;
+$text-input-ios-highlight-color-invalid:#ffffff;
+$radio-ios-color-on: #000000;
+$radio-ios-color-off: #999999;
+$label-ios-text-color-focused: #999999;
 
 
 // App Material Design Variables
