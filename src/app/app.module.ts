@@ -32,6 +32,7 @@ import { FinFormulaire } from '../pages/formulaire/fin-formulaire/fin-formulaire
 import { RaisonRefusFormulaire } from '../pages/formulaire/raison-refus-formulaire/raison-refus-formulaire';
 import { RefusFormulaire } from '../pages/formulaire/refus-formulaire/refus-formulaire';
 import { Autocomplete } from '../pages/autocomplete/autocomplete';
+import { Center } from '../pages/center/center';
 
 //Modules créés pour l'application (providers)
 import { Api } from '../providers/api';
@@ -84,7 +85,8 @@ export class MyErrorHandler implements ErrorHandler {
     FinFormulaire,
     RaisonRefusFormulaire,
     RefusFormulaire,
-    Autocomplete
+    Autocomplete,
+    Center
   ],
   imports: [
     BrowserModule,
@@ -113,7 +115,8 @@ export class MyErrorHandler implements ErrorHandler {
     FinFormulaire,
     RaisonRefusFormulaire,
     RefusFormulaire,
-    Autocomplete
+    Autocomplete,
+    Center
   ],
   providers: [
     Api,

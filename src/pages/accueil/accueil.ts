@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { TranslateService } from '@ngx-translate/core';
 
 //page suivante
 import { Maladie } from '../formulaire/maladie/maladie';
 import { RaisonRefusFormulaire } from '../formulaire/raison-refus-formulaire/raison-refus-formulaire';
+
+//page center
+import{ Center } from '../center/center';
 
 //providers
 import { Formulaire } from '../../providers/formulaire';
@@ -16,7 +20,7 @@ import { LocalStockage } from '../../providers/localstockage';
 })
 export class Accueil {
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public formulaire: Formulaire, public localstockage: LocalStockage, private geolocation: Geolocation) {}
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formulaire: Formulaire, public localstockage: LocalStockage, private geolocation: Geolocation) {}
   
   /**
    * Fonction qui permet de fixer le centre.
@@ -29,13 +33,74 @@ export class Accueil {
    */
   setCenter() {
     this.localstockage.getData("setCenter").then((val)=> {
-      //Création de la page modale
-      let centerModal = this.modalCtrl.create(Center, {centerData : val});
-      //Traitements lors de la fermeture de la page d'autocompletion
-      centerModal.onDidDismiss(data => {
-        this.localstockage.setData(data)
+      let center1: string;
+      let center2: string;
+      let center3: string;
+      let center4: string;
+      let center5: string;
+      let center6: string;
+      let center7: string;
+      let center8: string;
+      let center9: string;
+      let center10: string;
+      let center11: string;
+      let center12: string;
+      let center13: string;
+      let center14: string;
+      let titreCenter: string;
+      let centerPicked: string;
+      if (val==null){
+        centerPicked = '';
+      } else {
+        centerPicked = val;
+      }
+      this.translate.get('OPTION_CENTER_1').subscribe(value => {
+        center1 = value;
       });
-      //Affichage de la page d'autocompletion
+      this.translate.get('OPTION_CENTER_2').subscribe(value => {
+        center2 = value;
+      });
+      this.translate.get('OPTION_CENTER_3').subscribe(value => {
+        center3 = value;
+      });
+      this.translate.get('OPTION_CENTER_4').subscribe(value => {
+        center4 = value;
+      });
+      this.translate.get('OPTION_CENTER_5').subscribe(value => {
+        center5 = value;
+      });
+      this.translate.get('OPTION_CENTER_6').subscribe(value => {
+        center6 = value;
+      });
+      this.translate.get('OPTION_CENTER_7').subscribe(value => {
+        center7 = value;
+      });
+      this.translate.get('OPTION_CENTER_8').subscribe(value => {
+        center8 = value;
+      });
+      this.translate.get('OPTION_CENTER_9').subscribe(value => {
+        center9 = value;
+      });
+      this.translate.get('OPTION_CENTER_10').subscribe(value => {
+        center10 = value;
+      });
+      this.translate.get('OPTION_CENTER_11').subscribe(value => {
+        center11 = value;
+      });
+      this.translate.get('OPTION_CENTER_12').subscribe(value => {
+        center12 = value;
+      });
+      this.translate.get('OPTION_CENTER_13').subscribe(value => {
+        center13 = value;
+      });
+      this.translate.get('OPTION_CENTER_14').subscribe(value => {
+        center14 = value;
+      });
+      this.translate.get('TITRE_MODAL_CENTER').subscribe(value => {
+        titreCenter = value;
+      });
+      let centerModal = this.modalCtrl.create(Center,{centerList: [center1, center2, center3, center4, center5, center6, center7, center8, center9, center10, center11, center12, center13, center14], titreModalCenter: titreCenter, centerModalPicked: centerPicked});
+      //Affichage de la page du choix du centre
       centerModal.present();
     });
   }
@@ -51,11 +116,6 @@ export class Accueil {
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
   nextPage() {
-    //Date de création du nouveau formulaire
-    interface dateObjet { dateForm: Date, accordForm: Boolean};
-    var currentTime = new Date();
-    var dateCreaForm: dateObjet = {dateForm : currentTime, accordForm : true};
-
     //Coordonnées GPS du patient
     interface coordObjet {latitudeForm: Number, longitudeForm: Number};
     var coordForm: coordObjet = {latitudeForm : null, longitudeForm : null};
@@ -106,11 +166,17 @@ export class Accueil {
           break;
         }
       });
-
-      //Création du formulaire
-      this.localstockage.setData(dateCreaForm).then((message) => {
-        this.localstockage.getAllData().then((dataForm)=>{
-          this.formulaire.createForm(dataForm);
+      //Date de création du nouveau formulaire
+      interface dateObjet { dateForm: Date, accordForm: Boolean, centerForm: string};
+      var currentTime = new Date();
+      var dateCreaForm: dateObjet;
+      this.localstockage.getData("setCenter").then((val)=> {
+        dateCreaForm = {dateForm : currentTime, accordForm : true, centerForm: val};
+        //Création du formulaire
+        this.localstockage.setData(dateCreaForm).then((message) => {
+          this.localstockage.getAllData().then((dataForm)=>{
+            this.formulaire.createForm(dataForm);
+          });
         });
       });
       
@@ -130,11 +196,6 @@ export class Accueil {
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
   refusPage() {
-    //Date de création du nouveau formulaire
-    interface dateObjet { dateForm: Date, accordForm: Boolean};
-    var currentTime = new Date();
-    var dateCreaForm: dateObjet = {dateForm : currentTime, accordForm : true};
-
     //Coordonnées GPS du patient
     interface coordObjet {latitudeForm: Number, longitudeForm: Number};
     var coordForm: coordObjet = {latitudeForm : null, longitudeForm : null};
@@ -186,10 +247,17 @@ export class Accueil {
         }
       });
 
-      //Création du formulaire
-      this.localstockage.setData(dateCreaForm).then((message) => {
-        this.localstockage.getAllData().then((dataForm)=>{
-          this.formulaire.createForm(dataForm);
+      //Date de création du nouveau formulaire
+      interface dateObjet { dateForm: Date, accordForm: Boolean, centerForm: string};
+      var currentTime = new Date();
+      var dateCreaForm: dateObjet;
+      this.localstockage.getData("setCenter").then((val)=> {
+        dateCreaForm = {dateForm : currentTime, accordForm : true, centerForm: val};
+        //Création du formulaire
+        this.localstockage.setData(dateCreaForm).then((message) => {
+          this.localstockage.getAllData().then((dataForm)=>{
+            this.formulaire.createForm(dataForm);
+          });
         });
       });
 

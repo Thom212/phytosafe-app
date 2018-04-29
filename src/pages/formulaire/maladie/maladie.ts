@@ -137,6 +137,11 @@ export class Maladie implements OnInit {
     this.maladieForm.patchValue({organeForm: ''});
     this.maladieForm.patchValue({nom_organeForm: ''});
     this.organeChoix = '';
+    //nouvelles dimensions de la fenêtre
+    this.contentDimensions = this.content.getContentDimensions();
+    if (this.contentDimensions.contentHeight + 50 < this.contentDimensions.scrollHeight) {
+      this.showScrollFabMaladie = true;
+    }
   }
 
   /**
@@ -150,6 +155,11 @@ export class Maladie implements OnInit {
     this.isNotHemato = true;
     this.isOrgane = true;
     this.showOrganeModal();
+    //nouvelles dimensions de la fenêtre
+    this.contentDimensions = this.content.getContentDimensions();
+    if (this.contentDimensions.contentHeight + 50 < this.contentDimensions.scrollHeight) {
+      this.showScrollFabMaladie = true;
+    }
   }
 
   /**

@@ -10,12 +10,14 @@ import { Diacritics } from '../../providers/diacritics';
 
 export class Autocomplete {
   autocompleteItems: any;
+  autocompleteData: any;
   autocompleteEntry: string;
 
   @ViewChild(Searchbar) searchbar:Searchbar;
 
   constructor (public viewCtrl: ViewController, public params: NavParams, public diacritics: Diacritics) {
     this.autocompleteItems = [];
+    this.autocompleteData = this.params.get('dataAutocomplete');
     this.autocompleteEntry = this.params.get('entryAutocomplete');
   }
 
@@ -56,11 +58,25 @@ export class Autocomplete {
     if (this.autocompleteEntry == '') {
       this.autocompleteItems = [];
     } else {
-      this.autocompleteItems = this.params.get('dataAutocomplete').filter((val)=>{
+      let arrayLength: number = this.autocompleteData.length;
+      var i: number = 0;
+      var nbItems: number = 0;
+      var table = [];
+      while (i < arrayLength && nbItems < 20) {
+        let strVal = this.diacritics.replaceDiacritics(this.autocompleteData[i].toLowerCase());
+        let strEntry = this.diacritics.replaceDiacritics(this.autocompleteEntry.toLowerCase());
+        if (strVal.indexOf(strEntry) > -1) {
+          table.push(strVal);
+          nbItems++;
+        }
+        i++;
+      }
+      this.autocompleteItems = table;
+      /*this.autocompleteItems = this.params.get('dataAutocomplete').filter((val)=>{
         let strVal = this.diacritics.replaceDiacritics(val.toLowerCase());
         let strEntry = this.diacritics.replaceDiacritics(this.autocompleteEntry.toLowerCase());
         return strVal.indexOf(strEntry) > -1;
-      });
+      });*/
     }
   }
 }

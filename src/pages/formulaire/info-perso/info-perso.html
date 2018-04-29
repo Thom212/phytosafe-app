@@ -20,15 +20,9 @@
       <span>{{ 'FORM_INFO_PATIENT' | translate }}</span>
       {{ 'FORM_INFO_PATIENT_DETAILS' | translate }}
     </h3>
-    <!--ion-item class="itemInput" no-lines>
-      <ion-label [class.blur]="dateNaissance" floating>{{ 'FORM_DATE_NAISSANCE' | translate }}</ion-label>
-      <ion-input [class.invalid]="!infoPersoForm.controls.date_naissanceForm.valid && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)" formControlName="date_naissanceForm" type="number" pattern="\d*" (ionBlur)="labelBlur()" (ionFocus)="labelFocus()"></ion-input>
-    </ion-item-->
     <div class="itemInput">
       <p>{{ 'FORM_DATE_NAISSANCE' | translate }}</p>
-      <!--ion-item no-lines-->
-        <ion-input class="inputNaissance" [class.invalid]="!infoPersoForm.controls.date_naissanceForm.valid && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)" formControlName="date_naissanceForm" placeholder="{{ 'FORM_DATE_NAISSANCE_PLACEHOLDER' | translate }}" type="number" pattern="[0-9]*"></ion-input>
-      <!--/ion-item-->
+      <ion-input class="inputNaissance" [class.invalid]="!infoPersoForm.controls.date_naissanceForm.valid && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)" formControlName="date_naissanceForm" placeholder="{{ 'FORM_DATE_NAISSANCE_PLACEHOLDER' | translate }}" type="number" pattern="[0-9]*"></ion-input>
     </div>
     <p *ngIf="!infoPersoForm.controls.date_naissanceForm.valid  && (infoPersoForm.controls.date_naissanceForm.dirty || submitAttempt)">{{ 'FORM_DATE_NAISSANCE_ALERTE' | translate }}</p>
 

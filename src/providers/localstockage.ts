@@ -47,7 +47,7 @@ export class LocalStockage {
     return new Promise((resolve, reject) => {
       for(var propertyName in data) {
         //L'identifiant unique, qui peut être une des propriétés de l'objet data, n'est pas supprimé.
-        if (propertyName!="idForm" && !propertyName.startsWith('Saved_Form')){
+        if (propertyName!="idForm" && !propertyName.startsWith('Saved_Form') && propertyName!="setCenter"){
           this.storage.remove(propertyName).then(() => {
             console.log(propertyName + ' supprimée');
           });
@@ -86,7 +86,7 @@ export class LocalStockage {
   clearAllData(){
     return new Promise((resolve, reject) => {
       this.storage.forEach( (value, key, index) => {
-        if (!key.startsWith('Saved_Form')){
+        if (!key.startsWith('Saved_Form') && key !== 'setCenter'){
           this.storage.remove(key).then(() => {
             //console.log(key + ' supprimée : ' + value);
           });

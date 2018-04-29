@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 
 import { Accueil } from '../pages/accueil/accueil';
+import { LocalStockage } from '../providers/localstockage';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -15,7 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class MyApp {
   rootPage = Accueil;
 
-  constructor(private translate: TranslateService, private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private storage: Storage) {
+  constructor(private translate: TranslateService, private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private storage: Storage, public localstockage: LocalStockage) {
     this.initTranslate();
   }
 
@@ -23,7 +24,9 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.storage.ready().then(()=>{
         this.statusBar.styleDefault();
-        this.splashScreen.hide();
+        this.localstockage.clearAllData().then(()=>{
+          this.splashScreen.hide();
+        });
       });
     });
   }

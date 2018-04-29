@@ -199,6 +199,11 @@ export class Therapies implements OnInit {
     this.anticancerForm.addControl(this.anticancerTable[0].traitementnom, this.anticancerTable[0].traitementnomControl);
     this.anticancerForm.addControl(this.anticancerTable[0].traitementid, this.anticancerTable[0].traitementidControl);
     this.showTraitementModal(0);
+    //nouvelles dimensions de la fenêtre
+    this.contentDimensions = this.content.getContentDimensions();
+    if (this.contentDimensions.contentHeight + 50 < this.contentDimensions.scrollHeight) {
+      this.showScrollFabTherapies = true;
+    }
   }
 
   /**

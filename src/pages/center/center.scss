@@ -1,0 +1,39 @@
+.ios, .md{
+  center {
+    ion-content{      
+      .spinnerCenter {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        ion-spinner * {
+          width: 100%;
+          height: 100%;
+        }        
+      }
+      div{
+        form {
+          margin-top: 20px;
+          ion-list {
+            margin: 0px;
+            ion-item{
+              background-color: #f2f2f2;
+              margin-left: 16px;
+              width: 100%;
+              margin-right: 10px;
+              margin-bottom: 0px;
+              padding-left: 10px;
+            }
+            ion-label, ion-radio{
+              margin: 0px;
+              padding: 0px 20px 0px 0px;
+              color: #999999;
+            }
+          }
+        }   
+      } 
+    }
+  }
+}

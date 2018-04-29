@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{this.params.get('titreModalCenter')}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content no-bounce overflow-scroll="true">
+  <div *ngIf="showForm">
+    <form [formGroup]="centerForm" novalidate>
+      <ion-list radio-group formControlName="setCenter" text-wrap ion-row no-lines *ngFor="let center of centerList; let i=index">  
+        <ion-item no-lines>
+          <ion-label>{{ center }}</ion-label>
+          <ion-radio (click)="dismiss()" value="{{ center }}"></ion-radio>
+        </ion-item>
+      </ion-list>
+    </form>
+  </div>
+  <div *ngIf="!showForm" class="spinnerCenter">
+    <ion-spinner></ion-spinner>
+  </div>
+</ion-content>
