@@ -14,7 +14,8 @@ Refactorer : sur maladie, organe en cancer; sur thérapie, control en validator
 Renommer toute les properties de langue pour inclure le module dans le nom 
 Supprimer les README de toutes les pages
 Faire une page de parametres qui définit lhopital/service, test/production...
-Reréfléchir à   comment sont gérés les autocompletes
+Reréfléchir à comment sont gérés les autocompletes
+Séparer les constantes techniques des i18n. mettre ces constantes techniques dans les "value" des form.
 
 
 
