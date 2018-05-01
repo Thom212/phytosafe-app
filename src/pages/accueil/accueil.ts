@@ -252,7 +252,7 @@ export class Accueil {
       var currentTime = new Date();
       var dateCreaForm: dateObjet;
       this.localstockage.getData("setCenter").then((val)=> {
-        dateCreaForm = {dateForm : currentTime, accordForm : true, centerForm: val};
+        dateCreaForm = {dateForm : currentTime, accordForm : false, centerForm: val};
         //Création du formulaire
         this.localstockage.setData(dateCreaForm).then((message) => {
           this.localstockage.getAllData().then((dataForm)=>{
