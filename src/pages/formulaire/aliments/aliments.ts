@@ -22,15 +22,23 @@ export class Aliments {
   @ViewChild(Content) content: Content;
 
   alimentationForm: FormGroup;
+  fruitFrom: FormGroup;
   submitAttempt: boolean = false;
   showScrollFabTherapies: boolean = false;
   contentDimensions: any;
   
   constructor(public navCtrl: NavController, public zone: NgZone, public translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public localstockage: LocalStockage, public keyboard: Keyboard, public diacritics: Diacritics, public inactif: Inactif) {
     this.alimentationForm = formBuilder.group({
-      alimentsForm:  [''],
-      fruitsForm:  [''],
+        cafeForm: [false],
+        theForm: [false],
+        reglisseForm: [false],
+        sojaForm: [false],
+        pamplemousseForm: [false],
+        pomeloForm: [false],
+        orangeForm: [false],
+        cranberryForm: [false]
     });
+
     this.contentDimensions = {};
   }
 

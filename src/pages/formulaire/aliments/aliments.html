@@ -20,48 +20,45 @@
         <span>{{ 'FORM_INFO_ALIMENTS' | translate }}</span>
         {{ 'FORM_INFO_ALIMENTS_DETAILS' | translate }}
       </h3>
-      <ion-list radio-group formControlName="alimentsForm">
+      <ion-list text-wrap>
         <p>{{ 'FORM_ALIMENTS_CHECK' | translate }}</p>
         <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)">{{ 'FORM_ALIMENTS_OPTION_1' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_ALIMENTS_OPTION_1' | translate }}" [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)"></ion-radio>
+          <ion-label>{{ 'FORM_ALIMENTS_OPTION_1' | translate }}</ion-label>
+          <ion-checkbox  formControlName="cafeForm"></ion-checkbox>
         </ion-item>
         <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)">{{ 'FORM_ALIMENTS_OPTION_2' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_ALIMENTS_OPTION_2' | translate }}" [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)"></ion-radio>
+          <ion-label>{{ 'FORM_ALIMENTS_OPTION_2' | translate }}</ion-label>
+          <ion-checkbox  formControlName="theForm"></ion-checkbox>
         </ion-item>
         <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)">{{ 'FORM_ALIMENTS_OPTION_3' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_ALIMENTS_OPTION_3' | translate }}" [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)"></ion-radio>
+          <ion-label>{{ 'FORM_ALIMENTS_OPTION_3' | translate }}</ion-label>
+          <ion-checkbox  formControlName="reglisseForm"></ion-checkbox>
         </ion-item>
         <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)">{{ 'FORM_ALIMENTS_OPTION_4' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_ALIMENTS_OPTION_4' | translate }}" [class.invalid-bis]="!alimentationForm.controls.alimentsForm.valid && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)"></ion-radio>
+          <ion-label>{{ 'FORM_ALIMENTS_OPTION_4' | translate }}</ion-label>
+          <ion-checkbox  formControlName="sojaForm"></ion-checkbox>
         </ion-item>
       </ion-list>
-      <p *ngIf="!alimentationForm.controls.alimentsForm.valid  && (alimentationForm.controls.alimentsForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
       
-      <ion-list radio-group formControlName="fruitsForm">  
+      <ion-list text-wrap>  
         <p>{{ 'FORM_FRUITS_CHECK' | translate }}</p>
         <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)">{{ 'FORM_FRUITS_OPTION_1' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_FRUITS_OPTION_1' | translate }}" [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)"></ion-radio>
+          <ion-label>{{ 'FORM_FRUITS_OPTION_1' | translate }}</ion-label>
+          <ion-checkbox  formControlName="pamplemousseForm"></ion-checkbox>
         </ion-item>
         <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)">{{ 'FORM_FRUITS_OPTION_2' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_FRUITS_OPTION_2' | translate }}" [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)"></ion-radio>
+          <ion-label>{{ 'FORM_FRUITS_OPTION_2' | translate }}</ion-label>
+          <ion-checkbox  formControlName="pomeloForm"></ion-checkbox>
         </ion-item>
         <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)">{{ 'FORM_FRUITS_OPTION_3' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_FRUITS_OPTION_3' | translate }}" [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)"></ion-radio>
+          <ion-label>{{ 'FORM_FRUITS_OPTION_3' | translate }}</ion-label>
+          <ion-checkbox  formControlName="orangeForm"></ion-checkbox>
         </ion-item>
         <ion-item no-lines>
-          <ion-label [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)">{{ 'FORM_FRUITS_OPTION_4' | translate }}</ion-label>
-          <ion-radio value="{{ 'FORM_FRUITS_OPTION_4' | translate }}" [class.invalid-bis]="!alimentationForm.controls.fruitsForm.valid && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)"></ion-radio>
+          <ion-label>{{ 'FORM_FRUITS_OPTION_4' | translate }}</ion-label>
+          <ion-checkbox  formControlName="cranberryForm"></ion-checkbox>
         </ion-item>
-      </ion-list>
-      <p *ngIf="!alimentationForm.controls.fruitsForm.valid  && (alimentationForm.controls.fruitsForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
-      
+      </ion-list>      
     </form>  
     
     <p *ngIf="!alimentationForm.valid && submitAttempt" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
