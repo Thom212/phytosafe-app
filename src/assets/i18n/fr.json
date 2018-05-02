@@ -63,7 +63,13 @@
   "FORM_MALADIE_OPTION_1" : "tumeur locale",
   "FORM_MALADIE_OPTION_2" : "tumeur métastasée",
   "FORM_MALADIE_OPTION_3" : "je ne sais pas",
-  
+  "FORM_MALADIE_DUREE_DELAI_DIAGNOSTIQUE" : "Depuis combien de temps avez vous été diagnostiqué(e) ?",
+  "FORM_MALADIE_DUREE_MOINS6MOIS" : "Moins de 6 mois",
+  "FORM_MALADIE_DUREE_6MOIS1AN" : "Entre 6 mois et 1 an",
+  "FORM_MALADIE_DUREE_1AN2ANS" : "Entre 1 an et 2 ans",
+  "FORM_MALADIE_DUREE_2ANS5ANS" : "Entre 2 ans et 5 ans",
+  "FORM_MALADIE_DUREE_PLUS5ANS" : "Plus de 5 ans",
+
   "FORM_THERAPIES" : "Thérapies",
   "FORM_INFO_THERAPIE" : "Informations sur les thérapies utilisées : ",
   "FORM_INFO_THERAPIE_DETAILS" : "renseignez si vous recevez actuellement, avez reçu dans l'année précédente, ou si vous allez recevoir une radiothérapie ou une chirurgie.",

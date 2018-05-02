@@ -49,7 +49,8 @@ export class Maladie implements OnInit {
       organeboolForm : [''],
       organeForm: ['', Validators.pattern('([A-Z ]{5})')],
       nom_organeForm: ['', Validators.pattern('([0-9a-zA-Zéèêëàäâùüûïîöôçÿ\u0152\u0153\\- \'\(\)]*)')],
-      etatForm:  ['']
+      etatForm:  [''],
+      dureeForm:  ['', Validators.required]
     },{ validator: MaladieValidator.isValid});
     this.organeNom = [];
     this.organeElement = [];

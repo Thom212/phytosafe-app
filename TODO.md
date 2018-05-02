@@ -17,6 +17,7 @@ Faire une page de parametres qui définit lhopital/service, test/production...
 Reréfléchir à comment sont gérés les autocompletes
 Séparer les constantes techniques des i18n. mettre ces constantes techniques dans les "value" des form.
 Faire des classes abstraites pour les controllers pour ne pas réécrire la meme chose dans chaque controlleur
+Renommer les identifiants techniques des textes pour qu'on comprenne ce qu'il y a dedans.
 
 
 

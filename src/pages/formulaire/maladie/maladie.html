@@ -88,8 +88,32 @@
           <ion-radio value="{{ 'FORM_MALADIE_OPTION_3' | translate }}" [class.invalid-bis]="!maladieForm.controls.etatForm.valid && (maladieForm.controls.etatForm.dirty || submitAttempt) && !isHemato"></ion-radio>
         </ion-item>
       </ion-list>
-      <p *ngIf="!maladieForm.controls.etatForm.valid  && (maladieForm.controls.etatForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
     </div>
+
+    <ion-list radio-group formControlName="dureeForm">
+      <p>{{ 'FORM_MALADIE_DUREE_DELAI_DIAGNOSTIQUE' | translate }}</p>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!maladieForm.controls.dureeForm.valid && (maladieForm.controls.dureeForm.dirty || submitAttempt) && !isHemato">{{ 'FORM_MALADIE_DUREE_MOINS6MOIS' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_MALADIE_DUREE_MOINS6MOIS' | translate }}" [class.invalid-bis]="!maladieForm.controls.dureeForm.valid && (maladieForm.controls.dureeForm.dirty || submitAttempt) && !isHemato"></ion-radio>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!maladieForm.controls.dureeForm.valid && (maladieForm.controls.dureeForm.dirty || submitAttempt) && !isHemato">{{ 'FORM_MALADIE_DUREE_6MOIS1AN' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_MALADIE_DUREE_6MOIS1AN' | translate }}" [class.invalid-bis]="!maladieForm.controls.dureeForm.valid && (maladieForm.controls.dureeForm.dirty || submitAttempt) && !isHemato"></ion-radio>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!maladieForm.controls.dureeForm.valid && (maladieForm.controls.dureeForm.dirty || submitAttempt) && !isHemato">{{ 'FORM_MALADIE_DUREE_1AN2ANS' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_MALADIE_DUREE_1AN2ANS' | translate }}" [class.invalid-bis]="!maladieForm.controls.dureeForm.valid && (maladieForm.controls.dureeForm.dirty || submitAttempt) && !isHemato"></ion-radio>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!maladieForm.controls.dureeForm.valid && (maladieForm.controls.dureeForm.dirty || submitAttempt) && !isHemato">{{ 'FORM_MALADIE_DUREE_2ANS5ANS' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_MALADIE_DUREE_2ANS5ANS' | translate }}" [class.invalid-bis]="!maladieForm.controls.dureeForm.valid && (maladieForm.controls.dureeForm.dirty || submitAttempt) && !isHemato"></ion-radio>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label [class.invalid-bis]="!maladieForm.controls.dureeForm.valid && (maladieForm.controls.dureeForm.dirty || submitAttempt) && !isHemato">{{ 'FORM_MALADIE_DUREE_PLUS5ANS' | translate }}</ion-label>
+        <ion-radio value="{{ 'FORM_MALADIE_DUREE_PLUS5ANS' | translate }}" [class.invalid-bis]="!maladieForm.controls.dureeForm.valid && (maladieForm.controls.dureeForm.dirty || submitAttempt) && !isHemato"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <p *ngIf="!maladieForm.controls.dureeForm.valid  && (maladieForm.controls.dureeForm.dirty || submitAttempt)">{{ 'FORM_OPTION_ALERTE' | translate }}</p>
 
   </form>
   <p *ngIf="!maladieForm.valid && submitAttempt" class="FormAlerte">{{ 'FORM_ALERTE' | translate }}</p>
