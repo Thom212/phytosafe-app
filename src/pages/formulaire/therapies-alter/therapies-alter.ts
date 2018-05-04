@@ -1,6 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { NavController, Content } from 'ionic-angular';
+import { Keyboard } from '@ionic-native/keyboard';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -28,7 +29,7 @@ export class TherapiesAlter{
   showScrollFabTherapiesAlter: boolean = false;
   contentDimensions: any;
   
-  constructor(public navCtrl: NavController, public zone: NgZone, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public traitement: Traitement, public localstockage: LocalStockage, public inactif: Inactif) {
+  constructor(public navCtrl: NavController, public zone: NgZone, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public traitement: Traitement, public localstockage: LocalStockage, public inactif: Inactif, private keyboard: Keyboard) {
     this.therapiesAlterForm = formBuilder.group({
         phytoForm: [false],
         aromaForm: [false],

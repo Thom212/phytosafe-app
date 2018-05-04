@@ -17,13 +17,16 @@ export class LocalStockage {
    * @returns {Promise} - une promesse est renvoyée qui se termine lorsque l'ensemble des données a été enregistré. 
    */
   setData(data) {
+    let promises = [];
+    //Décomposition des propriétés de l'objet en paire clé/valeur
+    for(var propertyName in data) {
+      console.log(propertyName + ' en cours d\'enregistrement : ' + data[propertyName]);
+      promises.push(this.storage.set(propertyName,data[propertyName]));//Enregistrement de la paire clé/valeur
+    }
     return new Promise((resolve,reject) => {
-      //Décomposition des propriétés de l'objet en paire clé/valeur
-      for(var propertyName in data) {
-        console.log(propertyName + ' en cours d\'enregistrement : ' + data[propertyName]);
-        this.storage.set(propertyName,data[propertyName]);//Enregistrement de la paire clé/valeur
-      }
-      resolve('enregistré !');
+      Promise.all(promises).then(() => {
+        resolve('Enregistré !');
+      });
     });
   }
 
@@ -44,16 +47,17 @@ export class LocalStockage {
    * @returns {Promise} - une promesse est renvoyée qui se termine lorsque les données sont supprimées. 
    */
   removeData(data){
-    return new Promise((resolve, reject) => {
-      for(var propertyName in data) {
-        //L'identifiant unique, qui peut être une des propriétés de l'objet data, n'est pas supprimé.
-        if (propertyName!="idForm" && !propertyName.startsWith('Saved_Form') && propertyName!="setCenter"){
-          this.storage.remove(propertyName).then(() => {
-            console.log(propertyName + ' supprimée');
-          });
-        }
+    let promises = [];
+    for(var propertyName in data) {
+      //L'identifiant unique, qui peut être une des propriétés de l'objet data, n'est pas supprimé.
+      if (propertyName!="idForm" && !propertyName.startsWith('Saved_Form') && propertyName!="setCenter"){
+        promises.push(this.storage.remove(propertyName));
       }
-      resolve('Supression des données');
+    }
+    return new Promise((resolve, reject) => {
+      Promise.all(promises).then(() => {
+        resolve('Supression des données !');
+      });
     });
   }
 
