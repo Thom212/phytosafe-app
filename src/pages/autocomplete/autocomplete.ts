@@ -1,5 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {ViewController, NavParams, Searchbar} from 'ionic-angular';
+import { Keyboard } from '@ionic-native/keyboard';
 
 import { Diacritics } from '../../providers/diacritics';
 
@@ -15,7 +16,7 @@ export class Autocomplete {
 
   @ViewChild(Searchbar) searchbar:Searchbar;
 
-  constructor (public viewCtrl: ViewController, public params: NavParams, public diacritics: Diacritics) {
+  constructor (public viewCtrl: ViewController, public params: NavParams, public diacritics: Diacritics, private keyboard: Keyboard) {
     this.autocompleteItems = [];
     this.autocompleteData = this.params.get('dataAutocomplete');
     this.autocompleteEntry = this.params.get('entryAutocomplete');
@@ -24,6 +25,7 @@ export class Autocomplete {
   ionViewDidEnter() {
     setTimeout(() => {
       this.searchbar.setFocus();
+      this.keyboard.show();
     });
   }
 
@@ -34,6 +36,7 @@ export class Autocomplete {
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
   dismiss() {
+    this.keyboard.close();
     this.viewCtrl.dismiss(this.autocompleteEntry);
   }
 
@@ -45,6 +48,7 @@ export class Autocomplete {
    */
   chooseItem(item: any) {
     this.autocompleteEntry = item;
+    this.keyboard.close();
     this.viewCtrl.dismiss(item);
   }
 
@@ -72,11 +76,6 @@ export class Autocomplete {
         i++;
       }
       this.autocompleteItems = table;
-      /*this.autocompleteItems = this.params.get('dataAutocomplete').filter((val)=>{
-        let strVal = this.diacritics.replaceDiacritics(val.toLowerCase());
-        let strEntry = this.diacritics.replaceDiacritics(this.autocompleteEntry.toLowerCase());
-        return strVal.indexOf(strEntry) > -1;
-      });*/
     }
   }
 }
