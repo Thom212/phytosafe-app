@@ -17,9 +17,6 @@ export class MyApp {
 
   constructor(private translate: TranslateService, private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private storage: Storage) {
     this.initTranslate();
-  }
-
-  ionViewDidLoad() {
     this.platform.ready().then(() => {
       this.storage.ready().then(()=>{
         this.statusBar.styleDefault();
