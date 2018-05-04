@@ -20,7 +20,69 @@ import { LocalStockage } from '../../providers/localstockage';
 })
 export class Accueil {
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formulaire: Formulaire, public localstockage: LocalStockage, private geolocation: Geolocation) {}
+  center1: string;
+  center2: string;
+  center3: string;
+  center4: string;
+  center5: string;
+  center6: string;
+  center7: string;
+  center8: string;
+  center9: string;
+  center10: string;
+  center11: string;
+  center12: string;
+  center13: string;
+  center14: string;
+  titreCenter: string;
+
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public translate: TranslateService, public formulaire: Formulaire, public localstockage: LocalStockage, private geolocation: Geolocation) {
+    this.translate.get('OPTION_CENTER_1').subscribe(value => {
+      this.center1 = value;
+    });
+    this.translate.get('OPTION_CENTER_2').subscribe(value => {
+      this.center2 = value;
+    });
+    this.translate.get('OPTION_CENTER_3').subscribe(value => {
+      this.center3 = value;
+    });
+    this.translate.get('OPTION_CENTER_4').subscribe(value => {
+      this.center4 = value;
+    });
+    this.translate.get('OPTION_CENTER_5').subscribe(value => {
+      this.center5 = value;
+    });
+    this.translate.get('OPTION_CENTER_6').subscribe(value => {
+      this.center6 = value;
+    });
+    this.translate.get('OPTION_CENTER_7').subscribe(value => {
+      this.center7 = value;
+    });
+    this.translate.get('OPTION_CENTER_8').subscribe(value => {
+      this.center8 = value;
+    });
+    this.translate.get('OPTION_CENTER_9').subscribe(value => {
+      this.center9 = value;
+    });
+    this.translate.get('OPTION_CENTER_10').subscribe(value => {
+      this.center10 = value;
+    });
+    this.translate.get('OPTION_CENTER_11').subscribe(value => {
+      this.center11 = value;
+    });
+    this.translate.get('OPTION_CENTER_12').subscribe(value => {
+      this.center12 = value;
+    });
+    this.translate.get('OPTION_CENTER_13').subscribe(value => {
+      this.center13 = value;
+    });
+    this.translate.get('OPTION_CENTER_14').subscribe(value => {
+      this.center14 = value;
+    });
+    this.translate.get('TITRE_MODAL_CENTER').subscribe(value => {
+      this.titreCenter = value;
+    });
+  }
   
   /**
    * Fonction qui permet de fixer le centre.
@@ -33,73 +95,13 @@ export class Accueil {
    */
   setCenter() {
     this.localstockage.getData("setCenter").then((val)=> {
-      let center1: string;
-      let center2: string;
-      let center3: string;
-      let center4: string;
-      let center5: string;
-      let center6: string;
-      let center7: string;
-      let center8: string;
-      let center9: string;
-      let center10: string;
-      let center11: string;
-      let center12: string;
-      let center13: string;
-      let center14: string;
-      let titreCenter: string;
       let centerPicked: string;
       if (val==null){
         centerPicked = '';
       } else {
         centerPicked = val;
       }
-      this.translate.get('OPTION_CENTER_1').subscribe(value => {
-        center1 = value;
-      });
-      this.translate.get('OPTION_CENTER_2').subscribe(value => {
-        center2 = value;
-      });
-      this.translate.get('OPTION_CENTER_3').subscribe(value => {
-        center3 = value;
-      });
-      this.translate.get('OPTION_CENTER_4').subscribe(value => {
-        center4 = value;
-      });
-      this.translate.get('OPTION_CENTER_5').subscribe(value => {
-        center5 = value;
-      });
-      this.translate.get('OPTION_CENTER_6').subscribe(value => {
-        center6 = value;
-      });
-      this.translate.get('OPTION_CENTER_7').subscribe(value => {
-        center7 = value;
-      });
-      this.translate.get('OPTION_CENTER_8').subscribe(value => {
-        center8 = value;
-      });
-      this.translate.get('OPTION_CENTER_9').subscribe(value => {
-        center9 = value;
-      });
-      this.translate.get('OPTION_CENTER_10').subscribe(value => {
-        center10 = value;
-      });
-      this.translate.get('OPTION_CENTER_11').subscribe(value => {
-        center11 = value;
-      });
-      this.translate.get('OPTION_CENTER_12').subscribe(value => {
-        center12 = value;
-      });
-      this.translate.get('OPTION_CENTER_13').subscribe(value => {
-        center13 = value;
-      });
-      this.translate.get('OPTION_CENTER_14').subscribe(value => {
-        center14 = value;
-      });
-      this.translate.get('TITRE_MODAL_CENTER').subscribe(value => {
-        titreCenter = value;
-      });
-      let centerModal = this.modalCtrl.create(Center,{centerList: [center1, center2, center3, center4, center5, center6, center7, center8, center9, center10, center11, center12, center13, center14], titreModalCenter: titreCenter, centerModalPicked: centerPicked});
+      let centerModal = this.modalCtrl.create(Center,{centerList: [this.center1, this.center2, this.center3, this.center4, this.center5, this.center6, this.center7, this.center8, this.center9, this.center10, this.center11, this.center12, this.center13, this.center14], titreModalCenter: this.titreCenter, centerModalPicked: centerPicked});
       //Affichage de la page du choix du centre
       centerModal.present();
     });
