@@ -23,16 +23,19 @@ export class RaisonRefusFormulaire {
 
   refusForm: FormGroup;
   submitAttempt: boolean = false;
+  checkAutres: boolean = false;
   showScrollFabTherapies: boolean = false;
   contentLoader: string;
   showScrollFabInfoPerso: boolean = false;
   contentDimensions: any;
+  raisonAutres: string;
   
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public zone: NgZone, public loadingCtrl: LoadingController, public localstockage: LocalStockage, public formulaire: Formulaire, public translate: TranslateService, public formBuilder: FormBuilder, public inactif: Inactif) {
     this.refusForm = formBuilder.group({
       raisonRefusForm:  ['', Validators.required]
     });
     this.contentDimensions = {};
+    this.raisonAutres = '';
   }
 
   ionViewDidEnter(){
@@ -79,6 +82,26 @@ export class RaisonRefusFormulaire {
   }
 
   /**
+   * Fonction qui permet le déploiement d'un champ permettant d'entrer le nom d'une raison autre.
+   * @method autresSelect
+   * @param {} - aucune valeur n'est passée à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  autresSelect(){
+    this.checkAutres = true;
+  }
+
+  /**
+   * Fonction qui permet de supprimer le champ permettant d'entrer le nom d'une raison autre.
+   * @method raisonsSelect
+   * @param {} - aucune valeur n'est passée à la fonction.
+   * @returns {} - aucune valeur n'est retournée par la fonction.
+   */
+  raisonsSelect(){
+    this.checkAutres = false;
+  }
+
+  /**
    * Fonction qui est liée au bouton "Continuer" sur la page du formulaire - Informations Générales.
    * Elle valide les valeurs entrées dans les champs du formulaire et les stocke localement. 
    * Une fois ces valeurs stockées, elle récupère la valeur stockée correspondant à l'identificant du formulaire. 
@@ -92,6 +115,9 @@ export class RaisonRefusFormulaire {
    */
   nextPage() {
     this.submitAttempt = true;
+    if (this.raisonAutres !== '' && this.checkAutres === true){
+      this.refusForm.controls.raisonRefusForm.setValue(this.raisonAutres);
+    }
     if(this.refusForm.valid){
       let loader = this.loadingCtrl.create({
         content: ''

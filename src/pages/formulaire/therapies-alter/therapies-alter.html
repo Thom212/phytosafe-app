@@ -40,10 +40,10 @@
       </ion-item>
       <ion-item no-lines>
         <ion-label >{{ 'FORM_THERAPIES_OPTION_5' | translate }}</ion-label>
-        <ion-checkbox formControlName="autresboolForm" (click)="autres(inputAutres)"></ion-checkbox>
+        <ion-checkbox formControlName="autresboolForm" (click)="autres()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines *ngIf="checkAutres">
-        <ion-input #inputAutres [class.invalid]="!therapiesAlterForm.controls.autresForm.valid && (therapiesAlterForm.controls.autresForm.dirty || submitAttempt)" formControlName="autresForm" type="text"></ion-input>
+        <ion-input [class.invalid]="!therapiesAlterForm.controls.autresForm.valid && (therapiesAlterForm.controls.autresForm.dirty || submitAttempt)" placeholder = "{{ 'FORM_THERAPIES_PLACEHOLDER' | translate }}" formControlName="autresForm" type="text"></ion-input>
       </ion-item>
       <ion-item no-lines>
         <ion-label>{{ 'FORM_THERAPIES_OPTION_6' | translate }}</ion-label>

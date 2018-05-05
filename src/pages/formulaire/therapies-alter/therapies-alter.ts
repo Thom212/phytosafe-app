@@ -1,7 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { NavController, Content } from 'ionic-angular';
-import { Keyboard } from '@ionic-native/keyboard';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -29,7 +28,7 @@ export class TherapiesAlter{
   showScrollFabTherapiesAlter: boolean = false;
   contentDimensions: any;
   
-  constructor(public navCtrl: NavController, public zone: NgZone, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public traitement: Traitement, public localstockage: LocalStockage, public inactif: Inactif, private keyboard: Keyboard) {
+  constructor(public navCtrl: NavController, public zone: NgZone, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public traitement: Traitement, public localstockage: LocalStockage, public inactif: Inactif) {
     this.therapiesAlterForm = formBuilder.group({
         phytoForm: [false],
         aromaForm: [false],
@@ -92,10 +91,10 @@ export class TherapiesAlter{
   /**
    * Fonction qui permet le déploiement d'un champ permettant d'entrer le nom d'une thérapie alternative, après que l'utilisateur ait dit avoir recours à des thérapies alternatives qui ne sont pas listées dans le formulaire.
    * @method autres
-   * @param {id} - un identifiant css est passé à la fonction.
+   * @param {} - aucune valeur n'est passée à la fonction.
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
-  autres(inputAutres){
+  autres(){
     if(this.checkAutres == false){
       this.checkAutres = true;
       this.therapiesAlterForm.controls.aucunForm.setValue(false);
@@ -104,7 +103,6 @@ export class TherapiesAlter{
       this.checkAutres = false;
       this.therapiesAlterForm.controls.autresboolForm.setValue(false);
       this.therapiesAlterForm.controls.autresForm.setValue('');
-      inputAutres.setFocus();
     }
   }
   
