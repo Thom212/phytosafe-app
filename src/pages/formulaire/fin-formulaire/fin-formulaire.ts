@@ -10,6 +10,7 @@ import { Accueil } from '../../accueil/accueil';
 export class FinFormulaire {
 
   timerCount: number = 15; //Fixe le temps avant que l'utilisateur soit redirigé vers la page d'accueil.
+  timer : any;
   succesForm: boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) { 
@@ -26,7 +27,7 @@ export class FinFormulaire {
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
     startTimer(){
-      setTimeout(x => {
+      this.timer = setTimeout(x => {
         if(this.timerCount <= 0) { 
           //Navigation à la page d'accueil du formulaire - Accueil
           this.navCtrl.push(Accueil);
@@ -45,6 +46,7 @@ export class FinFormulaire {
    * @returns {} - aucune valeur n'est retournée par la fonction.
    */
   nextPage() {
+    clearTimeout(this.timer);
     //Navigation à la page d'accueil du formulaire - Accueil
     this.navCtrl.push(Accueil);
   }
