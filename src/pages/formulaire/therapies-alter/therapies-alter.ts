@@ -31,6 +31,7 @@ export class TherapiesAlter{
   constructor(public navCtrl: NavController, public zone: NgZone, translate: TranslateService, public formBuilder: FormBuilder, public formulaire: Formulaire, public traitement: Traitement, public localstockage: LocalStockage, public inactif: Inactif) {
     this.therapiesAlterForm = formBuilder.group({
         phytoForm: [false],
+        boissonForm: [false],
         aromaForm: [false],
         vitamineForm: [false],
         homeoForm: [false],
@@ -115,6 +116,7 @@ export class TherapiesAlter{
   aucun() {
     this.checkAutres = false;
     this.therapiesAlterForm.controls.phytoForm.setValue(false);
+    this.therapiesAlterForm.controls.boissonForm.setValue(false);
     this.therapiesAlterForm.controls.aromaForm.setValue(false);
     this.therapiesAlterForm.controls.vitamineForm.setValue(false);
     this.therapiesAlterForm.controls.homeoForm.setValue(false);
@@ -132,6 +134,7 @@ export class TherapiesAlter{
   inconnu() {
     this.checkAutres = false;
     this.therapiesAlterForm.controls.phytoForm.setValue(false);
+    this.therapiesAlterForm.controls.boissonForm.setValue(false);
     this.therapiesAlterForm.controls.aromaForm.setValue(false);
     this.therapiesAlterForm.controls.vitamineForm.setValue(false);
     this.therapiesAlterForm.controls.homeoForm.setValue(false);

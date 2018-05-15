@@ -23,34 +23,38 @@
     <ion-list text-wrap>
       <p>{{ 'FORM_THERAPIES_TYPES' | translate }}</p>
       <ion-item no-lines>
-        <ion-label>{{ 'FORM_THERAPIES_OPTION_1' | translate }}</ion-label>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_PHYTO' | translate }}</ion-label>
         <ion-checkbox  formControlName="phytoForm" (click)="therapie()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines>
-        <ion-label>{{ 'FORM_THERAPIES_OPTION_2' | translate }}</ion-label>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_BOISSON' | translate }}</ion-label>
+        <ion-checkbox formControlName="boissonForm" (click)="therapie()"></ion-checkbox>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_AROMA' | translate }}</ion-label>
         <ion-checkbox formControlName="aromaForm" (click)="therapie()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines>
-        <ion-label>{{ 'FORM_THERAPIES_OPTION_3' | translate }}</ion-label>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_VITAMINE' | translate }}</ion-label>
         <ion-checkbox formControlName="vitamineForm" (click)="therapie()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines>
-        <ion-label>{{ 'FORM_THERAPIES_OPTION_4' | translate }}</ion-label>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_HOMEO' | translate }}</ion-label>
         <ion-checkbox formControlName="homeoForm" (click)="therapie()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines>
-        <ion-label >{{ 'FORM_THERAPIES_OPTION_5' | translate }}</ion-label>
+        <ion-label >{{ 'FORM_THERAPIES_OPTION_AUTRES' | translate }}</ion-label>
         <ion-checkbox formControlName="autresboolForm" (click)="autres()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines *ngIf="checkAutres">
         <ion-input [class.invalid]="!therapiesAlterForm.controls.autresForm.valid && (therapiesAlterForm.controls.autresForm.dirty || submitAttempt)" placeholder = "{{ 'FORM_THERAPIES_PLACEHOLDER' | translate }}" formControlName="autresForm" type="text"></ion-input>
       </ion-item>
       <ion-item no-lines>
-        <ion-label>{{ 'FORM_THERAPIES_OPTION_6' | translate }}</ion-label>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_AUCUN' | translate }}</ion-label>
         <ion-checkbox formControlName="aucunForm" (click)="aucun()"></ion-checkbox>
       </ion-item>
       <ion-item no-lines>
-        <ion-label>{{ 'FORM_THERAPIES_OPTION_7' | translate }}</ion-label>
+        <ion-label>{{ 'FORM_THERAPIES_OPTION_INCONNU' | translate }}</ion-label>
         <ion-checkbox formControlName="inconnuForm" (click)="inconnu()"></ion-checkbox>
       </ion-item>
 
