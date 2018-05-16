@@ -117,7 +117,7 @@
   
   "FORM_PHYTO" : "Nom des thérapies",
   "FORM_INFO_PHYTO" : "Informations sur les thérapies alternatives prises : ",
-  "FORM_INFO_PHYTO_DETAILS" : "renseignez, si vous les connaissez, les noms des phytothérapies (extraits de plantes), les risques (thé vert, camomille ou autre), suppléments diététiques (vitamines, minéraux, gélée royale, jus de cranberry ou autre), ou les huiles essentielles que vous utilisez en les avalant. Ne pas renseigner les homéopathies ni les huiles ou crème qui sont utilisées sur la peau uniquement, ou inhalées.",
+  "FORM_INFO_PHYTO_DETAILS" : "renseignez, si vous les connaissez, les noms des phytothérapies (extraits de plantes), les tisanes et infusions (thé vert, camomille ou autre), suppléments diététiques (vitamines, minéraux, gelée royale, jus de cranberry ou autre), ou les huiles essentielles que vous utilisez en les avalant, de manière quotidienne ou très régulière  (au moins 3 fois par semaine). Ne pas renseigner les homéopathies ni les huiles ou crème qui sont utilisées sur la peau uniquement, ou inhalées.",
   "FORM_PHYTO_NOM" : "Nom de la thérapie",
   "FORM_PHYTO_NOM_ALERTE" : "Entrez un nom de thérapie valide.",
   "FORM_PHYTO_PLUS" : "Ajouter une thérapie",
