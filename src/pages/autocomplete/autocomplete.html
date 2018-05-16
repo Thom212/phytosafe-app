@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-toolbar>
     <ion-title>{{this.params.get('titreAutocomplete')}}</ion-title>
+</ion-header>
+<ion-content class="has-header">
+  <ion-toolbar class="myToolbar">
     <ion-searchbar placeholder="{{this.params.get('placeholderAutocomplete')}}" [(ngModel)]="autocompleteEntry" [showCancelButton]="true" type="text" (ionInput)="updateSearch()" (ionCancel)="dismiss()" (keyup.enter)="dismiss()"></ion-searchbar>
   </ion-toolbar>
-</ion-header>
-<ion-content>
   <ion-list>
     <ion-item *ngFor="let item of autocompleteItems" (click)="chooseItem(item)">
       {{ item }}
